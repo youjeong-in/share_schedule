@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
-<link href = "resources/css/signUp.css" rel = "stylesheet" type = "text/css"/>
+<link href = "resources/css/SignUp.css" rel = "stylesheet" type = "text/css"/>
 <title>회원가입</title>
 </head>
 <!-- <body onLoad="message('${message }')"> -->
