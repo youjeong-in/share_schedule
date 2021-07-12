@@ -4,46 +4,41 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입 페이지</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-<link href="resources/css/style.css" type="text/css" rel="stylesheet" />
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src ="js/js.js"> </script> 
+
+<link href = "resources/css/signUp.css" rel = "stylesheet" type = "text/css"/>
+<title>회원가입</title>
 </head>
+<!-- <body onLoad="message('${message }')"> -->
+
 <body>
-	
 
-	<div class = "title">S스케줄 <i class="fa fa-refresh"></i></div>
+<div id="main">
+<div id="bigBox">
+<div id="logo">ONE
+<div class="logo2">회원가입</div></div>
+<div id="id">아이디</div>
+<div><input type="text" id="idBox" class="box" name="userId" placeholder="아이디를 입력해주세요.">
+</div>
+<div id="pass">비밀번호</div>
+<div><input type="text" id="passBox" class="box" name="userpass" placeholder="비밀번호를 입력해주세요."></div>
+<div><input type="text" id="passBox2"class="box" name="userpass" placeholder="비밀번호를 다시 입력해주세요."></div>
 
-  <p>
-  <label>아이디</label>
-  <input class="w3-input" name="userId" type="text">
- <input type = "submit" value="중복확인" class="click" onClick="dupCheck(this)" /></p>
- 
-  <p>
-  <label>비밀번호</label>
-  <input class="w3-input" name ="userPwd" type="text">
-  
-    
-  <label>비밀번호확인</label>
-  <input class="w3-input" name ="userPwdCheck" type="text"></p>
-   
-   <p>
-   <label>이름</label>
-  <input class="w3-input" name ="userName" type="text"></p>
-  
-  <p>
-   <label>핸드폰번호</label>
-  <input class="w3-input" name ="userPhone" type="text"></p>
-	
-	<div class="click" onclick="sendJoinInfo()">가입하기</div>
-	
-	<div class="empty">이미 가입하셨나요?</div>
-	<div class="click2"><a href="http://192.168.219.104/logIn.jsp">로그인</a></div>
-	
+<div id="Phone">전화번호</div>
+<div><input type="text" class="box" id="userPhone" name="userPhone" placeholder="-빼고 입력해주세요."></div>
+
+<div class="name">
+<div><input type="text" id="firstName" class="box" name="userName" placeholder="성">
+<div><input type="text" id="lastName" class="box" name="userName" placeholder="이름"></div></div>
+</div>
+
+
+<div><div id="signUp"><a href="logIn" style="text-decoration:none; color:#5191ce;">로그인</a>
+<input type="button" class="button" name="userpass" value="가입하기"></div></div>
+
+</div>
 </div>
 
 </body>
