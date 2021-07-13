@@ -19,7 +19,7 @@ public class Authentication {
 		System.out.println(ai.getPublicIp() + "," + ai.getPrivateIp());
 		System.out.println(ai.getMethod());
 		return mav;
-	}
+	}	
 	
 	
 	//중복체크
