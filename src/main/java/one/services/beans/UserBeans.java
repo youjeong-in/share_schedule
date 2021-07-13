@@ -7,7 +7,7 @@ import lombok.Data;
 public class UserBeans {
 
 	private String userId;
-	private String userpass;
+	private String userPass;
 	private String userName;
 	private String userPhone;
 	private String userMail;

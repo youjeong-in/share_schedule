@@ -27,7 +27,7 @@
 <div><input type="text" id="idBox" class="box" name="userId" placeholder="아이디를 입력해주세요.">
 </div>
 <div id="pass">비밀번호</div>
-<div><input type="password" id="passBox" class="box" name="userpass" placeholder="비밀번호를 입력해주세요."></div>
+<div><input type="password" id="passBox" class="box" name="userPass" placeholder="비밀번호를 입력해주세요."></div>
 <div id="idForget">아이디를 잊으셨나요?</div>
 <div id="text">ICIA 일보아카데미만 로그인 가능합니다! 게스트 계정 만들 수 없고, 1조 프로젝트 용 로그인 창 입니다.</div>
 

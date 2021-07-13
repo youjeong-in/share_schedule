@@ -3,9 +3,10 @@
  */
 let publicIp;
 
+//아이디 -> 패스워드
 function sendUserId(){
    let uCode = document.getElementsByName("userId")[0];
-   let aCode = document.getElementsByName("userpass")[0];
+   let aCode = document.getElementsByName("userPass")[0];
    let id= document.getElementById("id");
    
    let next = document.getElementsByName("next")[0];
@@ -31,7 +32,7 @@ function logInInfo(){
 	//alert(location.host); //privateIp
 	
 	const id = document.getElementsByName("userId")[0];
-	const pwd =document.getElementsByName("userpass")[0];
+	const pwd =document.getElementsByName("userPass")[0];
 	let method = makeInput("hidden" , "method" , 1);
 	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
 	let privateIp = makeInput("hidden", "privateIp" , location.host);

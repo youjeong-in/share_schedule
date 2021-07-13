@@ -4,20 +4,23 @@ package one.services.auth;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import one.database.mapper.AuthInterface;
 import one.services.beans.AccessInfo;
 import one.services.beans.UserBeans;
 
 
 @Service
-public class Authentication {
+public class Authentication{
 	private ModelAndView mav = null;
-	
+	AuthInterface auth;
 	
 	//로그인
 	public ModelAndView logInCtl(AccessInfo ai) {
-		System.out.println(ai.getUserId() + "," + ai.getUserpass());
-		System.out.println(ai.getPublicIp() + "," + ai.getPrivateIp());
-		System.out.println(ai.getMethod());
+//		System.out.println(ai.getUserId() + "," + ai.getUserPass());
+//		System.out.println(ai.getPublicIp() + "," + ai.getPrivateIp());
+//		System.out.println(ai.getMethod());
+		
+		
 		return mav;
 	}	
 	
@@ -56,15 +59,14 @@ public class Authentication {
 	}
 	
 	
-	//컨버트
-	private boolean convert(int value) {
-		return (value>0)? true : false;
-	}
-	
-	
 	//회원  insert
 	private boolean insMember(UserBeans ub) {
 		
 		return false;
+	}
+	
+	//컨버트
+	private boolean convert(int value) {
+		return (value>0)? true : false;
 	}
 }

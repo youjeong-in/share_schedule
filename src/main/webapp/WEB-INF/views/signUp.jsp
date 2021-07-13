@@ -24,8 +24,8 @@
 <div><input type="text" id="idBox" class="box" name="userId" placeholder="아이디를 입력해주세요.">
 </div>
 <div id="pass">비밀번호</div>
-<div><input type="text" id="passBox" class="box" name="userpass" placeholder="비밀번호를 입력해주세요."></div>
-<div><input type="text" id="passBox2"class="box" name="userpass" placeholder="비밀번호를 다시 입력해주세요."></div>
+<div><input type="text" id="passBox" class="box" name="userPass" placeholder="비밀번호를 입력해주세요."></div>
+<div><input type="text" id="passBox2"class="box" name="userPass" placeholder="비밀번호를 다시 입력해주세요."></div>
 
 <div id="Phone">전화번호</div>
 <div><input type="text" class="box" id="userPhone" name="userPhone" placeholder="-빼고 입력해주세요."></div>

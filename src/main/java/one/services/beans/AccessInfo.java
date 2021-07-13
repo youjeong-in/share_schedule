@@ -10,7 +10,7 @@ import lombok.Data;
 public class AccessInfo {
 
 	private String userId;
-	private String userpass;
+	private String userPass;
 	private int method; // 1은 로그인 , -1 로그아웃
 	private String publicIp;
 	private String privateIp;

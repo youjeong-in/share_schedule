@@ -2,7 +2,24 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
-    <mapper namespace="one.database.mapper.AuthInterface">
-    
-    </mapper>
+
+<mapper namespace="one.database.mapper.AuthInterface">
+	<!-- -->
+	<select id="isUserId" resultType="int" parameterType="one.services.beans.AccessInfo">
+		SELECT COUNT(*) AS USERID WHERE MS_USERID=#{userId}
+	</select>
+
+	<select id="isAccess" resultType="int" parameterType="one.services.beans.AccessInfo">
+		SELECT COUNT(*) AS METHOD WHERE MS_USERID=#{userId} AND MS_USERPASS=#{userPass}
+	</select>
+	
+	<insert id="insHistory" parameterType="one.services.beans.AccessInfo">
+ 		INSERT INTO AH(AH_MBID,AH_DATE,AH_METHOD,AH_PUBLICIP,AH_PRIVATEIP) 
+ 		VALUES(#{userId},SYSDATE,#{method},#{publicIp},#{privateIp})
+	</insert>
+	
+	<insert id="insMember" parameterType="one.services.beans.UserBeans">
+ 		INSERT INTO MS(MS_USERID,MS_USERPASS,MS_USERNAME,MS_USERPHONE,MS_USERMAIL)
+ 		VALUES (#{userId},#{userPass},#{userName},#{userPhone},#{userMail})
+	</insert>
+</mapper>
