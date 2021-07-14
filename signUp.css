@@ -33,7 +33,7 @@ body{
 	border:1px solid #bbbbbb;
 	background-color:#ffffff;
 	border-radius:5px;
-	height:600px;
+	height:750px;
 	width:400px;
 	
 }
@@ -74,20 +74,28 @@ body{
 }.box:focus{
 	outline:1px solid #bdb6e5;
 }
+.mailbox{
+	width:138px;
+	margin-top:5px;
+	height:43px;
+	font-size:14px;
+	color:gray;
+	padding-left:5px;
+	border:1px solid #ebcfea;
+}
+
+.mailbox:focus{
+	outline:1px solid #bdb6e5;
+}
 
 .name{
 	margin-top:20px;
 	margin-bottom:20px;
 }
 
-#firstName{
-	width:90px;
-	height:10px;
-	padding:15px;
-	float:left;
-}
-#lastName{
-	width:168px;
+
+#name{
+	width:200px;
 	height:10px;
 	padding:15px;
 	float:left;
@@ -107,6 +115,24 @@ body{
 	position:absolute;
 	z-index:1;
 }
+
+#mail{
+	font-size:10px;
+	border:1px solid #ffffff;
+	background-color:#ffffff;
+	width:35px;
+	padding:2px;
+	margin-left:35px;
+	margin-top: 13px;
+	position:absolute;
+	z-index:1;
+	
+}
+
+#userMail{
+	margin-top: 20px;
+	width:35%;
+}
 #userPhone{
 	position:relative;
 }
@@ -120,6 +146,7 @@ body{
 	padding:2px;
 	margin-left:35px;
 	margin-bottom:-5px;
+	margin-top:30px;
 	position:absolute;
 	z-index:1;
 }
