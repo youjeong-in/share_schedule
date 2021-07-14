@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <link href = "resources/css/signUp.css" rel = "stylesheet" type = "text/css"/>
-
 <script src = "resources/js/js.js"></script>
 <title>회원가입</title>
 </head>
@@ -21,27 +20,34 @@
 <div id="logo">ONE
 <div class="logo2">회원가입</div></div>
 <div id="id">아이디</div>
-<div><input type="text" id="idBox" class="box" name="userId" placeholder="아이디를 입력해주세요.">
+<div><input type="text" id="idBox" class="box" name="userId" placeholder="*아이디를 입력해주세요." >
+<input type="button" class="button" name="userpass" value="중복체크" onClick="isDup()">
 </div>
 <div id="pass">비밀번호</div>
-<div><input type="text" id="passBox" class="box" name="userPass" placeholder="비밀번호를 입력해주세요."></div>
-<div><input type="text" id="passBox2"class="box" name="userPass" placeholder="비밀번호를 다시 입력해주세요."></div>
+<div><input type="password" id="passBox" class="box" name="userPass" placeholder="비밀번호를 입력해주세요."></div>
+<div><input type="password" id="passBox2"class="box" name="userPass2" placeholder="비밀번호를 다시 입력해주세요."></div>
 
 <div id="Phone">전화번호</div>
 <div><input type="text" class="box" id="userPhone" name="userPhone" placeholder="-빼고 입력해주세요."></div>
 
 <div class="name">
-<div><input type="text" id="firstName" class="box" name="userName" placeholder="성">
-<div><input type="text" id="lastName" class="box" name="userName" placeholder="이름"></div></div>
+<div><input type="text" id=name" class="box" name="userName" placeholder="이름"></div>
 </div>
 
 
 <div id="mail">이메일</div>
-<div><input type="email" class="box" id="userMail" name="userMail" placeholder="이메일을 입력해주세요."></div>
+<div><input type="email" class="box" id="userMail" name="userMail" placeholder="이메일">&nbsp;@
+<select class="mailbox" name="mailAdd">
+<option >직접입력</option>
+<option value="naver.com">naver.com</option>
+<option value="gmail.com">gmail.com</option>
+<option value="daum.net">daum.net</option>
+</select>
+</div>
 
 
 <div><div id="signUp"><a href="logIn" style="text-decoration:none; color:#5191ce;">로그인</a>
-<input type="button" class="button" name="userpass" value="가입하기"></div></div>
+<input type="button" class="button" name="userpass" value="가입하기" onClick="joinInfo()"></div></div>
 
 </div>
 </div>

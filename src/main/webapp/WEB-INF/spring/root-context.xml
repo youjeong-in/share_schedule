@@ -22,10 +22,16 @@
 	 <constructor-arg ref="HikariCP"></constructor-arg>
 	</bean>
 	
-	<!-- mybatis -->
+	<!-- mybatis dbcp연결 -->
 	<bean id="mybatisdb" class="org.mybatis.spring.SqlSessionFactoryBean">
 	<property name="dataSource" ref="datasource"></property>
+	<!--   <property name="configLocation"
+              value="classpath:/mybatis-config.xml" /> -->
+	</bean>
 	
+	<!-- 자동 open ,close하려고 사용 -->
+	<bean id="dbSession" class="org.mybatis.spring.SqlSessionTemplate">
+	 <constructor-arg name ="sqlSessionFactory" ref="mybatisdb" />
 	</bean>
 		
 </beans>

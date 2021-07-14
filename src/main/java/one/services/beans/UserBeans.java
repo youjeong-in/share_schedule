@@ -11,5 +11,6 @@ public class UserBeans {
 	private String userName;
 	private String userPhone;
 	private String userMail;
+	private String mailAdd;
 
 }

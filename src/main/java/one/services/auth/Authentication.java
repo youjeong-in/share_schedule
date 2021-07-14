@@ -1,7 +1,11 @@
 package one.services.auth;
 
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import one.database.mapper.AuthInterface;
@@ -11,62 +15,65 @@ import one.services.beans.UserBeans;
 
 @Service
 public class Authentication{
+	@Autowired
+	AuthDAO dao;
+	
 	private ModelAndView mav = null;
 	AuthInterface auth;
 	
+
+	
+	
 	//로그인
 	public ModelAndView logInCtl(AccessInfo ai) {
-//		System.out.println(ai.getUserId() + "," + ai.getUserPass());
-//		System.out.println(ai.getPublicIp() + "," + ai.getPrivateIp());
-//		System.out.println(ai.getMethod());
+		boolean check;
+		mav = new ModelAndView();
+		if(check = dao.isUserId(ai)) {//아이디가 있고
+			if(check = dao.isAccess(ai)) { //아이디-비번일치
+				if(check = dao.insHistory(ai)) { //로그기록이 insert 됐다면
+					mav.setViewName("dashboard");
+					mav.addObject("uName", dao.getUserInfo(ai).get(0).getUserName());
+					//ArrayList<UserBeans> list = (ArrayList)dao.getUserInfo(ai); //user정보를 가져와서
+					
+				}
+			}
+		}
 		
-		
+		if(!check) {
+			mav.setViewName("logIn");
+			mav.addObject("message", "아이디나 비밀번호가 일치하지 않습니다.");
+		}
+	
 		return mav;
 	}	
 	
 	
 	//중복체크
-	public String isDupCheck(UserBeans ub) {
+	public String isDupCheck(AccessInfo ai) {
+		
+		mav = new ModelAndView();
+		
+		if(!dao.isUserId(ai)) {//아이디가 없으면
+			mav.setViewName("logIn");
+			mav.addObject("message", "사용가능한 아이디 입니다.");
+		}else {
+			 mav.addObject("message", "사용불가능한 아이디 입니다. 다른아이디를 사용해주세요");
+		}
+		
 		return null;
 	}
 	
 	
 	//회원가입
 	public ModelAndView joinCtl(UserBeans ub) {
+		mav = new ModelAndView();
 		
+		if(!dao.idDupcheck(ub)) {//id가 없으면
+			if(dao.insMember(ub)) { //인서트가 됐으면
+				mav.setViewName("logIn");
+			}
+		}
 		return mav;
 	}
-	
-	//아이디 유무
-	private boolean isUserId(AccessInfo ai) {
-		return false;
-	}
-	
-	//아이디-비번 일치여부
-	private boolean isAccess(AccessInfo ai) {
-		
-		return false;
-	}
-	
-	//History Table에 ins
-	private boolean insHistory(AccessInfo ai) {
-		return false;
-	}
-	
-	//사용자 정보
-	private String getUserInfo(UserBeans ub) {
-		return null;
-	}
-	
-	
-	//회원  insert
-	private boolean insMember(UserBeans ub) {
-		
-		return false;
-	}
-	
-	//컨버트
-	private boolean convert(int value) {
-		return (value>0)? true : false;
-	}
+
 }

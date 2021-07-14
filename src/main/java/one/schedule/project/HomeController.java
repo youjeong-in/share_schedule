@@ -34,12 +34,13 @@ public class HomeController {
 	@Autowired
 	Authentication auth;
 	ModelAndView mav =null;
+	
 	@RequestMapping(value = {"/","/logIn"}, method = {RequestMethod.GET,RequestMethod.POST})//get,post 둘다사용경우
 	public String logInForm() {
 		return "logIn";
 	}
 
-	@GetMapping("/signUp") //get방식 a태그 눌렀을때 
+	@GetMapping("/signUpForm") //get방식 a태그 눌렀을때 
 	//@RequestMapping(value = "/signUp", method = RequestMethod.GET)
 	public String signUpForm() {
 		return "signUp";
@@ -57,15 +58,14 @@ public class HomeController {
 	@PostMapping("/signUp") 
 	public ModelAndView signUp(@ModelAttribute UserBeans ub){
 		mav=auth.joinCtl(ub);
-		
 		return mav;
 	}
 	
 	//중복체크
 	@PostMapping("/isDup") 
 	@ResponseBody 
-	public String isDuplicateCheck(@ModelAttribute UserBeans ub){
-		return auth.isDupCheck(ub);
+	public String isDuplicateCheck(@ModelAttribute AccessInfo ai){
+		return auth.isDupCheck(ai);
 		
 	
 	}
