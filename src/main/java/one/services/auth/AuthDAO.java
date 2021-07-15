@@ -20,6 +20,7 @@ public class AuthDAO{
 
 	boolean isUserId(AccessInfo ai) {
 		return this.convert(sqlSession.selectOne("isUserId" , ai));
+	
 	}
 
 	
@@ -33,9 +34,6 @@ public class AuthDAO{
 		return this.convert(sqlSession.insert("insHistory", ai));
 	}
 
-	boolean idDupcheck(UserBeans ub) {
-		return  this.convert(sqlSession.selectOne("idDupcheck" , ub));
-	}
 	
 	boolean insMember(UserBeans ub) {
 		return this.convert(sqlSession.insert("insMember", ub));

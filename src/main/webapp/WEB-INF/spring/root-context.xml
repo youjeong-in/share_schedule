@@ -34,4 +34,5 @@
 	 <constructor-arg name ="sqlSessionFactory" ref="mybatisdb" />
 	</bean>
 		
+	
 </beans>

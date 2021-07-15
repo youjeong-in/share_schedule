@@ -33,6 +33,45 @@ function isPasswordCheck(word){
 	return count;
 }
 
+/* 유효성 검사 */
+function isValidateCheck(type, word){
+	let result;
+	const codeComp = /^[a-zA-Z]{1}[0-9a-zA-Z]{7,11}$/g;
+	const pwdComp1 = /[a-z]/g;
+	const pwdComp2 = /[A-Z]/g;
+	const pwdComp3 = /[0-9]/g;
+	const pwdComp4 = /[!@#$%^&*]/g;
+	
+	if(type == 1){
+		result = codeComp.test(word); 
+	}else if(type == 2){
+		let count = 0;
+		count += pwdComp1.test(word)?1:0;
+		count += pwdComp2.test(word)?1:0;
+		count += pwdComp3.test(word)?1:0;
+		count += pwdComp4.test(word)?1:0;
+		
+		result = (count >= 3)? true:false;
+	}
+	
+	return result;
+}
+
+
+
+function korCheck(obj, event){
+	const pattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+	
+	if(pattern.test(event.target.value.trim())) {
+		obj.value = obj.value.replace(pattern,'').trim();
+	}
+}
+
+function charCount(value, min, max){
+	return value.length >= min && value.length<=max;
+	
+}
+
 //아이디 -> 패스워드
 function sendUserId(){
    let uCode = document.getElementsByName("userId")[0];
@@ -56,7 +95,7 @@ function sendUserId(){
    idFor.innerText="비밀번호를 잊으셨나요?";
    
 }
-
+//다음 누르면 패스워드 창으로 넘어감 (enter)
 function enterId(){
    let uCode = document.getElementsByName("userId")[0];
    let aCode = document.getElementsByName("userPass")[0];
@@ -84,9 +123,8 @@ function enterId(){
    
 
 }
-
+//enter누르면 로그인이됨
 function enterPwd(){
-	
 	
 	const id = document.getElementsByName("userId")[0];
 	const pwd =document.getElementsByName("userPass")[0];
@@ -139,47 +177,27 @@ function joinInfo(){
 	
 	const userId = document.getElementsByName("userId")[0];
 	const userPwd = document.getElementsByName("userPass")[0];
-	const userPwd2 = document.getElementsByName("userPass2")[0];
 	const userPhone = document.getElementsByName("userPhone")[0];
 	const userName = document.getElementsByName("userName")[0];
 	const userMail = document.getElementsByName("userMail")[0];
 	const mailAdd = document.getElementsByName("mailAdd")[0];
 
-//아이디 유효성검사
-	if(isIdCheck(userId.value)<2){
-		userId.value="";
-		userId.focus();
-		alert("아이디 6~12글자의 숫자+소문자 조합으로 해주세요");
-		return;
-	}
-	
-	if(userId.value ==""){
-		userId.value="";
-		userId.focus();
-		return;
-	}
-	
-	//비밀번호 유효성
-	if(isPasswordCheck(userPwd)<2){
-		userPwd.value="";
-		userPwd.focus();
-		alert("숫자,영소대문자,특수문자 포함3가지 입력해주세요");
-		return;
-	}
-	
-	if((userPwd.value!= userPwd2.value)){
-		userPwd2.value="";
-		userPwd2.focus();
-		return;
-	}
-	
-	//이름 널값 X	
+
+	//이름 널값 X
 	if(userName.value ==""){
+		alert("이름은 필수입력사항입니다.");
 		userName.value="";
 		userName.focus();
 		return;
 	}
 	
+	//이름 5글자이상일경우
+	if(!charCount(userName.value,2,5)){ 
+		alert("이름은 최대 5글자까지만 허용됩니다. 문의는 고객센터로해주세요.");
+		userName.value="";
+		userName.focus();
+		return;
+	}
 	
 	
 	let form = makeForm("signUp","post");
@@ -194,18 +212,6 @@ function joinInfo(){
 	document.body.appendChild(form);
 	form.submit();
 	
-	
-}
-//중복체크
-function isDup(){
-	const checkId = document.getElementsByName("userId")[0];
-	
-	let form =makeForm("isDup","post")
-	
-	form.appendChild(checkId);
-	
-	document.body.appendChild(form);
-	form.submit();
 	
 }
 
@@ -257,22 +263,21 @@ function getAjax(jobCode, clientData, fn){
 }
 
 function postAjax(jobCode, clientData, fn){
-	/*step1 */
+	/* Step 1*/
 	let ajax = new XMLHttpRequest();
-	
-	//step2
+		
+	/* Step2 */
 	ajax.onreadystatechange = function(){
 		if(ajax.readyState == 4 && ajax.status == 200){
-			//step5
-			window[fn](JSON.parse(ajax.responseText));//window - 브라우저
+			/* Step 5 */
+			window[fn](JSON.parse(ajax.responseText));
 		}
 	};
-	//step3
-	ajax.open("POST" , jobCode);
-	
-	//ajax.setRequestHeader("Context-type" , "application/x-www-form-urlencoded");
-	//step4
-	ajax.send(clientData);	
+	/* Step 3 */
+	ajax.open("POST", jobCode);
+	/* Step 4 */
+	ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	ajax.send(clientData);
 }
 
 function setPublicIp(data){

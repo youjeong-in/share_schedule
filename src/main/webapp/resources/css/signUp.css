@@ -33,7 +33,7 @@ body{
 	border:1px solid #bbbbbb;
 	background-color:#ffffff;
 	border-radius:5px;
-	height:750px;
+	height:770px;
 	width:400px;
 	
 }
@@ -52,7 +52,7 @@ body{
 
 #idBox{
 	position:relative;
-	margin-bottom:20px;
+	margin-bottom:10px;
 }
 
 /*.color1 {color: #2b81c8;}
@@ -146,12 +146,13 @@ body{
 	padding:2px;
 	margin-left:35px;
 	margin-bottom:-5px;
-	margin-top:30px;
+	margin-top:45px;
 	position:absolute;
 	z-index:1;
 }
 #passBox{
 	position:relative;
+	margin-top:20px;
 }
 
 #idForget{
@@ -204,3 +205,9 @@ body{
 	transform:translate(-50%, -50%);
 }
 
+#dupId{
+   margin-left:7.6%;
+   font-size:14px;
+   color:#FF4646;
+   font-weight:bold;
+}

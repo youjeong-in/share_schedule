@@ -21,7 +21,12 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/"/>
 		<beans:property name="suffix" value=".jsp" />
+		
 	</beans:bean>
+	<!-- Gson등록 -->
+	<beans:bean class="com.google.gson.Gson"></beans:bean>
+	
+	
 	
 	<context:component-scan base-package="one.schedule.project" />
 	<context:component-scan base-package="one.services.auth" />

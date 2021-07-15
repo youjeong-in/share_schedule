@@ -62,8 +62,8 @@ public class HomeController {
 	}
 	
 	//중복체크
-	@PostMapping("/isDup") 
-	@ResponseBody 
+	@PostMapping("isDup") 
+	@ResponseBody  
 	public String isDuplicateCheck(@ModelAttribute AccessInfo ai){
 		return auth.isDupCheck(ai);
 		
