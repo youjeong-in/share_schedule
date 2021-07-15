@@ -25,6 +25,8 @@
 	<!-- mybatis dbcp연결 -->
 	<bean id="mybatisdb" class="org.mybatis.spring.SqlSessionFactoryBean">
 	<property name="dataSource" ref="datasource"></property>
+	<!--   <property name="configLocation"
+              value="classpath:/mybatis-config.xml" /> -->
 	</bean>
 	
 	<!-- 자동 open ,close하려고 사용 -->
@@ -32,4 +34,5 @@
 	 <constructor-arg name ="sqlSessionFactory" ref="mybatisdb" />
 	</bean>
 		
+	
 </beans>

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 import one.database.mapper.AuthInterface;
 import one.services.beans.AccessInfo;
 import one.services.beans.UserBeans;
@@ -18,6 +20,8 @@ public class Authentication{
 	@Autowired
 	AuthDAO dao;
 	
+	@Autowired
+	Gson gson;
 	private ModelAndView mav = null;
 	AuthInterface auth;
 	
@@ -41,7 +45,7 @@ public class Authentication{
 		
 		if(!check) {
 			mav.setViewName("logIn");
-			mav.addObject("message", "다시 시도해주세요");
+			mav.addObject("message", "아이디나 비밀번호가 일치하지 않습니다.");
 		}
 	
 		return mav;
@@ -51,16 +55,13 @@ public class Authentication{
 	//중복체크
 	public String isDupCheck(AccessInfo ai) {
 		
-		mav = new ModelAndView();
+		boolean message = false;
 		
-		if(!dao.isUserId(ai)) {//아이디가 없으면
-			mav.setViewName("logIn");
-			mav.addObject("message", "사용가능한 아이디 입니다.");
-		}else {
-			 mav.addObject("message", "사용불가능한 아이디 입니다. 다른아이디를 사용해주세요");
+		if(!dao.isUserId(ai)) {//아이디가 없으면 사용가능
+			message = true;	
 		}
-		
-		return null;
+	
+		return gson.toJson(message);
 	}
 	
 	
@@ -68,11 +69,14 @@ public class Authentication{
 	public ModelAndView joinCtl(UserBeans ub) {
 		mav = new ModelAndView();
 		
-		if(!dao.idDupcheck(ub)) {//id가 없으면
+		mav.setViewName("signUp");
+		mav.addObject("message", "회원가입에 실패했습니다. 다시 시도해주세요");
+		
 			if(dao.insMember(ub)) { //인서트가 됐으면
 				mav.setViewName("logIn");
+				mav.addObject("message", "회원가입을 축하합니다.");
 			}
-		}
+		
 		return mav;
 	}
 
