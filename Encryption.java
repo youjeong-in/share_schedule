@@ -1,4 +1,4 @@
-package one.schedule.project;
+package one.schedule.util;
 
 
 import java.io.UnsupportedEncodingException;
@@ -136,7 +136,7 @@ public class Encryption implements PasswordEncoder{
 	}
 
 	//AES256 복호화
-	public String aesDecode(String str, String hint) throws java.io.UnsupportedEncodingException,
+	public String aesDecode(String encryptionData, String hint) throws java.io.UnsupportedEncodingException,
 	NoSuchAlgorithmException,
 	NoSuchPaddingException, 
 	InvalidKeyException, 
@@ -149,32 +149,38 @@ public class Encryption implements PasswordEncoder{
 		Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		c.init(Cipher.DECRYPT_MODE, (Key)mapAES.get("key"), new IvParameterSpec(mapAES.get("iv").toString().getBytes("UTF-8")));
 
-		byte[] byteStr = Base64.decodeBase64(str.getBytes());
+		byte[] byteStr = Base64.decodeBase64(encryptionData.getBytes());
 
 		return new String(c.doFinal(byteStr),"UTF-8");
 	}
 
 	// Triple DES Encoding and Decoding + AES Encoding and Decoding
 	// key값 리턴
-	private String key(String hint) {
+	private String key(String hint) {  // iciaorkr
 		// 24자리(24바이트)만 key 값으로 입력 가능
-		char[] compareValue = ("k1cj4w3ib9lhvsd7x0aqtmrg2y6epu5zn8fo").toCharArray();
-		char[] addRootKey = ("hoonzzang701106icia").toCharArray();
+		char[] compareValue = ("k1cj4w@3ib9!lhv#sd7$x0a%qtm^rg2&y6?epu5zn8fo").toCharArray();
+		char[] addRootKey = ("KoreaHoonZzangVictoryWin").toCharArray();
 
 		String keyValue = "";
 
 		// 파라미터로 전달 받은 rootKey를 char[]에 저장
 		char[] keyValueArray = new char[24];
-		keyValueArray = hint.toCharArray();
+		char[] charHint = hint.toCharArray();
+		for(int index = 0; index < charHint.length; index++) {
+			keyValueArray[index] = charHint[index]; 
+		}
+		
 		// rootKey의 값이 24bytes가 안될 경우 모자란 bytes만큼 임의의 값을 대입
 		for(int i=0; i < 24 - hint.length(); i++){
 			keyValueArray[hint.length()+i] = addRootKey[i]; 
 		}
+		
 		// keyValueArray에 저장된 값을 keyValue의 값과 비교하여 일치하는 index값을 idx에 저장
 		for(int i=0; i<keyValueArray.length; i++){
 			for(int j=0; j<compareValue.length; j++){ 
 				if (keyValueArray[i] == compareValue[j]){
-					keyValue = compareValue[j] + keyValue;
+					int index = j % 24;
+					keyValue += addRootKey[index];
 					break;
 				} 
 			}
@@ -194,16 +200,16 @@ public class Encryption implements PasswordEncoder{
 	}
 
 	// AES 256 
-	private HashMap<String, Object> AES256Key(String hint) throws UnsupportedEncodingException {
+	private HashMap<String, Object> AES256Key(String keyValue) throws UnsupportedEncodingException {
 		String iv;
 		Key key;
 		HashMap<String, Object> mapAES = new HashMap<String, Object>();
 
-		iv = hint.substring(0, 16);
+		iv = keyValue.substring(0, 16);
 		mapAES.put("iv", iv);
 
 		byte[] keyBytes = new byte[16];
-		byte[] b = hint.getBytes("UTF-8");
+		byte[] b = keyValue.getBytes("UTF-8");
 		int len = b.length;
 		if (len > keyBytes.length) {
 			len = keyBytes.length;
