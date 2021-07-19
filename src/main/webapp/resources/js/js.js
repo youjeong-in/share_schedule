@@ -36,11 +36,10 @@ function isPasswordCheck(word){
 /* 유효성 검사 */
 function isValidateCheck(type, word){
 	let result;
-	const codeComp = /^[a-zA-Z]{1}[0-9a-zA-Z]{7,11}$/g;
+	const codeComp = /^[a-zA-Z]{1}[0-9a-zA-Z]{5,11}$/g;
 	const pwdComp1 = /[a-z]/g;
-	const pwdComp2 = /[A-Z]/g;
-	const pwdComp3 = /[0-9]/g;
-	const pwdComp4 = /[!@#$%^&*]/g;
+	const pwdComp2 = /[0-9]/g;
+	const pwdComp3 = /[!@#$%^&*]/g;
 	
 	if(type == 1){
 		result = codeComp.test(word); 
@@ -49,7 +48,6 @@ function isValidateCheck(type, word){
 		count += pwdComp1.test(word)?1:0;
 		count += pwdComp2.test(word)?1:0;
 		count += pwdComp3.test(word)?1:0;
-		count += pwdComp4.test(word)?1:0;
 		
 		result = (count >= 3)? true:false;
 	}

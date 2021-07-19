@@ -17,23 +17,25 @@ public class AuthDAO{
 	@Autowired //이미싱글톤으로 올라와있는 녀석을 연결한것이다!
 	SqlSessionTemplate sqlSession;
 	
+	
+	//암호화된 비밀번호 가져오기
+	String getEncPwd(AccessInfo ai) {
+		return sqlSession.selectOne("getEncPwd", ai);
+	}
 
+	//아이디 유무 중복체크를 위한
 	boolean isUserId(AccessInfo ai) {
 		return this.convert(sqlSession.selectOne("isUserId" , ai));
 	
 	}
-
-	
-	boolean isAccess(AccessInfo ai) {
-		return  this.convert(sqlSession.selectOne("isAccess" , ai));
-
-	}
-
-	
+	//로그인 기록 insert됐는지
 	boolean insHistory(AccessInfo ai) {
 		return this.convert(sqlSession.insert("insHistory", ai));
 	}
 
+	boolean isAccess(AccessInfo ai) {
+		return this.convert(sqlSession.selectOne("isAccess", ai));
+	}
 	
 	boolean insMember(UserBeans ub) {
 		return this.convert(sqlSession.insert("insMember", ub));

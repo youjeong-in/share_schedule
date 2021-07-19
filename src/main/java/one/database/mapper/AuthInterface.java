@@ -10,7 +10,9 @@ import one.services.beans.UserBeans;
 @Component
 public interface AuthInterface {
 	
-	boolean isUserId(AccessInfo ai);
+	
+	int getEncPwd(AccessInfo ai); 
+	boolean isUserId(AccessInfo ai); //for 중복체크
 	boolean isAccess(AccessInfo ai);
 	boolean insHistory(AccessInfo ai);
 	boolean insMember(UserBeans ub);

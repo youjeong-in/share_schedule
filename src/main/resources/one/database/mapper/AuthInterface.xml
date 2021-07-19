@@ -8,9 +8,14 @@
 	<select id="isUserId" resultType="int" parameterType="one.services.beans.AccessInfo">
 		SELECT COUNT(*) FROM MS WHERE MS_USERID=#{userId}
 	</select>
-
+	
+	<!-- 로그인 method 갯수확인  -->
 	<select id="isAccess" resultType="int" parameterType="one.services.beans.AccessInfo">
-		SELECT COUNT(*)  FROM MS WHERE MS_USERID=#{userId} AND MS_USERPASS=#{userPass}
+		SELECT SUM(AH_METHOD) FROM AH WHERE AH_MBID= #{userId}
+	</select>
+	
+	<select id="getEncPwd" resultType="string" parameterType="one.services.beans.AccessInfo">
+		SELECT MS_USERPASS  FROM MS WHERE MS_USERID=#{userId}
 	</select>
 	
 	<select id="getUserInfo" resultType= "one.services.beans.UserBeans" parameterType="one.services.beans.AccessInfo">
@@ -29,6 +34,6 @@
 
 	<insert id="insMember" parameterType="one.services.beans.UserBeans">
  		INSERT INTO MS(MS_USERID,MS_USERPASS,MS_USERNAME,MS_USERPHONE,MS_USERMAIL)
- 		VALUES (#{userId},#{userPass},#{userName},#{userPhone},#{userMail}||#{mailAdd})
+ 		VALUES (#{userId},#{userPass},#{userName},#{userPhone},#{userMail})
 	</insert>
 </mapper>

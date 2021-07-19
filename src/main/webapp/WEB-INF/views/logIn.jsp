@@ -22,8 +22,6 @@
 
 <body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
 
-<a href="https://api.ipify.org?format=jsonp&callback=getIP" >ip조회</a>
-
 <div id="main">
 <div id="bigBox">
 <div id="logo">ONE

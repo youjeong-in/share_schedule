@@ -23,12 +23,13 @@
 		<beans:property name="suffix" value=".jsp" />
 		
 	</beans:bean>
-	<!-- Gson등록 -->
+	<!-- Gson을 single-ton으로 등록 -->
 	<beans:bean class="com.google.gson.Gson"></beans:bean>
 	
 	
 	
 	<context:component-scan base-package="one.schedule.project" />
+	<context:component-scan base-package="one.schedule.util" />
 	<context:component-scan base-package="one.services.auth" />
 	<mybatis-spring:scan base-package="one.database.mapper"/>
 	

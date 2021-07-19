@@ -18,7 +18,7 @@
 		const userId = document.getElementsByName("userId")[0];
 
 		if (obj.value != "재입력") {
-			if (charCount(userId.value, 8, 12)) {
+			if (charCount(userId.value, 6, 12)) {
 				if (!isValidateCheck(1, userId.value)) { //패턴에 합하지않는다면,
 					alert("아이디형식이 맞지않습니다.");
 					userId.value = "";
@@ -43,7 +43,7 @@
 
 	$(document).ready(function() {
 		$("#idBox").blur(function() {
-			var idBox = $('#idBox').value();
+			var idBox = $('#idBox').val();
 			postAjax("idDup", "userId=" + idBox, "afterDup");
 		});
 	});
@@ -57,7 +57,7 @@
 
 		if (isValidateCheck(1, idBox)) {
 			idBox.style.border = "1px solid #FF4646";
-			dupId.innerText = "숫자와 영문 대소문자 8~12자리로 입력해주세요.";
+			dupId.innerText = "숫자와 영문 대소문자 6~12자리로 입력해주세요.";
 			dupId.style.color = "#FF4646";
 			idBox.value = "";
 			idBox.focus();
@@ -145,7 +145,7 @@
 
 			<div class="name">
 				<div>
-					<input type="text" id=name " class="box" name="userName"
+					<input type="text" id="name" class="box" name="userName"
 						placeholder="이름">
 				</div>
 			</div>

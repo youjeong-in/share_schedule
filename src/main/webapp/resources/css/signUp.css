@@ -95,11 +95,11 @@ body{
 
 
 #name{
-	width:200px;
+	width:300px;
 	height:10px;
 	padding:15px;
 	float:left;
-	margin-left:10px;
+	margin-left:30px;
 }
 #passBox2{
 	margin-bottom:20px;
@@ -123,7 +123,7 @@ body{
 	width:35px;
 	padding:2px;
 	margin-left:35px;
-	margin-top: 13px;
+	margin-top: 58px;
 	position:absolute;
 	z-index:1;
 	
