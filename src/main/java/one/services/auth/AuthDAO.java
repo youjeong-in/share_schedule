@@ -46,6 +46,13 @@ public class AuthDAO{
 		return sqlSession.selectList("getUserInfo", ai);
 	}
 	
+	boolean checkBrowser(AccessInfo ai) {
+		int result = sqlSession.selectOne("checkBrowser", ai);
+		
+		return this.convert(sqlSession.selectOne("checkBrowser", ai));//true는 1이상- 로그인기록있음 
+
+	}
+	
 
 
 	//컨버트

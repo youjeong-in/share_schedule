@@ -17,4 +17,5 @@ public interface AuthInterface {
 	boolean insHistory(AccessInfo ai);
 	boolean insMember(UserBeans ub);
 	List<UserBeans> getUserInfo(AccessInfo ai);
+	int checkBrowser(AccessInfo ai); 
 }

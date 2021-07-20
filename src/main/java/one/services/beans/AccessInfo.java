@@ -14,4 +14,5 @@ public class AccessInfo {
 	private int method; // 1은 로그인 , -1 로그아웃
 	private String publicIp;
 	private String privateIp;
+	private String browser;
 }

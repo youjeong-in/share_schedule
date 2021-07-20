@@ -26,10 +26,20 @@
  		FROM MS WHERE MS_USERID=#{userId}
 	</select>
 	
+	<select id="checkBrowser" parameterType="one.services.beans.AccessInfo" resultType="int">
+		 SELECT NVL(SUM(AH_METHOD),0) FROM AH WHERE AH_MBID= #{userId} AND AH_BROWSER= #{browser}
+	</select>
+	
+	<insert id="forceLogOut" parameterType="one.services.beans.AccessInfo">
+		INSERT INTO AH(AH_MBID, AH_DATE, AH_PUBLICIP,AH_PRIVATEIP,AH_BROWSER)
+		SELECT AH_MBID, SYSDATE, -1, AH_PUBLICIP, AH_PRIVATEIP, AH_BROWSER FROM AH
+		WHERE AH_DATE = (SELECT MAX(AH_DATE)FROM AH WHERE AH_MBID = #{userId})
+	</insert>
+	
 	
 	<insert id="insHistory" parameterType="one.services.beans.AccessInfo">
- 		INSERT INTO AH(AH_MBID,AH_DATE,AH_METHOD,AH_PUBLICIP,AH_PRIVATEIP) 
- 		VALUES(#{userId},default,#{method},#{publicIp},#{privateIp})
+ 		INSERT INTO AH(AH_MBID,AH_DATE,AH_METHOD,AH_PUBLICIP,AH_PRIVATEIP,AH_BROWSER) 
+ 		VALUES(#{userId},default,#{method},#{publicIp},#{privateIp},#{browser})
 	</insert>
 
 	<insert id="insMember" parameterType="one.services.beans.UserBeans">

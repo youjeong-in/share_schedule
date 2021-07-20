@@ -3,6 +3,7 @@
  */
 let publicIp;
 
+
 function isIdCheck(word){ //소문자 숫자 특수문자 중 2가지 사용
 	const sEng = /[a-z]/;
 	const num = /[0-9]/;
@@ -123,13 +124,26 @@ function enterId(){
 }
 //enter누르면 로그인이됨
 function enterPwd(){
+		const browser = navigator.userAgent.toLowerCase();
+	let result = "";
+	
+	if(browser.lastIndexOf('edg')>-1){
+		result = 'edge';
+	}else if(browser.lastIndexOf('whale')>-1){
+		result = 'whale';
+	}else if(browser.indexOf('chrome')>-1){
+		result = 'chrome';
+	}else{
+		result = 'any';
+	}
 	
 	const id = document.getElementsByName("userId")[0];
 	const pwd =document.getElementsByName("userPass")[0];
 	let method = makeInput("hidden" , "method" , 1);
 	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
 	let privateIp = makeInput("hidden", "privateIp" , location.host);
-
+	const brow = makeInput("hidden", "browser", result);
+	
 	if(window.event.keyCode==13){
 
 	let form = makeForm("Access","post");
@@ -140,6 +154,7 @@ function enterPwd(){
 	form.appendChild(method);
 	form.appendChild(pubIp);
 	form.appendChild(privateIp);
+	form.appendChild(brow);
 	
 	document.body.appendChild(form);
 	form.submit();
@@ -152,12 +167,29 @@ function logInInfo(){
 	//alert(publicIp); //publicIp
 	//alert(location.host); //privateIp
 	
+	const browser = navigator.userAgent.toLowerCase();
+	let result = "";
+	
+	if(browser.lastIndexOf('edg')>-1){
+		result = 'edge';
+	}else if(browser.lastIndexOf('whale')>-1){
+		result = 'whale';
+	}else if(browser.indexOf('chrome')>-1){
+		result = 'chrome';
+	}else{
+		result = 'any';
+	}
+
+	alert(browser);
 	const id = document.getElementsByName("userId")[0];
 	const pwd =document.getElementsByName("userPass")[0];
 	let method = makeInput("hidden" , "method" , 1);
 	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
 	let privateIp = makeInput("hidden", "privateIp" , location.host);
+	const brow = makeInput("hidden", "browser", result);
 
+
+	
 	let form = makeForm("Access","post");
 	
 	form.appendChild(id);
@@ -165,11 +197,15 @@ function logInInfo(){
 	form.appendChild(method);
 	form.appendChild(pubIp);
 	form.appendChild(privateIp);
+	form.appendChild(brow);
+	
 	
 	document.body.appendChild(form);
 	form.submit();
 	
 }
+
+
 //회원가입 
 function joinInfo(){
 	

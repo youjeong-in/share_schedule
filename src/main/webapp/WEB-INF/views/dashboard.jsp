@@ -15,6 +15,7 @@ function logOut(){
 	let method = makeInput("hidden" , "method" , -1);
 	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
 	let privateIp = makeInput("hidden", "privateIp" , location.host);
+	let brow = document.getElementsByName("browser")[0];
 
 	if(confirm("로그아웃하시겠습니까?")){
 		
@@ -24,6 +25,8 @@ function logOut(){
 		form.appendChild(method);
 		form.appendChild(pubIp);
 		form.appendChild(privateIp);
+		form.appendChild(brow);
+		
 		
 		document.body.appendChild(form);
 		form.submit();
@@ -37,7 +40,7 @@ function logOut(){
 </head>
 <body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
 	<input type="hidden" value="${userId }" name="userId" />
-	<input type="hidden" value="${publicIp }" name="publicIp" />
+	<input type="hidden" value="${browser }" name="browser" />
 	<!--addObject로 가져온 녀석들 -->
 
 	<div>환영합니다.${uName }님의 페이지입니다.</div>
