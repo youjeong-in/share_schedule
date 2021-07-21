@@ -40,37 +40,22 @@ public class HomeController {
 	ModelAndView mav =null;
 
 	@RequestMapping(value = {"/","/logIn"}, method = {RequestMethod.GET,RequestMethod.POST})//get,post 둘다사용경우
-	public ModelAndView logInForm() {
-		mav = new ModelAndView();
+	public ModelAndView logInForm(AccessInfo ai) {
 		
-		try {
-			if(pu.getAttribute("userId") != null) { //Session이 생성되어있는 경우
-				mav.setViewName("dashboard");
-				mav.addObject("userId" , enc.aesEncode((String)pu.getAttribute("userId"), "innew"));
-				mav.addObject("uName", enc.aesDecode((String)pu.getAttribute("uName"),(String) pu.getAttribute("userId")));
-				
-				
-			}else {
-				mav.setViewName("logIn");}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		return mav;
+		return auth.rootCtl(ai);
 	}
 
 	@GetMapping("/signUpForm") //get방식 a태그 눌렀을때 오는 잡코드
 	//@RequestMapping(value = "/signUp", method = RequestMethod.GET)
-	public String signUpForm() {
-		return "signUp";
+	public ModelAndView signUpForm() {
+		return auth.joinForm();
 	}
 
 
 	@PostMapping("/Access") //post방식
 	//@RequestParam("userId") String uId
 	public ModelAndView logIn(@ModelAttribute AccessInfo ai){ //한가지로 여러개를 불러올수있음
+		
 		mav=auth.logInCtl(ai);
 		return mav;
 

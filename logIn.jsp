@@ -16,13 +16,13 @@
 		alert(message);
 	}
 </script>
+
+
 <title>로그인</title>
 </head>
 <!-- <body onLoad="message('${message }')"> -->
 
 <body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
-
-<a href="https://api.ipify.org?format=jsonp&callback=getIP" >ip조회</a>
 
 <div id="main">
 <div id="bigBox">
@@ -40,6 +40,7 @@
 <div><div id="signUp"><a href="signUpForm" style="text-decoration:none; color:#5191ce;">회원가입</a>
 <input type="button" class="button" name="next" value="다음" onClick="sendUserId()">
 <input type="button" id="button2" class="button" name="subMit" value="로그인" onClick="logInInfo()" style="display:none;">
+
 
 </div></div>
 
