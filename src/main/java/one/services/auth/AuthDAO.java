@@ -32,11 +32,22 @@ public class AuthDAO{
 	boolean insHistory(AccessInfo ai) {
 		return this.convert(sqlSession.insert("insHistory", ai));
 	}
-
+	
+	//아이디의 로그인 상태확인 
 	boolean isAccess(AccessInfo ai) {
 		return this.convert(sqlSession.selectOne("isAccess", ai));
 	}
 	
+	//최근의 로그인 접속을 강제 -1넣어줌
+	boolean forceLogOut(AccessInfo ai) {
+		return this.convert(sqlSession.insert("forceLogOut", ai));
+	}
+	
+	//다시 접속했을때(첫번째 브라우저에서의 로그인) 로그인 상태확인
+	boolean isCurrentAccess(AccessInfo ai) {
+		return this.convert(sqlSession.selectOne("isCurrentAccess", ai));
+	}
+	//회원가입
 	boolean insMember(UserBeans ub) {
 		return this.convert(sqlSession.insert("insMember", ub));
 			

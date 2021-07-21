@@ -40,9 +40,9 @@ public class HomeController {
 	ModelAndView mav =null;
 
 	@RequestMapping(value = {"/","/logIn"}, method = {RequestMethod.GET,RequestMethod.POST})//get,post 둘다사용경우
-	public ModelAndView logInForm() {
+	public ModelAndView logInForm(AccessInfo ai) {
 		
-		return auth.rootCtl();
+		return auth.rootCtl(ai);
 	}
 
 	@GetMapping("/signUpForm") //get방식 a태그 눌렀을때 오는 잡코드

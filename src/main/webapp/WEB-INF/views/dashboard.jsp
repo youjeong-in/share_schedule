@@ -9,13 +9,25 @@
 <title>메인페이지</title>
 <script>
 function logOut(){
+	const browser = navigator.userAgent.toLowerCase();
+	let result = "";
+	
+	if(browser.lastIndexOf('edg')>-1){
+		result = 'edge';
+	}else if(browser.lastIndexOf('whale')>-1){
+		result = 'whale';
+	}else if(browser.indexOf('chrome')>-1){
+		result = 'chrome';
+	}else{
+		result = 'any';
+	}
 	
 	let userId = document.getElementsByName("userId")[0];
 	//let pubIp = document.getElementsByName("publicIp")[0];
 	let method = makeInput("hidden" , "method" , -1);
 	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
 	let privateIp = makeInput("hidden", "privateIp" , location.host);
-	let brow = document.getElementsByName("browser")[0];
+	const brow = makeInput("hidden", "browser", result);
 
 	if(confirm("로그아웃하시겠습니까?")){
 		

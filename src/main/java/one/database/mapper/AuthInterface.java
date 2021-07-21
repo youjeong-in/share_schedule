@@ -18,4 +18,6 @@ public interface AuthInterface {
 	boolean insMember(UserBeans ub);
 	List<UserBeans> getUserInfo(AccessInfo ai);
 	int checkBrowser(AccessInfo ai); 
+	boolean isCurrentAccess(AccessInfo ai);
+	boolean forceLogOut(AccessInfo ai);
 }
