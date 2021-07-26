@@ -82,6 +82,26 @@ public class HomeController {
 
 		return mav;
 	}
+	
+	@GetMapping("/scheduleManage")
+	public String scheduleManage () {
+		
+		return "scheduleManage";
+	}
+	
+	@GetMapping("/teamManage")
+	public String teamManage () {
+		
+		return "teamManage";
+	}
+	
+	@GetMapping("/back")
+	public String dashboard() {
+		return "dashboard";
+	}
+	
+
+	
 
 }
 

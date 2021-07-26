@@ -55,9 +55,12 @@ function logOut(){
 	<input type="hidden" value="${browser }" name="browser" />
 	<!--addObject로 가져온 녀석들 -->
 
-	<div>환영합니다.${uName }님의 페이지입니다.</div>
+	<div id="title">환영합니다.<br>${uName }님의 페이지입니다.</div>
 	
 
 	<div name="logOut" class="button" onClick="logOut()">로그아웃</div>
+	
+	<div name="teamManage" class="teambutton" onClick="" ><a href ="scheduleManage">스케줄 관리</a></div>
+	<div name="schedule" class="teambutton" onClick=""><a href="teamManage" >팀관리</a></div>
 </body>
 </html>

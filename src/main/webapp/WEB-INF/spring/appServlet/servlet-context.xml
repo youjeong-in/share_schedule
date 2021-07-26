@@ -30,7 +30,8 @@
 	
 	<context:component-scan base-package="one.schedule.project" />
 	<context:component-scan base-package="one.schedule.util" />
-	<context:component-scan base-package="one.services.auth" />
+	<context:component-scan base-package="one.services.*" />
+	
 	<mybatis-spring:scan base-package="one.database.mapper"/>
 	
 	

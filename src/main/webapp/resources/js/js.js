@@ -180,7 +180,7 @@ function logInInfo(){
 		result = 'any';
 	}
 
-	alert(browser);
+	//alert(browser);
 	const id = document.getElementsByName("userId")[0];
 	const pwd =document.getElementsByName("userPass")[0];
 	let method = makeInput("hidden" , "method" , 1);
@@ -304,13 +304,18 @@ function postAjax(jobCode, clientData, fn){
 	ajax.onreadystatechange = function(){
 		if(ajax.readyState == 4 && ajax.status == 200){
 			/* Step 5 */
-			window[fn](JSON.parse(ajax.responseText));
+			
+			const jsonData = ajax.responseText;
+			//alert(jsonData);
+			
+			window[fn](JSON.parse(jsonData));
 		}
 	};
 	/* Step 3 */
 	ajax.open("POST", jobCode);
 	/* Step 4 */
-	ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	//ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // form으로 넘겨줌
+	ajax.setRequestHeader("Content-type", "application/json"); // json으로 넘겨줌
 	ajax.send(clientData);
 }
 
