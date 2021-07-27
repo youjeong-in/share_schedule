@@ -296,7 +296,7 @@ function getAjax(jobCode, clientData, fn){
 	
 }
 
-function postAjax(jobCode, clientData, fn){
+function postAjax(jobCode, clientData, fn, header){
 	/* Step 1*/
 	let ajax = new XMLHttpRequest();
 		
@@ -315,7 +315,8 @@ function postAjax(jobCode, clientData, fn){
 	ajax.open("POST", jobCode);
 	/* Step 4 */
 	//ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // form으로 넘겨줌
-	ajax.setRequestHeader("Content-type", "application/json"); // json으로 넘겨줌
+	//"application/json"
+	ajax.setRequestHeader("Content-type", header); // json으로 넘겨줌
 	ajax.send(clientData);
 }
 

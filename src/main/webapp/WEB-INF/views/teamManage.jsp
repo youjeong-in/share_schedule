@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +11,11 @@
 <script src = "resources/js/js.js"></script>
 <script type="text/javascript">
 
-	function callTeamList(){
+	function callTeamList(userId){
 		let sendJsonData =[];
-		sendJsonData.push({msId:"dlsdbwjd92"});
+		sendJsonData.push({msId:userId});
 		let clientData = JSON.stringify(sendJsonData);
-		postAjax('/schedule/teamList', clientData,'getTeamList');
+		postAjax('/schedule/teamList', clientData,'getTeamList' , 'application/json');
 		
 	}
 	function getTeamList(jsonData){
@@ -35,21 +35,22 @@
 		let sendJsonData =[];
 		sendJsonData.push({tname:teamName});
 		let clientData = JSON.stringify(sendJsonData);
-		alert(clientData);
 		
-		postAjax('/schedule/addTeam', clientData, 'getTeamList');
+		
+		postAjax('/schedule/addTeam', clientData, 'getTeamList', 'application/json');
 	}
 	
 	function getMemberList(tcode){
 		let sendJsonData =[];
 		sendJsonData.push({tcode:tcode});
 		let clientData = JSON.stringify(sendJsonData);
-		postAjax("/schedule/memberList", clientData, "getMember");
+		postAjax('/schedule/memberList', clientData, 'getMember', 'application/json');
 	}
 	
 	function getMember(jsonData){
-		let member = document.getElementById("memberList");
-		let memberList = "<div>[멤버리스트(" + jsonData.length + ")]<div onClick='addMember()'> +멤버추가</div><br><br></div>";
+		let member = document.getElementById("memberList"); 
+		let memberList = "<div>[멤버리스트(" + jsonData.length + ")]<div onClick=\"addMember(\'" + '${userId}' + "\')\"> + 멤버추가 </div><br><br></div>";
+		
 		
 	
 		for(i = 0; i < jsonData.length; i++){
@@ -58,6 +59,36 @@
 		
 		member.innerHTML = memberList;
 		
+	}
+	
+	function addMember(id){
+		let sendJsonData =[];
+		sendJsonData.push({msId:id});
+		let clientData = JSON.stringify(sendJsonData);
+		
+		postAjax('/schedule/friendsList' , clientData, 'friendsList', 'application/json');
+	}
+	
+	function friendsList(jsonData){
+		let popup = document.getElementById("popup");
+		
+		let friend = document.getElementById("friendList");
+		let fList = "<div>[친구 리스트(" + jsonData.length + ")]<div><br><br>";
+		
+		for(i=0; i<jsonData.length; i++){
+			fList += "<div>" + jsonData[i].msId + " - " + jsonData[i].msName + "</div>";
+		}
+		
+		friend.innerHTML = fList;
+	
+		popup.style.display = "block";
+		
+	}
+	
+	function closePopup(){
+		let popup = document.getElementById("popup");
+		
+		popup.style.display = "none";
 	}
 	
 	function backMain(){
@@ -72,7 +103,7 @@
 <title>Team Manage</title>
 </head>
 
-<body onLoad="callTeamList()">
+<body onLoad="callTeamList('${userId}')">
 <div id ="header">
 <div id="logo" onClick="backMain()"> O N E </div>
 	<div id="inb">
@@ -90,7 +121,10 @@
 	
 	<div id = "memberList"></div></div>
 	
+	<div id = "popup" onClick="closePopup()">
+	<div id = "friendList"></div></div>
+	
 	</div>
-
+	
 </body>
 </html>

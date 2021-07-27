@@ -27,7 +27,7 @@
 				}
 
 				//ajax true면 사용가능
-				postAjax("isDup", "userId=" + userId.value, "afterDup");
+				postAjax("isDup", "userId=" + userId.value, "afterDup", 'application/x-www-form-urlencoded');
 			} else {
 				alert("아이디의 길이는 8~12이내 입니다.");
 				userId.focus();

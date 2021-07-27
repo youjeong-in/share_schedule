@@ -45,6 +45,12 @@ public class RestAPIController {
 		
 	}
 	
+	@PostMapping("/friendsList")
+	public List<TDetailBean> friendsList (@RequestBody List<TDetailBean> list){
+		
+		return fr.getFriends(list.get(0));
+	}
+	
 	
 	
 }

@@ -13,5 +13,6 @@ public interface FriendsInterface {
 	public boolean insTeam(TeamBean tb);
 	public String getNewCode();
 	public boolean insMb(TeamBean tb);
+	public List<TDetailBean> getFriends(TDetailBean tdb);
 
 }
