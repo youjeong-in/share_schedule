@@ -7,6 +7,9 @@ public class TDetailBean {
 	
 	private String tCode;
 	private String msId;
-	private String msType; 
+	private String frId;
+	private String msName;
+	private String cgType; 
+	private String cgName;
 
 }

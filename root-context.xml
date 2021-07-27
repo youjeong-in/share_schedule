@@ -2,37 +2,53 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
+
 	<!-- singleton으로 HikariCP올리기 -->
-	
+
 	<bean id="HikariCP" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name ="jdbcUrl" value="jdbc:oracle:thin:@106.243.194.229:9999:xe"></property>
-		<property name = "username" value="INNEW"></property>
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@106.243.194.229:9999:xe"></property>
+		<property name="username" value="INNEW"></property>
 		<property name="password" value="1234"></property>
-	
+
 	</bean>
-	
+
 	<!-- Datasource 바라보기 -->
-	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-	 <constructor-arg ref="HikariCP"></constructor-arg>
+	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<constructor-arg ref="HikariCP"></constructor-arg>
 	</bean>
-	
+
 	<!-- mybatis dbcp연결 -->
-	<bean id="mybatisdb" class="org.mybatis.spring.SqlSessionFactoryBean">
-	<property name="dataSource" ref="datasource"></property>
-	<!--   <property name="configLocation"
-              value="classpath:/mybatis-config.xml" /> -->
+	<bean id="mybatisdb"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource"></property>
+
+		<!-- <property name="configLocation" value="classpath:/mybatis-config.xml" 
+			/> -->
 	</bean>
-	
+
 	<!-- 자동 open ,close하려고 사용 -->
 	<bean id="dbSession" class="org.mybatis.spring.SqlSessionTemplate">
-	 <constructor-arg name ="sqlSessionFactory" ref="mybatisdb" />
+		<constructor-arg name="sqlSessionFactory"
+			ref="mybatisdb" />
 	</bean>
-		
-	
+
+<!-- transaction을 처리해주려고 사용 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="datasource"/>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
 </beans>
