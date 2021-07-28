@@ -51,6 +51,16 @@ public class RestAPIController {
 		return fr.getFriends(list.get(0));
 	}
 	
+	@PostMapping("/sendMail")
+	public List<TDetailBean> sendMail (@RequestBody List<TeamBean> list){
+		
+		//System.out.println(list.get(0).getTdetails());
+		return fr.addMember(list.get(0));
+	}
+	
+	
+	
+	
 	
 	
 }

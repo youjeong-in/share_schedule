@@ -40,13 +40,19 @@
 	<!-- 내가 맺은 친구들 select -->
 	<select id="getFriends" parameterType="one.services.beans.TDetailBean" resultType="one.services.beans.TDetailBean">
 	
-	SELECT MSID , MSNAME
+	SELECT MSID , MSNAME 
 	FROM REQUESTFRIEND
 	WHERE FRID=#{msId} AND FR_ACCEPT='1'
 	UNION 
 	SELECT FRID,MSNAME
 	FROM RECEIVERFRIEND 
 	WHERE MSID=#{msId}  AND FR_ACCEPT='1'
+	</select>
+	
+	<!-- 이메일 가져오기 -->
+	<select id="getMail" parameterType="one.services.beans.TeamBean" resultType="string">
+		SELECT MS_USERMAIL AS EMAIL FROM MS WHERE MS_USERID= #{msId}
+	
 	</select>
 
 </mapper>

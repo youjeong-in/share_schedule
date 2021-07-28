@@ -91,24 +91,36 @@ a {
 	text-align: center;
 	width:300px;
 	height: 400px;
-	margin : 20px 100px;
+	margin : 45px 100px;
 	background :  #5191ce;
 }
 
-#friendList{
-  background-color :#fefefe;
-   margin:15% auto; padding:2px;
-   width:20%;
-   text-align:center;
-  
+	#friendList{
+	  background-color :#fefefe;
+	   margin:15% auto; padding:2px;
+	   width:20%;
+	   text-align:center;
+	  
+	}
+	
+	#popup{
+	   position:fixed; z-index:1; 
+	   left:0px; top:0px; width:100%; height:100%;
+	   overflow:auto;
+	   background-color:rgba(051,051,153,0.5);
+	   display:none;
+	   padding-bottom: 20px;
+	}
+
+#sendMail{
+	width:40%;
+	background:#FFD9EC;
+	margin-left:30%;
 }
 
-#popup{
-   position:fixed; z-index:1; 
-   left:0px; top:0px; width:100%; height:100%;
-   overflow:auto;
-   background-color:rgba(051,051,153,0.5);
-   display:none;
-   padding-bottom: 20px;
+#backspace{
+	margin-left:80%;
+	width:20%;
+	background:#FFD9EC;
+	font-size:15px;
 }
-

@@ -14,5 +14,6 @@ public interface FriendsInterface {
 	public String getNewCode();
 	public boolean insMb(TeamBean tb);
 	public List<TDetailBean> getFriends(TDetailBean tdb);
+	public String getMail(TeamBean tb);
 
 }

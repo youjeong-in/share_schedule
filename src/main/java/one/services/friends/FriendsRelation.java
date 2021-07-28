@@ -3,9 +3,14 @@ package one.services.friends;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -29,6 +34,9 @@ public class FriendsRelation implements FriendsInterface{
 	SqlSessionTemplate sqlSession;
 	@Autowired
 	DataSourceTransactionManager tx; 
+	
+	@Autowired
+	JavaMailSenderImpl javaMail;
 
 	private DefaultTransactionDefinition def; //isolation과 propagation을 위한
 	private TransactionStatus status;
@@ -84,7 +92,7 @@ public class FriendsRelation implements FriendsInterface{
 				if(this.insTeam(tb)) {
 					
 						tb.setMsId((String)pu.getAttribute("userId"));
-						tb.setTCode(this.getNewCode());
+						tb.setTCode(this.getNewCode());	
 						//tb.setTCode("210726001"); //커밋 테스트용
 						//TD 테이블에 추가
 						this.insMb(tb);
@@ -156,7 +164,8 @@ public class FriendsRelation implements FriendsInterface{
 				e.printStackTrace();
 			} 
 		}
-		
+	
+		//System.out.println(fList);
 		return fList;
 	}
 
@@ -180,6 +189,66 @@ public class FriendsRelation implements FriendsInterface{
 			tx.rollback(status);
 		}
 	}
+	
+	public String getMail(TeamBean tb) {
+		String mail;
+		
+		mail =sqlSession.selectOne("getMail", tb);
+		
+		return mail;
+	}
+
+
+	 public List<TDetailBean> addMember(TeamBean tb) {
+		 
+		 for(int id=0; id<tb.getTdetails().size(); id++) {
+			 tb.setMsId(tb.getTdetails().get(id).getMsId());
+		 }
+		 
+		 
+		 for(int i=0; i<tb.getTdetails().size(); i++) {
+			 tb.getTdetails().get(i).setEMail(this.getMail(tb));
+		 }
+	      
+//	      tb.getTdetails().get(0).setEMail(this.getMail(tb));
+//	      tb.getTdetails().get(1).setEMail(this.getMail(tb));
+	      this.friendsAuth(tb.getTdetails());
+	      
+	      
+	      tb.getTdetails().get(0).setTCode(tb.getTCode());
+	      
+	      return getMemberList(tb.getTdetails().get(0));
+	   }
+
+
+	 private void friendsAuth(List<TDetailBean> td) {//메일작성, 전송
+	      String subject = "Invitation";
+	      String contents = "팀원으로 초대하겠습니다람쥐";
+	      
+	      String from = "i_innew0731@naver.com";
+	      String[] to = new String[td.size()];
+	      for(int index=0; index<td.size(); index++) {
+	         to[index] = td.get(index).getEMail();
+	      }
+	   
+	      MimeMessage mail = javaMail.createMimeMessage();
+	      MimeMessageHelper helper = new MimeMessageHelper(mail, "UTF-8");
+	      
+	      
+	         try {
+	            helper.setFrom(from);
+	            helper.setTo(to);
+	            helper.setSubject(subject);
+	            helper.setText(contents);
+	            
+	            javaMail.send(mail);
+	         } catch (MessagingException e) {
+	   
+	            e.printStackTrace();
+	         }
+	          
+	   }
+
 
 	
 
