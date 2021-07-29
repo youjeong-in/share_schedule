@@ -2,6 +2,9 @@ package one.schedule.project;
 
 
 
+
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -21,7 +24,9 @@ import one.schedule.util.Encryption;
 import one.schedule.util.ProjectUtil;
 import one.services.auth.Authentication;
 import one.services.beans.AccessInfo;
+import one.services.beans.TeamBean;
 import one.services.beans.UserBeans;
+import one.services.friends.FriendsRelation;
 
 /**
  * Handles requests for the application home page.
@@ -36,6 +41,8 @@ public class HomeController {
 	ProjectUtil pu;
 	@Autowired
 	Encryption enc;
+	@Autowired 
+	FriendsRelation fr;
 
 	ModelAndView mav =null;
 
@@ -98,6 +105,24 @@ public class HomeController {
 	@GetMapping("/back")
 	public String dashboard() {
 		return "dashboard";
+	}
+	
+	
+	@GetMapping("/EmailAuth")
+	public ModelAndView emaiAuth(@ModelAttribute TeamBean list) {
+		mav = new ModelAndView();
+		mav.setViewName("emailAuth");
+		mav.addObject("tCode",list.getTCode());
+		mav.addObject("msId", list.getMsId());
+		
+		return mav;
+	}
+	
+	@PostMapping("/authConfirm")
+	public ModelAndView authConfirm(@ModelAttribute TeamBean list) {
+
+	
+		return fr.authConfirm(list);
 	}
 	
 

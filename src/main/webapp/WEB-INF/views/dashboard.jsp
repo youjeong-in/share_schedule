@@ -46,8 +46,31 @@ function logOut(){
 	}else{
 		
 	}
-
 }
+
+function addFriend(){
+	let popup = document.getElementById("pop");
+	let back = document.getElementById("background");
+
+	popup.style.display = "block";
+	back.style.display="block";
+}
+
+function searchBtn(){
+	let word = document.getElementsByName("word")[0];
+	
+	let sendJsonData =[];
+	sendJsonData.push({word:word.value});
+	let clientData = JSON.stringify(sendJsonData);
+	
+	alert(clientData);
+	postAjax('/schedule/search', clientData ,'searchResult' , 'application/json');
+}
+
+function searchResult(jsonData){
+	alert(jsonData);
+}
+
 </script>
 </head>
 <body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
@@ -57,7 +80,14 @@ function logOut(){
 
 	<div id="title">환영합니다.<br>${uName }님의 페이지입니다.</div>
 	
-
+	<div name="addFriend" class="button" onClick="addFriend()">친구추가</div>
+	
+	<div class="background" id="background" style="display:none">
+	<div id="pop" class="pop" style="display:none">
+	<input type="text" name="word" id="text" placeholder="친구의 이름을 입력하세요.">
+	<div name="searchbtn" class="sbtn" onClick="searchBtn()">검색</div>
+	</div>
+	</div>
 	<div name="logOut" class="button" onClick="logOut()">로그아웃</div>
 	
 	<div name="teamManage" class="teambutton" onClick="" ><a href ="scheduleManage">스케줄 관리</a></div>

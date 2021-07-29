@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import one.services.beans.SearchBean;
 import one.services.beans.TDetailBean;
 import one.services.beans.TeamBean;
 import one.services.friends.FriendsRelation;
@@ -56,6 +59,12 @@ public class RestAPIController {
 		
 		//System.out.println(list.get(0).getTdetails());
 		return fr.addMember(list.get(0));
+	}
+	
+	@PostMapping("/search")
+	public List<SearchBean> search (@RequestBody List<SearchBean> sb){
+		System.out.println(sb.get(0).getWord());
+		return fr.word(sb.get(0));
 	}
 	
 	

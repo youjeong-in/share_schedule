@@ -83,7 +83,7 @@
 			fList += "<div><input type='checkbox' name='tdetails' value='"+jsonData[i].msId+"'>" + jsonData[i].msId + " - " + jsonData[i].msName + "</div>";
 		}
 		
-		fList+= "<br><div id='sendMail' onClick='checkFList()'>메일전송"
+		fList+= "<br><div id='sendMail' onClick='checkFList()'>메일전송</div>";
 		friend.innerHTML = fList;
 		popup.style.display = "block";
 		
@@ -147,7 +147,7 @@
 	
 	<div id = "memberList"></div></div>
 	
-	<div id = "popup"  >
+	<div id = "popup">
 	<div id = "friendList"></div></div>
 	
 	</div>

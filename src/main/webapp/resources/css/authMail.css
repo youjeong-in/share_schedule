@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+body{
+   background-color:#f0ebf0;
+      
+}
+
+.button{
+	width:500px;
+	height:48px;
+	background-color:#5191ce;
+	border:1px solid #f0ebf0;
+	border-radius:5px;
+	margin-top:50px;
+	margin-right:500px;
+	float:right;
+	color:#f0ebf0;
+	cursor:pointer;
+	text-align:center;
+	letter-spacing:3px;
+	font-size: 26px;
+	text-decoration:none;
+}

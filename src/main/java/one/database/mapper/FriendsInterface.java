@@ -2,8 +2,10 @@ package one.database.mapper;
 
 import java.util.List;
 
+import one.services.beans.SearchBean;
 import one.services.beans.TDetailBean;
 import one.services.beans.TeamBean;
+import one.services.beans.UserBeans;
 
 public interface FriendsInterface {
 	
@@ -13,7 +15,11 @@ public interface FriendsInterface {
 	public boolean insTeam(TeamBean tb);
 	public String getNewCode();
 	public boolean insMb(TeamBean tb);
-	public List<TDetailBean> getFriends(TDetailBean tdb);
+	public List<TDetailBean> getFriends(TDetailBean td);
 	public String getMail(TeamBean tb);
+	public boolean insGeneral(TeamBean tb);
+	public List<SearchBean> word(SearchBean sb);
+	public List<SearchBean> allmember();
 
 }
+

@@ -13,6 +13,7 @@ public class TDetailBean {
 	private String msName;
 	private String cgType; 
 	private String cgName;
-	private String eMail;
+	private String email;
+
 	
 }
