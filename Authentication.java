@@ -226,4 +226,40 @@ public class Authentication{
 		return mav;
 	}
 
+	//Link 타고 인증타고 들어왔을때, 로그인
+	public ModelAndView linkAccess(AccessInfo ai) {
+		boolean check=true;
+		mav = new ModelAndView();
+		String message = null;
+		String encPwd=null; //암호화된 비번
+		
+		if(check) {
+			encPwd = dao.getEncPwd(ai);
+			if(check = (encPwd!= null)){ //아이디가 있어서 암호화된 비번이 null이 아니고
+				if(check = enc.matches(ai.getUserPass(), encPwd)) { //암호화된 비번과 사용자가 보낸 비번이 일치하면
+					if(check = dao.insHistory(ai)) { //로그인 기록을 남겨졌으면
+						try {
+							pu.setAttribute("userId", ai.getUserId());//Session 생성! 
+							
+							mav.setViewName("certification");
+							mav.addObject("userId" , ai.getUserId()); //로그인할때 아이디 암호화
+							mav.addObject("uName" , enc.aesDecode(dao.getUserInfo(ai).get(0).getUserName(), ai.getUserId()));//복호화한 데이터를 setAttribute
+							mav.addObject("tCode",ai.getTCode());
+							mav.addObject("publicIp", ai.getPublicIp());
+							mav.addObject("privateIp", ai.getPrivateIp());
+							mav.addObject("browser", ai.getBrowser());
+							pu.setAttribute("uName", dao.getUserInfo(ai).get(0).getUserName());
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+						} 
+					}
+				}
+			}
+			message = (check)?"로그인 성공" : "로그인 정보를 확인해주세요";
+		}
+		
+		return mav;
+	}
+
 }

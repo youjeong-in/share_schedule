@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <script src = "resources/js/js.js"></script>
 <script type="text/javascript">
+      let teCode;
 
 	function callTeamList(userId){
 		let sendJsonData =[];
@@ -41,18 +42,21 @@
 	}
 	
 	function getMemberList(tcode){
+		
 		let sendJsonData =[];
 		sendJsonData.push({tcode:tcode});
 		let clientData = JSON.stringify(sendJsonData);
 		postAjax('/schedule/memberList', clientData, 'getMember', 'application/json');
+		
+		closePopup();
 	}
 	
 	function getMember(jsonData){
+		teCode = jsonData[0].tcode; //전역변수에 담아줌
+		
 		let member = document.getElementById("memberList"); 
-		let memberList = "<div>[멤버리스트(" + jsonData.length + ")]<div onClick=\"addMember(\'" + '${userId}' + "\')\"> + 멤버추가 </div><br><br></div>";
+		let memberList = "<div>[멤버리스트(" + jsonData.length + ")]<div onClick=\"addMember(\'" + '${userId}' +  "\')\"> + 멤버추가 </div><br><br></div>";
 		
-		
-	
 		for(i = 0; i < jsonData.length; i++){
 			memberList += "<div> " + jsonData[i].msId + " - "+ jsonData[i].msName + " (" +jsonData[i].cgName + ") </div>"; 
 		}
@@ -63,7 +67,7 @@
 	
 	function addMember(id){
 		let sendJsonData =[];
-		sendJsonData.push({msId:id});
+		sendJsonData.push({msId:id,tcode:teCode});
 		let clientData = JSON.stringify(sendJsonData);
 		
 		postAjax('/schedule/friendsList' , clientData, 'friendsList', 'application/json');
@@ -73,15 +77,40 @@
 		let popup = document.getElementById("popup");
 		
 		let friend = document.getElementById("friendList");
-		let fList = "<div>[친구 리스트(" + jsonData.length + ")]<div><br><br>";
+		let fList = "<div>[친구 리스트(" + jsonData.length + ")]<div><div id ='backspace' onClick='closePopup()'>뒤로가기</div><br><br>";
+	
 		
 		for(i=0; i<jsonData.length; i++){
-			fList += "<div>" + jsonData[i].msId + " - " + jsonData[i].msName + "</div>";
+			fList += "<div><input type='checkbox' name='tdetails' value='"+jsonData[i].msId+"'><input type='hidden' name='email' value='"+jsonData[i].email+"'>" + jsonData[i].msId + " - " + jsonData[i].msName + "</div>";
 		}
 		
+		fList+= "<br><div id='sendMail' onClick='checkFList()'>메일전송</div>";
 		friend.innerHTML = fList;
-	
 		popup.style.display = "block";
+		
+	}
+	
+	function checkFList(){
+		let sendJsonData =[];
+		let tdetails = [];
+		
+		let email = document.getElementsByName("email");
+		sendJsonData.push({tcode:teCode,tdetails});
+		
+		let values = document.getElementsByName("tdetails");
+	
+
+		for(i=0; i<values.length; i++){
+			if(values[i].checked){
+				tdetails.push({msId:values[i].value,email:email[i].value});
+				
+			}
+		}
+		let clientData = JSON.stringify(sendJsonData);
+		alert(clientData);
+		
+		postAjax('/schedule/sendMail' , clientData, 'getMemberList', 'application/json');
+		
 		
 	}
 	
@@ -121,7 +150,7 @@
 	
 	<div id = "memberList"></div></div>
 	
-	<div id = "popup" onClick="closePopup()">
+	<div id = "popup">
 	<div id = "friendList"></div></div>
 	
 	</div>
