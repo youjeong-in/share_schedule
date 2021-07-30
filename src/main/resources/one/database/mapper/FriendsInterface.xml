@@ -40,17 +40,17 @@
 	<!-- 내가 맺은 친구들 select -->
 	<select id="getFriends" parameterType="one.services.beans.TDetailBean" resultType="one.services.beans.TDetailBean">
 	
-	SELECT MSID , MSNAME 
+	SELECT MSID , MSNAME , EMAIL
 	FROM REQUESTFRIEND
 	WHERE FRID=#{msId} AND FR_ACCEPT='1'
 	UNION 
-	SELECT FRID,MSNAME
+	SELECT FRID,MSNAME, EMAIL
 	FROM RECEIVERFRIEND 
 	WHERE MSID=#{msId}  AND FR_ACCEPT='1'
 	</select>
 	
 	<!-- 이메일 가져오기 -->
-	<select id="getMail" parameterType="one.services.beans.TeamBean" resultType="string">
+	<select id="getMail" parameterType="one.services.beans.TDetailBean" resultType="string">
 		SELECT MS_USERMAIL AS EMAIL FROM MS WHERE MS_USERID= #{msId}
 	</select>
 	
@@ -60,13 +60,24 @@
 	
 	<!-- 총 멤버리스트 -->
 	<select id="allmember" resultType="one.services.beans.SearchBean">
-		SELECT MS_USERID AS USERID , MS_USERNAME AS USERNAME, MS_USERMAIL AS USERMAIL FROM MS
+		  SELECT MS_USERID AS USERID , MS_USERNAME AS USERNAME, MS_USERMAIL AS USERMAIL FROM MS
+		
 	</select>
 	
 	<!-- 친구 검색 -->
-	<select id="word" parameterType="one.services.beans.SearchBean" resultType="one.services.beans.TDetailBean">
+	<select id="search" parameterType="one.services.beans.SearchBean" resultType="one.services.beans.TDetailBean">
 		SELECT MS_USERID AS "MSID", MS_USERNAME AS "MSNAME", MS_USERMAIL AS "EMAIL" FROM MS
 		WHERE MS_USERNAME || MS_USERMAIL LIKE '%'|| #{word} ||'%'
 	</select>
+	
+	<!-- 있는 친구$ 친구신청  -->
+	<insert id= "askFr" parameterType="one.services.beans.SearchBean">
+		INSERT INTO FR VALUES (#{myId}, #{userId},'0')
+	</insert>
+	
+	<!-- 친구가 수락 -->
+	<update id="acceptFr" parameterType="one.services.beans.SearchBean">
+		UPDATE FR SET FR_ACCEPT = '0' WHERE FR_REQUEST= #{myId} AND FR_RECEIVER=#{userId}
+	</update>
 
 </mapper>

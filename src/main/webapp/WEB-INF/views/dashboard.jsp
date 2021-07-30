@@ -4,10 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="resources/css/signUp.css" rel="stylesheet" type="text/css" />
+<link href="resources/css/dashboard.css" rel="stylesheet" type="text/css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <script src="resources/js/js.js"></script>
 <title>메인페이지</title>
 <script>
+function message(${message}){
+	if(message!= ""){
+		alert(message);
+	}
+}
 function logOut(){
 	const browser = navigator.userAgent.toLowerCase();
 	let result = "";
@@ -63,34 +71,105 @@ function searchBtn(){
 	sendJsonData.push({word:word.value});
 	let clientData = JSON.stringify(sendJsonData);
 	
-	alert(clientData);
+	//alert(clientData);
 	postAjax('/schedule/search', clientData ,'searchResult' , 'application/json');
 }
 
 function searchResult(jsonData){
-	alert(jsonData);
+
+	let space = document.getElementById("space");
+	let spaceList = "";
+	
+	for(i=0; i<jsonData.length; i++){
+		spaceList += "<td id='td'><input type='checkbox' id='checkbox' name='invit' value='"+ jsonData[i].userId + "'/>" + "     "+ jsonData[i].userId + "     "+ jsonData[i].userName + "     "+  jsonData[i].userMail + "</td><br>";
+	}
+
+	spaceList += "<div id='sendMail'  onClick='askFr()'>친구신청</div>";
+	space.innerHTML = spaceList;
 }
+
+function askFr(){
+	let id = document.getElementsByName("invit");
+	
+	
+	let sendJsonData =[];
+
+	for(i=0; i<id.length; i++){
+		if(id[i].checked){
+			sendJsonData.push({userId:id[i].value});
+		}
+	}
+
+	let clientData = JSON.stringify(sendJsonData);
+	alert(clientData);
+	postAjax('/schedule/askFriend' , clientData, 'getFrienList', 'application/json');
+}
+
+ function getFrienList(){
+
+	 
+ }
+ 
+//사이트에 초대 
+ function newFriend(){
+ let friendMail = prompt('초대할 친구의 이메일을 입력하세요');
+	 
+	 let clientData = "to="+ friendMail;
+	 
+	 
+	 getAjax('/schedule/askMail', clientData, 'resultFriendMail');
+ }
+ 
+function resultFriendMail(data){
+	alert(data.message);
+}
+ 
+ 
+ function closePopup(){
+		let popup = document.getElementById("pop");
+		let back = document.getElementById("background");
+
+		popup.style.display = "none";
+		back.style.display="none";
+ }
 
 </script>
 </head>
 <body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
+<div id ="header">
+<div id="logo"> O N E </div>
+	<div id="inb">
+ 		<div id="title">${uName }님</div>
+ 		<div name="logOut" class="logoutbtn" onClick="logOut()">로그아웃</div>
+ 		<div name="addFriend" class="button" onClick="addFriend()">친구추가</div>
+ 	</div>
+ 
+</div>
+
 	<input type="hidden" value="${userId }" name="userId" />
 	<input type="hidden" value="${browser }" name="browser" />
 	<!--addObject로 가져온 녀석들 -->
 
-	<div id="title">환영합니다.<br>${uName }님의 페이지입니다.</div>
-	
-	<div name="addFriend" class="button" onClick="addFriend()">친구추가</div>
 	
 	<div class="background" id="background" style="display:none">
-	<div id="pop" class="pop" style="display:none">
-	<input type="text" name="word" id="text" placeholder="친구의 이름을 입력하세요.">
-	<div name="searchbtn" class="sbtn" onClick="searchBtn()">검색</div>
+		<div id="pop" class="pop" style="display:none">
+		<div id="poplogo"> O N E </div>
+			<input type="text" name="word" id="text" placeholder="친구의 이름을 입력하세요.">
+			<div id="searchbtn" class="sbutton" onClick="searchBtn()">검색
+			<div class='askbtn' onClick='newFriend()'>새친구 초대하기</div></div>
+			<table>
+			<tr><th>아이디</th><th>이름</th><th>이메일</th></tr>
+			<td id="space"></td>
+			</table>
+			
+			<div id ='backspace' onClick='closePopup()'>close</div>
+		</div>
 	</div>
-	</div>
-	<div name="logOut" class="button" onClick="logOut()">로그아웃</div>
 	
-	<div name="teamManage" class="teambutton" onClick="" ><a href ="scheduleManage">스케줄 관리</a></div>
-	<div name="schedule" class="teambutton" onClick=""><a href="teamManage" >팀관리</a></div>
+	<div id=buttonFrame>
+		<a href ="scheduleManage"><div name="teamManage" id=button class="schedulebutton" >스케줄 관리</div></a>
+		<a href="teamManage"><div name="schedule" id=button class="teambutton" >팀 관리</div></a>
+	</div>
+	
 </body>
 </html>

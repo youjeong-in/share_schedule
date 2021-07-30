@@ -16,10 +16,12 @@ public interface FriendsInterface {
 	public String getNewCode();
 	public boolean insMb(TeamBean tb);
 	public List<TDetailBean> getFriends(TDetailBean td);
-	public String getMail(TeamBean tb);
+	public String getMail(TDetailBean tdb);
 	public boolean insGeneral(TeamBean tb);
-	public List<SearchBean> word(SearchBean sb);
+	public List<SearchBean> search(SearchBean sb);
 	public List<SearchBean> allmember();
-
+	public boolean askFr(SearchBean sb);
+	public boolean acceptFr(SearchBean sb);
+	
 }
 

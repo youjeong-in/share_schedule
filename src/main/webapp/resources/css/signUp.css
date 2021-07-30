@@ -284,3 +284,16 @@ body{
 	
 }
 
+.searchHeader{
+	font-weight:bold;
+	font-size:15px;
+	color : #5191ce;
+	border:1px solid #000000;
+}
+
+#sendMail{
+	width:40%;
+	background:#5191ce;
+	color: #ffffff;
+	margin-left:30%;
+}

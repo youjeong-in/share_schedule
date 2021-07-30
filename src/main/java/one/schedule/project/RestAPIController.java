@@ -2,6 +2,7 @@ package one.schedule.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import one.services.beans.MailBean;
 import one.services.beans.SearchBean;
 import one.services.beans.TDetailBean;
 import one.services.beans.TeamBean;
@@ -57,14 +60,28 @@ public class RestAPIController {
 	@PostMapping("/sendMail")
 	public List<TDetailBean> sendMail (@RequestBody List<TeamBean> list){
 		
-		//System.out.println(list.get(0).getTdetails());
+		System.out.println(list.get(0).getTdetails());
 		return fr.addMember(list.get(0));
 	}
 	
 	@PostMapping("/search")
 	public List<SearchBean> search (@RequestBody List<SearchBean> sb){
-		System.out.println(sb.get(0).getWord());
-		return fr.word(sb.get(0));
+		//System.out.println(sb.get(0).getWord());
+		return fr.search(sb.get(0));
+	}
+	
+	//기존에 있던 친구에게 친구신청
+	@PostMapping("/askFriend")
+	public String askFriend (@RequestBody SearchBean list){
+		//System.out.println(list.get(0));
+		return fr.askFriend(list);
+	}
+	
+	//새친구 초대메일보내기
+	@GetMapping("/askMail")
+	public Map<String, String> askMail (@ModelAttribute MailBean mb){
+		//System.out.println(mb.getTo());
+		return fr.askMail(mb);
 	}
 	
 	

@@ -48,6 +48,7 @@
 		let clientData = JSON.stringify(sendJsonData);
 		postAjax('/schedule/memberList', clientData, 'getMember', 'application/json');
 		
+		closePopup();
 	}
 	
 	function getMember(jsonData){
@@ -80,7 +81,7 @@
 	
 		
 		for(i=0; i<jsonData.length; i++){
-			fList += "<div><input type='checkbox' name='tdetails' value='"+jsonData[i].msId+"'>" + jsonData[i].msId + " - " + jsonData[i].msName + "</div>";
+			fList += "<div><input type='checkbox' name='tdetails' value='"+jsonData[i].msId+"'><input type='hidden' name='email' value='"+jsonData[i].email+"'>" + jsonData[i].msId + " - " + jsonData[i].msName + "</div>";
 		}
 		
 		fList+= "<br><div id='sendMail' onClick='checkFList()'>메일전송</div>";
@@ -93,6 +94,7 @@
 		let sendJsonData =[];
 		let tdetails = [];
 		
+		let email = document.getElementsByName("email");
 		sendJsonData.push({tcode:teCode,tdetails});
 		
 		let values = document.getElementsByName("tdetails");
@@ -100,15 +102,16 @@
 
 		for(i=0; i<values.length; i++){
 			if(values[i].checked){
-				tdetails.push({msId:values[i].value});
+				tdetails.push({msId:values[i].value,email:email[i].value});
+				
 			}
 		}
-			
-		
 		let clientData = JSON.stringify(sendJsonData);
 		alert(clientData);
 		
 		postAjax('/schedule/sendMail' , clientData, 'getMemberList', 'application/json');
+		
+		
 	}
 	
 	function closePopup(){

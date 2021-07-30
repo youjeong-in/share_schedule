@@ -14,6 +14,7 @@ public class TeamBean {
 	private String tName;
 	private String msId;
 	private String email;
+	private String myId;
 	private List<TDetailBean> tdetails;
 	
 	

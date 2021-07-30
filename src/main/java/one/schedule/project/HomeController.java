@@ -118,6 +118,7 @@ public class HomeController {
 		return mav;
 	}
 	
+
 	@PostMapping("/authConfirm")
 	public ModelAndView authConfirm(@ModelAttribute TeamBean list) {
 

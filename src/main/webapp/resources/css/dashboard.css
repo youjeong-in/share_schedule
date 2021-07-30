@@ -1,0 +1,251 @@
+@charset "UTF-8";
+
+
+body {
+	background :   #f0ebf0;
+	 font-family: 'Nanum Gothic', sans-serif;
+	 margin : 0px;
+	
+}
+
+#header {
+	background : rgba(255,255,255, 0.6);
+	 margin-top : 0px;
+	 height: 150px;
+}
+
+#logo{
+	
+	text-align: center;
+	font-size : 60px;
+	font-weight: bold;
+	letter-spacing : 2px;
+	color :  #2b81c8;
+	padding-top : 15px;
+	margin-bottom: 15px;
+}
+
+#poplogo{
+	text-align: center;
+	font-size : 50px;
+	font-weight: bold;
+	letter-spacing : 2px;
+	color :  #bdb6e5;
+	padding-top : 15px;
+	margin-bottom: 15px;
+}
+
+#inb{
+	margin: 0;
+    padding: 0;
+    outline: 0;
+    color: #333;
+    font-family: 'NanumBarunGothic', sans-serif;
+    font-size: 16px;
+    vertical-align: baseline;
+		
+}
+
+
+#title{
+	position:absolute;
+	color : #bdb6e5;
+	font-weight : bold;
+	font-size : 20px;
+	margin-left: 15px;
+}
+
+#buttonFrame{
+	position:absolute;
+   	top:30%;
+   	left:50%;
+   	transform: translate(-50%, -50%);
+	width:500px;
+	height:48px;
+	color:#f0ebf0;
+	cursor:pointer;
+	text-align:center;
+	letter-spacing:3px;
+	font-size: 26px;
+	text-decoration:none;
+}
+
+.teambutton{
+	
+	width:500px;
+	height:44px;
+	background-color:#5191ce;
+	border:1px solid #f0ebf0;
+	border-radius:5px;
+	margin-top:100px;
+	margin-right:100px;
+	color:#f0ebf0;
+	cursor:pointer;
+	text-align:center;
+	letter-spacing:3px;
+	font-size: 26px;
+	text-decoration: none;
+}
+
+#button:hover{
+	background:#679DCF;
+	font-weight:bold;
+}
+
+
+.schedulebutton{
+	
+	width:500px;
+	height:48px;
+	background-color:#5191ce;
+	border:1px solid #f0ebf0;
+	border-radius:5px;
+	margin-top:30px;
+	float:right;
+	color:#f0ebf0;
+	cursor:pointer;
+	text-align:center;
+	letter-spacing:3px;
+	font-size: 26px;
+	text-decoration: none;
+	
+}
+
+
+
+.button{
+	width:78px;
+	height:40px;
+	background-color:#5191ce;
+	border:1px solid #f0ebf0;
+	border-radius:10px;
+	margin-top:-9px;
+	margin-right:37.4px;
+	float:right;
+	color:#f0ebf0;
+	cursor:pointer;
+	text-align:center;
+	letter-spacing:3px;		
+}
+
+.button:hover{
+	background:#679DCF;
+	font-weight:bold;
+}
+
+.sbutton{
+	width:50px;
+	height:30px;
+	background-color:#bdb6e5;
+	border:1px solid #f0ebf0;
+	border-radius:1px;
+	margin:-32px 3px 1px 462px;
+	color:#f0ebf0;
+	cursor:pointer;
+	text-align:center;
+	letter-spacing:3px;
+}
+
+.sbutton:hover{
+	background:#B4AAE6;
+}
+
+.askbtn{
+	width:140px;
+	height:30px;
+	background-color:#f0ebf0;
+	border:1px solid #bdb6e5;
+	border-radius:1px;
+	margin:-105px 3px 1px 0px;
+	color:#bdb6e5;
+	cursor:pointer;
+	text-align:center;
+	letter-spacing:3px;
+	
+}
+
+.askbtn:hover{
+	font-weight:bold;
+}
+
+
+.logoutbtn{
+	position: absolute;
+    top: 99px;
+    left: 100px;	
+    padding: 4px 10px 6px 11px;
+    background-color: #ccd0d4;
+    -webkit-border-radius: 14px;
+    border-radius: 18px;
+    font-size: 13px;
+    color: #fff;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+.logoutbtn:hover{
+	background:#BDBDBD;
+	font-weight:bold;
+}
+
+.background{  
+ 	   position:fixed; z-index:1; 
+	   left:0px; top:0px; width:100%; height:100%;
+	   overflow:auto;
+	   background-color:rgba(051,051,153,0.5);
+	   backdrop-filter:blur(10px);
+	   display:none;
+	   padding-bottom: 20px;
+}
+
+.pop{
+  	   background-color :#fefefe;
+	   margin:15% auto; 
+	   padding:5px;
+	   width:40%;
+	   
+	   text-align:center;
+	  
+}
+
+#checkbox{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #bcbcbc;
+	cursor: pointer;
+	background-color: #666666;
+}
+
+#backspace{
+	border:1px solid #BDBDBD;
+	width:70px;
+	padding:3px;
+	top:50px;
+	text-align:center;
+	margin: 0 auto;
+	
+}
+
+#text{
+	border:2px solid #bdb6e5;
+	border-radius:1px;
+	width:300px;
+	height:26px;
+
+	}
+
+table{
+	border:3px solid #bdb6e5;
+}
+
+#space{
+	border:1px solid #BDBDBD;
+}
+
+#sendMail{
+	border:1px solid #BDBDBD;
+	color: #bdb6e5;
+	width:22%;
+	margin:0 auto;
+}
