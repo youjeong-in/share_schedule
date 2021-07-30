@@ -67,6 +67,14 @@ public class HomeController {
 		return mav;
 
 	}
+	
+	@PostMapping("/linkAccess") //post방식
+	public ModelAndView linkAccess(@ModelAttribute AccessInfo ai){ //한가지로 여러개를 불러올수있음
+		System.out.println(ai);
+		mav=auth.linkAccess(ai);
+		return mav;
+		
+	}
 
 
 	@PostMapping("/signUp") 
@@ -113,7 +121,6 @@ public class HomeController {
 		mav = new ModelAndView();
 		mav.setViewName("emailAuth");
 		mav.addObject("tCode",list.getTCode());
-		mav.addObject("msId", list.getMsId());
 		
 		return mav;
 	}

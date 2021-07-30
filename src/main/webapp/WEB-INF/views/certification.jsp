@@ -11,6 +11,7 @@
 	function mailAuth(){
 	
 	let tCode = document.getElementsByName("tCode")[0];
+	let msId = document.getElementsByName("msId")[0];
 	
 	let f = document.createElement("form");
 	
@@ -18,6 +19,7 @@
 	f.method = "post";
 	
 	f.appendChild(tCode);
+	f.appendChild(msId);
 	
 	document.body.appendChild(f);
 	f.submit(0);
@@ -27,7 +29,9 @@
 </head>
 <body>
 	 <input type="hidden" name ="tCode" value="${tCode }" /> 
+	 	<input type="hidden" value="${userId }" name="msId" />
+	<input type="hidden" value="${browser }" name="browser" />
 	
-	<div class = "button" onClick="mailAuth()" >클릭하여 수락해주세요.</div>
+	<div id = "button" onClick="mailAuth()" >클릭하여 수락해주세요.</div>
 </body>
 </html>

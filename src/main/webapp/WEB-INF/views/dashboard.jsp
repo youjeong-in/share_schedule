@@ -11,7 +11,7 @@
 <script src="resources/js/js.js"></script>
 <title>메인페이지</title>
 <script>
-function message(${message}){
+function message(message){
 	if(message!= ""){
 		alert(message);
 	}
@@ -135,7 +135,7 @@ function resultFriendMail(data){
 
 </script>
 </head>
-<body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
+<body onLoad="message('${message}')">
 <div id ="header">
 <div id="logo"> O N E </div>
 	<div id="inb">
@@ -153,16 +153,17 @@ function resultFriendMail(data){
 	
 	<div class="background" id="background" style="display:none">
 		<div id="pop" class="pop" style="display:none">
-		<div id="poplogo"> O N E </div>
+		<div id ='backspace' onClick='closePopup()'>Close</div>
+		<div class='askbtn' onClick='newFriend()'>새친구 초대하기</div>	
+		<div id="poplogo"> O N E </div>	
 			<input type="text" name="word" id="text" placeholder="친구의 이름을 입력하세요.">
-			<div id="searchbtn" class="sbutton" onClick="searchBtn()">검색
-			<div class='askbtn' onClick='newFriend()'>새친구 초대하기</div></div>
+			<div id="searchbtn" class="sbutton" onClick="searchBtn()">검색</div>
 			<table>
 			<tr><th>아이디</th><th>이름</th><th>이메일</th></tr>
 			<td id="space"></td>
 			</table>
 			
-			<div id ='backspace' onClick='closePopup()'>close</div>
+			
 		</div>
 	</div>
 	

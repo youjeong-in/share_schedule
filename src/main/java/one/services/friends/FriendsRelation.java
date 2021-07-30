@@ -273,7 +273,7 @@ public class FriendsRelation implements FriendsInterface{
 
 		try {
 			if(this.insGeneral(tb)) {//true이면 insert가 1이면
-				mav.setViewName("certification");
+				mav.setViewName("dashboard");
 				message = "멤버추가가 정상적으로 이루어졌습니다.";
 				System.out.println("성공");
 
@@ -385,7 +385,7 @@ public class FriendsRelation implements FriendsInterface{
 		mb.setFrom("i_innew0731@naver.com");
 		mb.setSubject("초대장이 도착했습니다.");
 		try {
-			mb.setContent(((String)pu.getAttribute("userId"))+"님이 초대하셨습니다." + "<a href='http://localhost/signUpForm'>클릭하여 초대에 응해주세요.</a>");
+			mb.setContent(((String)pu.getAttribute("userId"))+"님이 초대하셨습니다." + "<a href='http://192.168.219.195/signUpForm'>클릭하여 초대에 응해주세요.</a>");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

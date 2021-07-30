@@ -15,4 +15,5 @@ public class AccessInfo {
 	private String publicIp;
 	private String privateIp;
 	private String browser;
+	private String tCode;
 }

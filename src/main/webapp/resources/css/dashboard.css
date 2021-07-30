@@ -15,13 +15,12 @@ body {
 }
 
 #logo{
-	
+	padding-top : 15px;
 	text-align: center;
 	font-size : 60px;
 	font-weight: bold;
 	letter-spacing : 2px;
 	color :  #2b81c8;
-	padding-top : 15px;
 	margin-bottom: 15px;
 }
 
@@ -31,7 +30,6 @@ body {
 	font-weight: bold;
 	letter-spacing : 2px;
 	color :  #bdb6e5;
-	padding-top : 15px;
 	margin-bottom: 15px;
 }
 
@@ -156,11 +154,11 @@ body {
 	background-color:#f0ebf0;
 	border:1px solid #bdb6e5;
 	border-radius:1px;
-	margin:-105px 3px 1px 0px;
 	color:#bdb6e5;
 	cursor:pointer;
 	text-align:center;
 	letter-spacing:3px;
+	
 	
 }
 
@@ -171,7 +169,7 @@ body {
 
 .logoutbtn{
 	position: absolute;
-    top: 99px;
+    
     left: 100px;	
     padding: 4px 10px 6px 11px;
     background-color: #ccd0d4;
@@ -223,7 +221,8 @@ body {
 	padding:3px;
 	top:50px;
 	text-align:center;
-	margin: 0 auto;
+	margin: 0 86%;
+	cursor:pointer;
 	
 }
 
