@@ -51,7 +51,6 @@ public class Authentication{
 
 	HttpSession session;
 
-	private static final String SAVE_PATH = "/FireBase/Source";
 
 	public ModelAndView rootCtl(AccessInfo ai) {
 		mav = new ModelAndView();
@@ -197,37 +196,16 @@ public class Authentication{
 
 		mav.setViewName("signUp");
 		mav.addObject("message", "회원가입에 실패했습니다. 다시 시도해주세요");
-		String extName = null;
 
 
-		if(ub.getMpFile().isEmpty()){
-			System.out.println("값이없다.");
+
+		if(ub.getMpFile().isEmpty()) { //비어있다면
+			System.out.println("넘어온 파일이 없다.");
 			ub.setStickerPath("");
-			
 		}else {
-			String originalName = ub.getMpFile().getOriginalFilename();
-			extName = originalName.substring(originalName.lastIndexOf("."), originalName.length());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
-			Calendar cal = Calendar.getInstance();
-
-			ub.setStickerPath(SAVE_PATH+ "/" +ub.getUserId()+sdf.format(cal.getTime()));
-			try {
-				byte[] data = ub.getMpFile().getBytes();
-
-				FileOutputStream fos = new FileOutputStream(SAVE_PATH+ "/" +ub.getUserId()+sdf.format(cal.getTime()) + extName);
-
-				fos.write(data);
-				fos.close();
-				System.out.println("성공");
-				System.out.println(SAVE_PATH+ "/" +ub.getUserId()+sdf.format(cal.getTime()));
-			} catch (IOException e1) {
-
-				e1.printStackTrace();
-			} 
-
+			System.out.println("파일 있다.");
+			ub.setStickerPath(pu.savingFile(ub.getMpFile()));
 		}
-
-
 
 		try {
 			ub.setUserMail(ub.getUserMail()+ub.getMailAdd());
@@ -241,6 +219,7 @@ public class Authentication{
 		} 
 
 		ub.setUserPass(enc.encode(ub.getUserPass())); //사용자가 입력한 비번을 가져와서 암호화된 비밀번호로 encode해서 set함
+
 		if(dao.insMember(ub)) { //인서트가 됐으면
 			mav.setViewName("logIn");
 			mav.addObject("message", "회원가입을 축하합니다.");
