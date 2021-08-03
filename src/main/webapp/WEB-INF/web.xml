@@ -21,6 +21,8 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+		
 	</servlet>
 
 	<servlet-mapping>
@@ -45,4 +47,6 @@
 	<session-config>
 		<session-timeout>60</session-timeout>
 	</session-config>
+	
+	
 </web-app>

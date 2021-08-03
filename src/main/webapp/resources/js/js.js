@@ -83,6 +83,13 @@ function sendUserId(){
    
    let text = document.getElementById("text");
    let idFor = document.getElementById("idForget");
+
+
+	if(uCode.value ==""){
+		alert("아이디를 입력하세요.");
+		uCode.focus();
+		return;
+	}
    
    uCode.style.display = "none";
    aCode.style.display = "block";
@@ -107,7 +114,17 @@ function enterId(){
    let text = document.getElementById("text");
    let idFor = document.getElementById("idForget");
 
+
+
 	if(window.event.keyCode==13){
+		
+		
+	if(uCode.value ==""){
+		alert("아이디를 입력하세요.");
+		uCode.focus();
+		return;
+	}
+   
 		
 	uCode.style.display = "none";
    aCode.style.display = "block";
@@ -119,7 +136,6 @@ function enterId(){
    idFor.innerText="비밀번호를 잊으셨나요?";
    	
 }
-   
 
 }
 //enter누르면 로그인이됨
@@ -167,6 +183,7 @@ function logInInfo(){
 	//alert(publicIp); //publicIp
 	//alert(location.host); //privateIp
 	
+	
 	const browser = navigator.userAgent.toLowerCase();
 	let result = "";
 	
@@ -188,7 +205,7 @@ function logInInfo(){
 	let privateIp = makeInput("hidden", "privateIp" , location.host);
 	const brow = makeInput("hidden", "browser", result);
 
-
+	
 	
 	let form = makeForm("Access","post");
 	
@@ -202,6 +219,18 @@ function logInInfo(){
 	
 	document.body.appendChild(form);
 	form.submit();
+
+}
+function upLoadFile(){
+	const file = document.getElementsByName("mpFile")[0];
+	alert(file);
+	
+	let f = makeForm("upLoad","post");
+	f.enctype = "multipart/form-data";
+	f.appendChild(file);
+	
+	document.body.appendChild(f);
+	f.submit();
 	
 }
 
@@ -215,7 +244,13 @@ function joinInfo(){
 	const userName = document.getElementsByName("userName")[0];
 	const userMail = document.getElementsByName("userMail")[0];
 	const mailAdd = document.getElementsByName("mailAdd")[0];
+	const file = document.getElementsByName("mpFile")[0];
 
+	if(userId.value ==""){
+		alert("아이디는 필수 입력사항입니다.");
+		userId.focus();
+		return;
+	}
 
 	//이름 널값 X
 	if(userName.value ==""){
@@ -234,7 +269,7 @@ function joinInfo(){
 	}
 	
 	
-	let form = makeForm("signUp","post");
+	let form = makeMultipartForm("signUp","post");
 	
 	form.appendChild(userId);
 	form.appendChild(userPwd);
@@ -242,6 +277,8 @@ function joinInfo(){
 	form.appendChild(userName);
 	form.appendChild(userMail);
 	form.appendChild(mailAdd);
+	form.appendChild(file);
+	
 	
 	document.body.appendChild(form);
 	form.submit();
@@ -250,7 +287,7 @@ function joinInfo(){
 }
 
 
-function makeForm(action, method, name=null){
+function makeForm(action, method ,name=null){
 	
 	let form = document.createElement("form");
 	
@@ -259,8 +296,21 @@ function makeForm(action, method, name=null){
 	form.setAttribute("method", method);
 	
 	return form;
-		
 }
+
+function makeMultipartForm(action, method ,name=null){
+	
+	let form = document.createElement("form");
+	
+	if(name!= null){form.setAttribute("name", name);}
+	form.setAttribute("action",action);
+	form.setAttribute("method", method);
+	form.setAttribute("enctype", "multipart/form-data");
+	
+	return form;
+}
+
+
 
 function makeInput(type, name, val){
 	
@@ -324,4 +374,6 @@ function setPublicIp(data){
 	publicIp = data.ip;
 	
 }
+
+
 	

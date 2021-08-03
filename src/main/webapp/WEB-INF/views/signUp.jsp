@@ -31,12 +31,14 @@
 			} else {
 				alert("아이디의 길이는 8~12이내 입니다.");
 				userId.focus();
+				
 			}
 
 		} else {
 			userId.value = "";
 			userId.readOnly = false;
 			userId.focus();
+				
 		}
 
 	}
@@ -71,6 +73,7 @@
 			dupId.innerText = "사용가능한 아이디입니다.";
 			idBox.style.border = "1px solid #51FFA6";
 			dupId.style.color = "#51FFA6";
+			return;
 
 		} else {
 			userId.value = ""
@@ -78,6 +81,7 @@
 			idBox.style.border = "1px solid #FF4646";
 			dupId.style.color = "#FF4646";
 			userId.focus();
+			return;
 		}
 	}
 
@@ -87,12 +91,9 @@
 				alert("비밀번호는 8~20글자이내 숫자,대문자,소문자,특수문자의 3가지이상의 조합입니다.");
 				obj.value = "";
 				obj.focus();
+				return;
 			}
-		} else {
-			alert("비밀번호는 8~20이내로 입력해주세요.");
-			obj.value = "";
-			obj.focus();
-		}
+		} 
 	}
 
 	function pwdCh2(obj) {
@@ -104,6 +105,7 @@
 			pwd1.value = "";
 			pwd2.value = "";
 			pwd1.focus();
+			return;
 		}
 	}
 </script>
@@ -162,12 +164,16 @@
 					<option value="@daum.net">daum.net</option>
 				</select>
 			</div>
-
+			
+			<div>
+				<input type="file" name="mpFile" class="file"/>
+				
+			</div>
 
 			<div>
 				<div id="signUp">
 					<a href="logIn" style="text-decoration: none; color: #5191ce;">로그인</a>
-					<input type="button" class="button" name="userpass" value="가입하기" onClick="joinInfo()">
+					<input type="button" class="button" name="userpass"  value="가입하기" onClick="joinInfo()">
 				</div>
 			</div>
 

@@ -68,6 +68,15 @@
          </props>
          </property>
    </bean>
+   
+   <!-- multipart 파일업로드/ commons-fileupload를 통해 서버로 보내주면 파일을 받는 녀석-->
+	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 <property name="maxUploadSize" value="1000000"/>    <!--   10mb 최대로 전송할수 있는 파일의 크기  -->
+	  <property name ="maxInMemorySize" value="5000000"/> <!-- 파일을 받는 서버 메모리의 사이즈  -->
+	 <!--  <property name ="uploadTempDir" value="" />   서버의 특정영역에 저장한다. 잘사용하지않음. 자동이지만 잘사용하지않는 이유는 각각 파일이 저장되는 곳이 달라야 편하기 때문에 서비스에 따라서 저장되는 위치가 달라야한다.-->
+   </bean>   
+   
 	<!--  <aop:aspectj-autoproxy></aop:aspectj-autoproxy>-->
+
 
 </beans>

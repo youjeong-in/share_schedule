@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ProjectUtil {
@@ -47,4 +48,22 @@ public class ProjectUtil {
     public String getSessionId() throws Exception  {
         return RequestContextHolder.getRequestAttributes().getSessionId();
     }
+    
+    /*upLoad된 파일을 Local Repository에 저장하는 메서드 : savingFile(MultipartFile) ,savingFile(MultipartFile[])*/
+    public boolean savingFile(MultipartFile file) {
+    	String uploadFileLocation = "";
+    	boolean result = false;
+    	
+    	
+    	return result;
+    }
+    
+    public boolean savingFile(MultipartFile[] file) {
+    	boolean result = false;
+    	
+    	
+    	return result;
+    }
+    
+    
 }

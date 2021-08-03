@@ -26,7 +26,15 @@
 	<!-- Gson을 single-ton으로 등록 -->
 	<beans:bean class="com.google.gson.Gson"></beans:bean>
 	
+	<!-- 파일 업로드 commons-fileupload를 통해 서버로 보내주면 파일을 받는 녀석 -->
+	 <!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<beans:property name="maxUploadSize" value="204857600" />
+	<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean>  -->
 	
+	<!--  <beans:bean id="mutipartLocation" class="org.springframework.web.multipart.commons.CommonsFileUploadSupport">
+	<beans:property name="uploadTempDirSpecified" value="C:\FireBase\Source" ref="multipartResolver" />
+	</beans:bean>-->
 	
 	<context:component-scan base-package="one.schedule.project" />
 	<context:component-scan base-package="one.schedule.util" />

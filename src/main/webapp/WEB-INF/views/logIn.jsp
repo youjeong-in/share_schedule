@@ -10,11 +10,16 @@
 <link href = "resources/css/logIn.css" rel = "stylesheet" type = "text/css"/>
 
 <script src = "resources/js/js.js"></script>
-<script>
-	const message = "${message}";
-	if(message!= ""){
-		alert(message);
+<script type= "text/javascript">
+	
+const message = "${message}";
+	
+function message(message){
+if(message!= ""){
+	alert(message);
 	}
+}
+	
 </script>
 
 
@@ -22,7 +27,7 @@
 </head>
 <!-- <body onLoad="message('${message }')"> -->
 
-<body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
+<body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')" >
 
 <div id="main">
 <div id="bigBox">

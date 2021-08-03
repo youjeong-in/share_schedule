@@ -48,7 +48,7 @@
 	</insert>
 
 	<insert id="insMember" parameterType="one.services.beans.UserBeans">
- 		INSERT INTO MS(MS_USERID,MS_USERPASS,MS_USERNAME,MS_USERPHONE,MS_USERMAIL)
- 		VALUES (#{userId},#{userPass},#{userName},#{userPhone},#{userMail})
+ 		INSERT INTO MS(MS_USERID,MS_USERPASS,MS_USERNAME,MS_USERPHONE,MS_USERMAIL,MS_STICKERPATH)
+ 		VALUES (#{userId},#{userPass},#{userName},#{userPhone},#{userMail},#{stickerPath})
 	</insert>
 </mapper>

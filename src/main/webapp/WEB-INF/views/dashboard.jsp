@@ -10,11 +10,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <script src="resources/js/js.js"></script>
 <title>메인페이지</title>
-<script>
-function message(message){
-	if(message!= ""){
-		alert(message);
-	}
+<script type= "text/javascript">
+const message = "${message}";
+
+if(message!= ""){
+	alert(message);
 }
 function logOut(){
 	const browser = navigator.userAgent.toLowerCase();
@@ -32,6 +32,7 @@ function logOut(){
 	
 	let userId = document.getElementsByName("userId")[0];
 	//let pubIp = document.getElementsByName("publicIp")[0];
+	//let privateIp = document.getElementsByName("privateIp")[0];
 	let method = makeInput("hidden" , "method" , -1);
 	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
 	let privateIp = makeInput("hidden", "privateIp" , location.host);
@@ -81,10 +82,10 @@ function searchResult(jsonData){
 	let spaceList = "";
 	
 	for(i=0; i<jsonData.length; i++){
-		spaceList += "<td id='td'><input type='checkbox' id='checkbox' name='invit' value='"+ jsonData[i].userId + "'/>" + "     "+ jsonData[i].userId + "     "+ jsonData[i].userName + "     "+  jsonData[i].userMail + "</td><br>";
+		spaceList += "<input type='checkbox' id='checkbox' name='invit' value='"+ jsonData[i].userId + "'/>" + "<div class='contentsSpaceId'>"+ jsonData[i].userId + "</div><div class='contentsSpaceName'>"+ jsonData[i].userName + "</div><div class='contentsSpaceMail'>"+  jsonData[i].userMail + "</div><br>";
 	}
 
-	spaceList += "<div id='sendMail'  onClick='askFr()'>친구신청</div>";
+	spaceList += "<div id='sendMail' onClick='askFr()'>친구신청</div>";
 	space.innerHTML = spaceList;
 }
 
@@ -135,12 +136,13 @@ function resultFriendMail(data){
 
 </script>
 </head>
-<body onLoad="message('${message}')">
+<body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
 <div id ="header">
 <div id="logo"> O N E </div>
 	<div id="inb">
  		<div id="title">${uName }님</div>
  		<div name="logOut" class="logoutbtn" onClick="logOut()">로그아웃</div>
+ 		<div class="button">쪽지함</div>
  		<div name="addFriend" class="button" onClick="addFriend()">친구추가</div>
  	</div>
  
@@ -148,6 +150,7 @@ function resultFriendMail(data){
 
 	<input type="hidden" value="${userId }" name="userId" />
 	<input type="hidden" value="${browser }" name="browser" />
+	<input type="hidden" value="${message }" name="message" />
 	<!--addObject로 가져온 녀석들 -->
 
 	
@@ -158,12 +161,10 @@ function resultFriendMail(data){
 		<div id="poplogo"> O N E </div>	
 			<input type="text" name="word" id="text" placeholder="친구의 이름을 입력하세요.">
 			<div id="searchbtn" class="sbutton" onClick="searchBtn()">검색</div>
-			<table>
-			<tr><th>아이디</th><th>이름</th><th>이메일</th></tr>
-			<td id="space"></td>
-			</table>
-			
-			
+			<div id="spacetitle">
+			<span class="headerspace">아이디</span><span class="headerspace">이름</span><span class="headerspace">이메일</span></div>
+			<div id ="space"></div>
+					
 		</div>
 	</div>
 	

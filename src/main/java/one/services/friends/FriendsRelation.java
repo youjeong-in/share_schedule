@@ -238,6 +238,7 @@ public class FriendsRelation implements FriendsInterface{
 //				contents[i] ="<a href='http://192.168.1.189/EmailAuth?msId="+tdb.get(i).getMsId()+"&tCode="+tdb.get(0).getTCode()+"'>클릭하여 초대에 승낙해주세요.</a>";
 //			
 //		}
+		
 		String from = "i_innew0731@naver.com";
 		String[] to = new String[tdb.size()];
 		for(int index=0; index<tdb.size(); index++) {
@@ -334,9 +335,7 @@ public class FriendsRelation implements FriendsInterface{
 	public String askFriend(SearchBean sb) {
 	
 		String message="친구신청이 실패하였습니다. 다시 시도하여주세요";
-		
-		
-		
+					
 		try {
 			sb.setMyId((String) pu.getAttribute("userId"));
 			
