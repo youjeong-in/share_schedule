@@ -4,5 +4,12 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
     <mapper namespace="one.database.mapper.ScheduleInterface">
-    
+   
+		 <insert id="insFile" parameterType="one.services.beans.SdDetailBean">
+		 INSERT INTO ALBUM VALUES  (#{tCode}, #{num}, #{stickerPath})
+		</insert> 
+		
+		<select id="getImage" parameterType="one.services.beans.SdDetailBean" resultType="one.services.beans.SdDetailBean">
+			SELECT AL_PATH AS STICKERPATH FROM ALBUM WHERE AL_SDTECODE ='210804001' AND AL_SDNUM='1'
+		</select>
     </mapper>

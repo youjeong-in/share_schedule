@@ -13,9 +13,12 @@
 <script type= "text/javascript">
 const message = "${message}";
 
-if(message!= ""){
-	alert(message);
-}
+	if(message!= ""){
+		alert(message);
+	}
+
+
+
 function logOut(){
 	const browser = navigator.userAgent.toLowerCase();
 	let result = "";
@@ -139,7 +142,9 @@ function resultFriendMail(data){
 <body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
 <div id ="header">
 <div id="logo"> O N E </div>
+		
 	<div id="inb">
+	<div id="picture"><img class="picture" src="${stickerPath }"></div>
  		<div id="title">${uName }님</div>
  		<div name="logOut" class="logoutbtn" onClick="logOut()">로그아웃</div>
  		<div class="button">쪽지함</div>
@@ -149,8 +154,8 @@ function resultFriendMail(data){
 </div>
 
 	<input type="hidden" value="${userId }" name="userId" />
-	<input type="hidden" value="${browser }" name="browser" />
-	<input type="hidden" value="${message }" name="message" />
+	<input type="hidden" value="${param.browser }" name="browser" />
+	<input type="hidden" value="${param.message }" name="message" />
 	<!--addObject로 가져온 녀석들 -->
 
 	

@@ -115,10 +115,9 @@ public class Authentication{
 								mav.addObject("browser", ai.getBrowser());
 								mav.addObject("publicIp", ai.getPublicIp());
 								mav.addObject("privateIp", ai.getPrivateIp());
-
+								//mav.addObject("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath());
 								pu.setAttribute("uName", dao.getUserInfo(ai).get(0).getUserName());
-
-
+								pu.setAttribute("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath());
 
 							}
 						}
@@ -204,7 +203,7 @@ public class Authentication{
 			ub.setStickerPath("");
 		}else {
 			System.out.println("파일 있다.");
-			ub.setStickerPath(pu.savingFile(ub.getMpFile()));
+			ub.setStickerPath("resources/image/"+pu.savingFile(ub.getMpFile()));
 		}
 
 		try {
@@ -246,6 +245,7 @@ public class Authentication{
 							mav.setViewName("certification");
 							mav.addObject("userId" , ai.getUserId()); //로그인할때 아이디 암호화
 							mav.addObject("uName" , enc.aesDecode(dao.getUserInfo(ai).get(0).getUserName(), ai.getUserId()));//복호화한 데이터를 setAttribute
+							mav.addObject("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath()); //프로필사진 경로
 							mav.addObject("tCode",ai.getTCode());
 							mav.addObject("publicIp", ai.getPublicIp());
 							mav.addObject("privateIp", ai.getPrivateIp());

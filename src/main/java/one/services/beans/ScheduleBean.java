@@ -1,5 +1,10 @@
 package one.services.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -20,5 +25,7 @@ public class ScheduleBean {
 	private String open;
 	private String loName;
 	private String loop;
+	private List<MultipartFile> sdFile;
+	private List<SdDetailBean> stickerPath;
 
 }

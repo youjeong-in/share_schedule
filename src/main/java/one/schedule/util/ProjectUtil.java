@@ -2,6 +2,8 @@ package one.schedule.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +71,7 @@ public class ProjectUtil {
     	File sfile = new File(uploadFileLocation, savingFileName);
     	try {
 			file.transferTo(sfile);
-			fileInfo = uploadFileLocation + savingFileName;
+			fileInfo = savingFileName;
 		} catch (IllegalStateException e) {
 		
 			e.printStackTrace();
@@ -80,8 +82,5 @@ public class ProjectUtil {
 
     	return fileInfo;
     }
-    
  
-    
-    
 }

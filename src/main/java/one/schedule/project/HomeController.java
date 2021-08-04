@@ -3,6 +3,9 @@ package one.schedule.project;
 
 
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import one.schedule.util.Encryption;
@@ -28,9 +32,11 @@ import one.schedule.util.ProjectUtil;
 import one.services.auth.Authentication;
 import one.services.auth.FileUploadService;
 import one.services.beans.AccessInfo;
+import one.services.beans.ScheduleBean;
 import one.services.beans.TeamBean;
 import one.services.beans.UserBeans;
 import one.services.friends.FriendsRelation;
+import one.services.schedule.ScheduleManage;
 
 /**
  * Handles requests for the application home page.
@@ -47,6 +53,8 @@ public class HomeController {
 	Encryption enc;
 	@Autowired 
 	FriendsRelation fr;
+	@Autowired
+	ScheduleManage sm;
 	
 	@Autowired
 	FileUploadService fus;
@@ -119,7 +127,7 @@ public class HomeController {
 	
 	@GetMapping("/back")
 	public String dashboard() {
-		return "dashboard";
+		return "redirect:/";
 	}
 	
 	
@@ -135,9 +143,19 @@ public class HomeController {
 
 	@PostMapping("/authConfirm")
 	public ModelAndView authConfirm(@ModelAttribute TeamBean list) {
-
-	
+		mav = new ModelAndView();
 		return fr.authConfirm(list);
+	}
+
+	@PostMapping("/sendFile")
+	public ModelAndView sendFile(@ModelAttribute ScheduleBean sb) {
+		mav = new ModelAndView();
+//		for(int i=0; i<sb.getSdFile().size(); i++) {
+//		System.out.println(sb.getSdFile().get(i).getOriginalFilename());
+//		}    
+	       		
+		mav = sm.sendFile(sb);
+		return mav;
 	}
 	
 
