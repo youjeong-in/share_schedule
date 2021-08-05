@@ -89,30 +89,30 @@ public class ScheduleManage {
 			e.printStackTrace();
 		}
 
-		//		for(int i=0; i<sb.getSdFile().size(); i++) {
-		//			sdb.setStickerPath("resources/image/" + pu.savingFile(sb.getSdFile().get(i)));
-		//			sdb.setTCode(sb.getTCode());
-		//			
-		//		}
-		
 		this.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,TransactionDefinition.ISOLATION_READ_COMMITTED ,false);
 
-		if(this.insSd(sb)) {
-			for(int i=0; i<sb.getSdFile().size(); i++) {
-				sdb.setStickerPath("resources/image/" + pu.savingFile(sb.getSdFile().get(i)));
-				sdb.setTCode(sb.getTCode());
-				
-				if(this.insFile(sdb)){
-					this.setTransactionResult(true);
-					mav.addObject("message", "스케줄 등록이 완료되었습니다.");
-				}
+		try {
+			if(this.insSd(sb)) {
+				mav.addObject("message", "스케줄 등록이 완료되었습니다.");
+				for(int i=0; i<sb.getSdFile().size(); i++) {
+					if(sb.getSdFile().get(i).getOriginalFilename()!="") {
+						sdb.setStickerPath("resources/image/" + pu.savingFile(sb.getSdFile().get(i)));
+						sdb.setTCode(sb.getTCode());
+
+						if(this.insFile(sdb)){
+							mav.addObject("message", "스케줄 등록이 완료되었습니다.");
+						}
+					}else {
+						System.out.println("파일없음");
+					}
+				}this.setTransactionResult(true);
 			}
-			
-		}else {
+		}catch(Exception e){
 			this.setTransactionResult(false); 
-			mav.addObject("message", "스케줄 등록에 실패했습니다. 다시 시도해주세요.");
-			
+			System.out.println("rollback");
+			mav.addObject("message", "스케줄 등록에 실패했습니다. 다시 시도해주세요.");	
 		}
+
 		mav.setViewName("redirect:/");
 
 		return mav;
@@ -134,8 +134,8 @@ public class ScheduleManage {
 	private boolean convertBoolean(int data) {
 		return (data > 0)? true:false;
 	}
-	
-	
+
+
 	//transaction Configuration
 	private void setTransactionConf(int propagation, int isolationLevel, boolean isRead) {
 		def = new DefaultTransactionDefinition();

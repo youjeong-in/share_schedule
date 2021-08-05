@@ -11,7 +11,8 @@
 <script src="resources/js/js.js"></script>
 <title>메인페이지</title>
 <script type= "text/javascript">
-const message = "${message}";
+
+const message = "${param.message}";
 
 	if(message!= ""){
 		alert(message);
