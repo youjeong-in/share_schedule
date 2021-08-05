@@ -10,5 +10,6 @@ public interface ScheduleInterface {
 	
 	boolean insFile(SdDetailBean sdDetailBean);
 	List<ScheduleBean> getImage(SdDetailBean sdb);
+	boolean insSd(ScheduleBean sb);
 
 }

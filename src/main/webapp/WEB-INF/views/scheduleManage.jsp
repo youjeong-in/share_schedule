@@ -26,10 +26,17 @@
 		form.submit();
 	}
 	
+	//새 스케줄 등록
+	function newSd(){
+		const main = document.getElementById("main");
+		const upload = "<div class='upload'><div id='file'></div><div id='button' class='button' onClick='addSd()'>추가</div></div>";
+		
+		main.innerHTML = upload;
+	}
 
 	function addSd() {
 		let fileSearch = document.getElementById("file");
-		let filespace = "<div><input type='file' name='sdFile' class='sdFile' multiple required onchange='setThumbnail(event)'/><input type='submit' id='send' class='button' value='전송' onClick='sendFile()'></div>";
+		let filespace = "<div><input type='file' name='sdFile' class='sdFile' multiple required /><div id='send' class='button' onClick='sendFile()'>전송</div></div>";
 		filespace += "<div id='delete' class='button' onClick='deleteBtn()'>삭제</div>";
 		
 		
@@ -65,7 +72,7 @@
 		<div id="inb">
 			<div id="inner">
 				<div class="cate">
-					<a> 새 스케줄 등록 </a>
+					<div onclick="newSd()"><a> 새 스케줄 등록 </a></div>
 				</div>
 				<div class="cate">
 					<a> 스케줄 보기</a>
@@ -74,11 +81,7 @@
 		</div>
 	</div>
 	<div id="main">
-
-		<div id="button" class="button" onClick="addSd()">추가</div>
-	
-		<div id="file"></div>
-		<div id="picture"><img class="picture" src="${picture }"></div>
+				
 		<div id="fileList"></div>
 	</div>
 </body>

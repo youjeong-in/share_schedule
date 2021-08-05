@@ -20,4 +20,5 @@ public interface AuthInterface {
 	int checkBrowser(AccessInfo ai); 
 	boolean isCurrentAccess(AccessInfo ai);
 	boolean forceLogOut(AccessInfo ai);
+	String getTcode(AccessInfo ai);
 }

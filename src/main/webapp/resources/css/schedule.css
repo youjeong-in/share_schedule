@@ -61,10 +61,10 @@ a {
 }
 
 .button{
-	width:78px;
+	width:60px;
 	height:40px;
 	background-color:#5191ce;
-	border:1px solid #f0ebf0;
+	border:2px outset #f0ebf0;
 	border-radius:10px;
 	margin:0 auto;
 	float:left;
@@ -76,14 +76,22 @@ a {
 
 .button:hover{
 	background:#679DCF;
+	transition:0.3s;
 	font-weight:bold;
 }
 
+
 .sdFile{
-	margin: 0 auto;
+	margin-top:10px;
 	float:left;
 }
 
-#send{
-	
+.upload{
+	height: 100px;
+    padding-top: 2px;
+    border:1px solid #333;
+	width:30%;
+	margin-top:20px;
+	margin-left:36%;
 }
+

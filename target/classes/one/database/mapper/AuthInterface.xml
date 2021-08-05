@@ -33,7 +33,9 @@
 	 	AH_BROWSER = #{browser} 
 	</select>
 	
-	
+	<select id="getTcode" parameterType="one.services.beans.AccessInfo" resultType="one.services.beans.AccessInfo">
+		SELECT * FROM TEAMLISTVIEW WHERE MSID=#{userId}
+	</select>
 	
 	<!-- 강제종료 -->
 	<insert id="forceLogOut" parameterType="one.services.beans.AccessInfo" >

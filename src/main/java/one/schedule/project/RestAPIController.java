@@ -72,9 +72,9 @@ public class RestAPIController {
 	
 	//기존에 있던 친구에게 친구신청
 	@PostMapping("/askFriend")
-	public String askFriend (@RequestBody SearchBean list){
-		//System.out.println(list.get(0));
-		return fr.askFriend(list);
+	public String askFriend (@RequestBody List<SearchBean> list){
+		System.out.println(list.get(0));
+		return fr.askFriend(list.get(0));
 	}
 	
 	//새친구 초대메일보내기

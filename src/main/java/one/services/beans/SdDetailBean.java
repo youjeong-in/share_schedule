@@ -9,6 +9,5 @@ public class SdDetailBean {
 	private int num;
 	private String stickerPath;
 
-	
 
 }

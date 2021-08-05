@@ -158,6 +158,14 @@ public class HomeController {
 		return mav;
 	}
 	
+	@PostMapping("/addSd")
+	public ModelAndView addSd(@ModelAttribute ScheduleBean sb) {
+		//System.out.println(sb);
+		
+		mav = sm.addSd(sb);
+		return mav;
+	}
+	
 
 	
 

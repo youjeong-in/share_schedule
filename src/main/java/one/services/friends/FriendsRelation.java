@@ -340,14 +340,13 @@ public class FriendsRelation implements FriendsInterface{
 			sb.setMyId((String) pu.getAttribute("userId"));
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,TransactionDefinition.ISOLATION_READ_COMMITTED ,false);
 
 		try {
 			if(this.askFr(sb)) {//만약에 0이 insert가 됐고, 
-				
+				System.out.println("여기");
 				message = "친구신청이 완료되었습니다.";
 				this.setTransactionResult(true);
 				System.out.println("성공");

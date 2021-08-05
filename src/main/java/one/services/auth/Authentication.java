@@ -91,6 +91,8 @@ public class Authentication{
 		mav = new ModelAndView();
 		String message = null;
 		String encPwd=null; //암호화된 비번
+		StringBuffer tCode = new StringBuffer();
+		StringBuffer tName = new StringBuffer();
 
 
 		try {
@@ -118,7 +120,18 @@ public class Authentication{
 								//mav.addObject("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath());
 								pu.setAttribute("uName", dao.getUserInfo(ai).get(0).getUserName());
 								pu.setAttribute("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath());
-
+				
+								for(int i=0; i<dao.getTcode(ai).size(); i++) {
+									tCode.append(dao.getTcode(ai).get(i).getTCode()+",");
+									tName.append(dao.getTcode(ai).get(i).getTName()+",");
+								}
+								
+								//System.out.println(tCode.toString());
+								//System.out.println(tName.toString());
+								pu.setAttribute("tCode", tCode.toString().substring(0,tCode.toString().length()-1));
+								pu.setAttribute("tName", tName.toString().substring(0,tName.toString().length()-1));
+								
+							
 							}
 						}
 					}

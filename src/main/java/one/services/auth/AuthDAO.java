@@ -63,6 +63,11 @@ public class AuthDAO{
 		return this.convert(sqlSession.selectOne("checkBrowser", ai));//true는 1이상- 로그인기록있음 
 
 	}
+	//내 아이디가 소속된 Tcode를 가져오는 메서드
+	List<AccessInfo> getTcode(AccessInfo ai){
+		
+		return sqlSession.selectList("getTcode", ai);
+	}
 
 
 

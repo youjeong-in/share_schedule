@@ -6,10 +6,15 @@
     <mapper namespace="one.database.mapper.ScheduleInterface">
    
 		 <insert id="insFile" parameterType="one.services.beans.SdDetailBean">
-		 INSERT INTO ALBUM VALUES  (#{tCode}, #{num}, #{stickerPath})
+		 INSERT INTO ALBUM VALUES  (#{tCode}, SCH_SEQ.CURRVAL, #{stickerPath})
 		</insert> 
 		
 		<select id="getImage" parameterType="one.services.beans.SdDetailBean" resultType="one.services.beans.SdDetailBean">
 			SELECT AL_PATH AS STICKERPATH FROM ALBUM WHERE AL_SDTECODE ='210804001' AND AL_SDNUM='1'
 		</select>
+		
+		<insert id="insSd" parameterType="one.services.beans.ScheduleBean">
+			INSERT INTO SD VALUES(#{tCode},SCH_SEQ.NEXTVAL,#{msId},#{title},#{date},#{location},#{contents},#{process},#{open},#{loop})
+		</insert>
+		
     </mapper>
