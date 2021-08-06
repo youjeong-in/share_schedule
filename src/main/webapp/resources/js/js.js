@@ -355,10 +355,12 @@ function postAjax(jobCode, clientData, fn, header){
 		if(ajax.readyState == 4 && ajax.status == 200){
 			/* Step 5 */
 			
+			
 			const jsonData = ajax.responseText;
 			//alert(jsonData);
 			
 			window[fn](JSON.parse(jsonData));
+			
 		}
 	};
 	/* Step 3 */

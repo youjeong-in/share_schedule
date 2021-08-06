@@ -59,18 +59,17 @@
 	</insert>
 	
 	<!-- 총 멤버리스트 -->
-	<select id="allmember" resultType="one.services.beans.SearchBean">
-		  SELECT MS_USERID AS USERID , MS_USERNAME AS USERNAME, MS_USERMAIL AS USERMAIL FROM MS
-		
+	<select id="allmember"  resultType="one.services.beans.SearchBean">
+		  SELECT MS_USERID AS USERID , MS_USERNAME AS USERNAME, MS_USERMAIL AS USERMAIL FROM MS 
 	</select>
 	
 	<!-- 친구 검색 -->
 	<select id="search" parameterType="one.services.beans.SearchBean" resultType="one.services.beans.TDetailBean">
 		SELECT MS_USERID AS "MSID", MS_USERNAME AS "MSNAME", MS_USERMAIL AS "EMAIL" FROM MS
-		WHERE MS_USERNAME || MS_USERMAIL LIKE '%'|| #{word} ||'%'
+		WHERE MS_USERID!=#{userId} AND MS_USERNAME || MS_USERMAIL LIKE '%'|| #{word} ||'%'
 	</select>
 	
-	<!-- 있는 친구$ 친구신청  -->
+	<!-- 회원인 친구에게 친구신청  -->
 	<insert id= "askFr" parameterType="one.services.beans.SearchBean">
 		INSERT INTO FR VALUES (#{myId}, #{userId},'0')
 	</insert>

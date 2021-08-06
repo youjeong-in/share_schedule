@@ -72,8 +72,7 @@ public class RestAPIController {
 	
 	//기존에 있던 친구에게 친구신청
 	@PostMapping("/askFriend")
-	public String askFriend (@RequestBody List<SearchBean> list){
-		System.out.println(list.get(0));
+	public boolean askFriend (@RequestBody List<SearchBean> list){
 		return fr.askFriend(list.get(0));
 	}
 	

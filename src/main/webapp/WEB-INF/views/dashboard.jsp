@@ -107,13 +107,18 @@ function askFr(){
 
 	let clientData = JSON.stringify(sendJsonData);
 	alert(clientData);
-	postAjax('/schedule/askFriend' , clientData, 'getFrienList', 'application/json');
+	postAjax('/schedule/askFriend' , clientData, 'getFriendList', 'application/json');
+	
+	closePopup();
 }
 
- function getFrienList(){
-
-	 
- }
+ function getFriendList(message){
+	 if(message==false){
+		 alert("나와는 친구가 될 수 없습니다.");
+	}else{
+		alert("친구신청이 완료되었습니다.");
+		} 
+ 	}
  
 //사이트에 초대 
  function newFriend(){
@@ -156,7 +161,8 @@ function resultFriendMail(data){
 		const tNameA = tName.split(",");
 		
 		if(confirm(dateA +"에 스케줄을 등록하시겠습니까?")){
-		let sdSpace2 ="<table><tr class='tCode_frame'><th scope='row'><span class='sdTitle'>팀선택</span></th><td colspan='2'>";
+		let	sdSpace2 = "<table><tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>날짜</span></th><td colspan='2'><div class='sguid' id='dateDiv'></div></tr>";
+		    sdSpace2 +="<tr class='tCode_frame'><th scope='row'><span class='sdTitle'>팀선택</span></th><td colspan='2'>";
 		
 		
 		sdSpace2 += "<select class='selTeam' name='tCode'><option label='팀선택'></option>";
@@ -166,8 +172,7 @@ function resultFriendMail(data){
 		
 		sdSpace2 += "</select></tr><tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>제목</span></th><td colspan='2'><div class='sguid'><input type='text' id='subject' name='title'></div></tr>";	
 		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>위치</span></th><td colspan='2'><div class='sguid'><input type='text' id='subject' name='location'></div></tr>"
-		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>날짜</span></th><td colspan='2'><div class='sguid' id='dateDiv'></div></tr>";
-		
+
 		sdSpace2 +="<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>공개여부</span></th><td colspan='2'><input type='checkbox' checked='on' value='O' onClick='check1(this)' name='open' style=\"width:10px;height:10px; -webkit-appearance:checkbox; appearance:checkbox\">공개<input type='checkbox' name='open' value='N' onClick='check1(this)' style=\"width:10px;height:10px; -webkit-appearance:checkbox; appearance:checkbox\">비공개";
 		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>반복여부</span></th><td colspan='2'><select name='loop'><option value='X'>반복없음</option><option value='Y'>년간반복</option><option value='M'>월간반복</option><option value='W'>주간반복</option></select>";
 		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>진행상태</span></th><td colspan='2'><select name='process'><option value='B'>예정</option><option value='C'>완료</option><option value='D'>연기</option><option value='H'>보류</option></select>";
@@ -290,12 +295,12 @@ function check1(data){
 <div class = "wideZone" >
 
 	<div class = "sideForm">
-	<div style="width: 100%; height: 50px;" class="infoBlank">
+		<div style="width: 100%; height: 50px;" class="infoBlank">
 	
-	<input type="button" class="sideAddBtn" value = "add Event+" onclick="newSchedule()" />
+		<input type="button" class="sideAddBtn" value = "add Event+" onclick="newSchedule()" />
 	</div>
 	<div id="sideInfo" class="infoBlank">
-<!-- style="width:100%; height:620px;"  -->
+<!-- style="width:100%; height:620px;" <div id="daySdDetail"> -->
 	</div>
 	</div>
 	<div class = "MngForm">

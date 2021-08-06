@@ -24,6 +24,7 @@ body {
 #logo {
 	padding-top: 15px;
 	text-align: center;
+	text-shadow: 2px 2px 5px #1260df;
 	font-size: 60px;
 	font-weight: bold;
 	letter-spacing: 2px;
@@ -33,6 +34,7 @@ body {
 
 #poplogo {
 	text-align: center;
+	text-shadow: 2px 2px 5px #7d46e1ed;
 	font-size: 50px;
 	font-weight: bold;
 	letter-spacing: 2px;
@@ -42,6 +44,7 @@ body {
 
 #newlogo {
 	text-align: center;
+	text-shadow: 2px 2px 30px #df1212;
 	font-size: 40px;
 	font-weight: bold;
 	letter-spacing: 2px;
@@ -215,7 +218,7 @@ body {
 
 .pop {
 	background: rgba(255, 255, 255, 1);
-	box-shadow: 0 8px 32px 0 rgba(0, 133, 255, 0.29);
+	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 	margin: 15% auto;
 	padding: 5px;
 	width: 40%;

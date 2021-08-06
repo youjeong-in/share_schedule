@@ -12,13 +12,13 @@
 <script src = "resources/js/js.js"></script>
 <script type= "text/javascript">
 	
-const message = "${message}";
+const message = "${param.message}";
 	
-function message(message){
+
 if(message!= ""){
 	alert(message);
 	}
-}
+
 	
 </script>
 

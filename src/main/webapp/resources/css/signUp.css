@@ -12,6 +12,7 @@ body{
 
 #logo{
 	font-size:30px;
+	text-shadow: 2px 2px 5px #1260df;
 	letter-spacing:3px;
 	margin-left:40%;
 	color:#2b81c8;
