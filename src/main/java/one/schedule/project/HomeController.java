@@ -162,7 +162,7 @@ public class HomeController {
 	public ModelAndView addSd(@ModelAttribute ScheduleBean sb) {
 		System.out.println(sb);
 		
-		mav = sm.addSd(sb);
+			mav = sm.addSd(sb);
 		return mav;
 	}
 

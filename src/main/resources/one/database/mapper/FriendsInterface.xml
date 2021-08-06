@@ -77,7 +77,7 @@
 	
 	<!-- 친구가 수락 -->
 	<update id="acceptFr" parameterType="one.services.beans.SearchBean">
-		UPDATE FR SET FR_ACCEPT = '0' WHERE FR_REQUEST= #{myId} AND FR_RECEIVER=#{userId}
+		UPDATE FR SET FR_ACCEPT ='1' WHERE FR_REQUEST= #{myId} AND FR_RECEIVER=#{userId}
 	</update>
 
 </mapper>

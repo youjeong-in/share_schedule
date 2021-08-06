@@ -232,7 +232,7 @@ public class FriendsRelation implements FriendsInterface{
 	private void friendsAuth(List<TDetailBean> tdb) {//메일작성, 전송
 
 		String subject = "팀원으로 초대합니다.";
-		String contents = "<a href='http://192.168.219.195/EmailAuth?tCode="+tdb.get(0).getTCode()+"'>클릭하여 초대에 승낙해주세요.</a>";
+		String contents = "<a href='http://192.168.1.188/EmailAuth?tCode="+tdb.get(0).getTCode()+"'>클릭하여 초대에 승낙해주세요.</a>";
 				
 //		for(int i=0; i<tdb.size(); i++) {
 //				contents[i] ="<a href='http://192.168.1.189/EmailAuth?msId="+tdb.get(i).getMsId()+"&tCode="+tdb.get(0).getTCode()+"'>클릭하여 초대에 승낙해주세요.</a>";
@@ -383,7 +383,7 @@ public class FriendsRelation implements FriendsInterface{
 		mb.setFrom("i_innew0731@naver.com");
 		mb.setSubject("초대장이 도착했습니다.");
 		try {
-			mb.setContent(((String)pu.getAttribute("userId"))+"님이 초대하셨습니다." + "<a href='http://192.168.219.195/signUpForm'>클릭하여 초대에 응해주세요.</a>");
+			mb.setContent(((String)pu.getAttribute("userId"))+"님이 초대하셨습니다." + "<a href='http://192.168.1.188/signUpForm'>클릭하여 초대에 응해주세요.</a>");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

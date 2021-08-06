@@ -143,17 +143,19 @@ function resultFriendMail(data){
 		back.style.display="none";
  }
  
- 
  function newSchedule(){
 		let popup = document.getElementById("popup");
 		let back = document.getElementById("back");
 		let sdSpace = document.getElementById("sdSpace");
 		let tCode = document.getElementsByName("teCode")[0].value;
 		let tName = document.getElementsByName("tName")[0].value;
+		let dateA = document.getElementsByName("dateA")[0].innerText;
+		let dateB = "";
+		
 		const tCodeA = tCode.split(",");
 		const tNameA = tName.split(",");
 		
-		
+		if(confirm(dateA +"에 스케줄을 등록하시겠습니까?")){
 		let sdSpace2 ="<table><tr class='tCode_frame'><th scope='row'><span class='sdTitle'>팀선택</span></th><td colspan='2'>";
 		
 		
@@ -162,23 +164,30 @@ function resultFriendMail(data){
 			sdSpace2 +="<option value=\""+tCodeA[list]+"\">"+ tNameA[list] +"</option>";
 		}
 		
-		sdSpace2 += "</select></tr><tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>제목</span></th><td colspan='2'><input type='text' id='subject' name='title'></tr>";	
-		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>위치</span></th><td colspan='2'><input type='text' id='subject' name='location'></tr>"
-		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>날짜</span></th><td colspan='2'><input type='date' id='subject' name='date'></tr>";
+		sdSpace2 += "</select></tr><tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>제목</span></th><td colspan='2'><div class='sguid'><input type='text' id='subject' name='title'></div></tr>";	
+		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>위치</span></th><td colspan='2'><div class='sguid'><input type='text' id='subject' name='location'></div></tr>"
+		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>날짜</span></th><td colspan='2'><div class='sguid' id='dateDiv'></div></tr>";
 		
-		sdSpace2 +="<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>공개여부</span></th><td colspan='2'><div><input type='checkbox' checked='on' name='open' value='N' onclick='check1(this)'>비공개<input type='checkbox' name='open' value='O' onclick='check1(this)'>공개</div>";
+		sdSpace2 +="<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>공개여부</span></th><td colspan='2'><input type='checkbox' checked='on' value='O' onClick='check1(this)' name='open' style=\"width:10px;height:10px; -webkit-appearance:checkbox; appearance:checkbox\">공개<input type='checkbox' name='open' value='N' onClick='check1(this)' style=\"width:10px;height:10px; -webkit-appearance:checkbox; appearance:checkbox\">비공개";
 		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>반복여부</span></th><td colspan='2'><select name='loop'><option value='X'>반복없음</option><option value='Y'>년간반복</option><option value='M'>월간반복</option><option value='W'>주간반복</option></select>";
 		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>진행상태</span></th><td colspan='2'><select name='process'><option value='B'>예정</option><option value='C'>완료</option><option value='D'>연기</option><option value='H'>보류</option></select>";
 		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>첨부파일</span></th><td colspan='2'><div class='sguid'><input type='file' id='file' name='sdFile' multiple></div></tr>";
 		sdSpace2 += "<tr class='sdtitle_frame'><th scope='row'><span class='sdTitle'>내용</span></th><td colspan='2'><div class='sguid_contents'><textarea id='contents' name='contents'></textarea></div></tr>";
 		sdSpace2 += "</table>";	
-	
+		
 		sdSpace.innerHTML = sdSpace2;
+		let dateDiv = document.getElementById("dateDiv");	
+		
+		dateB += "<input type=\"hidden\" name=\"date\" value=\""+dateA+"\"><div style='font-weight:bold; color:red;'>"+dateA+"</div>";
+		dateDiv.innerHTML=dateB;
+		
+
 		popup.style.display = "block";
 		back.style.display="block";
- }
- 
- function check1(data){
+	}
+}
+
+function check1(data){
 	 let value = document.getElementsByName("open");
 	 
 	 for(i=0; i<value.length; i++){
@@ -186,7 +195,9 @@ function resultFriendMail(data){
 			 value[i].checked= false;
 		 }
 	 }
- }
+}
+
+
  
  function submitSd(){
 	 let tCode = document.getElementsByName("tCode")[0];
@@ -263,8 +274,6 @@ function resultFriendMail(data){
 		<a href="teamManage"><div name="schedule" id=button class="teambutton" >팀 관리</div></a>
 	</div>
 	
-	
-	<div class="button" onClick="newSchedule()">날짜</div>
 	<div id="back" style="display:none">
 		<div id="popup" style="display:none">
 		<div id ='backspace' onClick='closePopup()'>Close</div>
@@ -277,6 +286,48 @@ function resultFriendMail(data){
 		</form>	
 	</div>
 </div>
+
+<div class = "wideZone" >
+
+	<div class = "sideForm">
+	<div style="width: 100%; height: 50px;" class="infoBlank">
+	
+	<input type="button" class="sideAddBtn" value = "add Event+" onclick="newSchedule()" />
+	</div>
+	<div id="sideInfo" class="infoBlank">
+<!-- style="width:100%; height:620px;"  -->
+	</div>
+	</div>
+	<div class = "MngForm">
+	    <div class="calendar">
+	        <div class="header">
+	            <div class="year-month"></div>
+	            <div class="nav">
+	                <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
+	                <button class="nav-btn go-today" onclick="goToday()">Today</button>
+	                <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
+	            </div>
+	        </div>
+	        <div class="main">
+	            <div class="days">
+	                <div class="day">일</div>
+	                <div class="day">월</div>
+	                <div class="day">화</div>
+	                <div class="day">수</div>
+	                <div class="day">목</div>
+	                <div class="day">금</div>
+	                <div class="day">토</div>
+	            </div>
+	            <div class="dates"></div>
+	        </div>
+	    </div>
+	</div>
+	
+       
+   </div>
+       
+
+    <script type="text/javascript" src="resources/js/newDashboard.js"></script>
 	
 </body>
 </html>
