@@ -1,11 +1,17 @@
 package one.services.auth;
 
 
+import java.io.FileOutputStream;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -85,6 +91,8 @@ public class Authentication{
 		mav = new ModelAndView();
 		String message = null;
 		String encPwd=null; //암호화된 비번
+		StringBuffer tCode = new StringBuffer();
+		StringBuffer tName = new StringBuffer();
 
 
 		try {
@@ -106,10 +114,24 @@ public class Authentication{
 								mav.setViewName("dashboard");
 								mav.addObject("userId" , enc.aesEncode(ai.getUserId(), "innew")); //로그인할때 아이디 암호화
 								mav.addObject("uName" , enc.aesDecode(dao.getUserInfo(ai).get(0).getUserName(), ai.getUserId()));//복호화한 데이터를 setAttribute
+								mav.addObject("browser", ai.getBrowser());
+								mav.addObject("publicIp", ai.getPublicIp());
+								mav.addObject("privateIp", ai.getPrivateIp());
+								//mav.addObject("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath());
 								pu.setAttribute("uName", dao.getUserInfo(ai).get(0).getUserName());
-
-
-
+								pu.setAttribute("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath());
+				
+								for(int i=0; i<dao.getTcode(ai).size(); i++) {
+									tCode.append(dao.getTcode(ai).get(i).getTCode()+",");
+									tName.append(dao.getTcode(ai).get(i).getTName()+",");
+								}
+								
+								//System.out.println(tCode.toString());
+								//System.out.println(tName.toString());
+								pu.setAttribute("tCode", tCode.toString().substring(0,tCode.toString().length()-1));
+								pu.setAttribute("tName", tName.toString().substring(0,tName.toString().length()-1));
+								
+						
 							}
 						}
 					}
@@ -145,7 +167,7 @@ public class Authentication{
 			if(pu.getAttribute("userId")!=null) { //Session이 null이 아니라면 즉, 살아있다면.
 
 				if(dao.isCurrentAccess(ai)) {
-					
+
 					while(!check) {
 						check = dao.insHistory(ai); //insert하고.. 좋은 방법은 아님! 
 					}
@@ -180,7 +202,7 @@ public class Authentication{
 	}
 
 
-	//회원가입
+	//회원가입 + 파일 업로드 작업
 	public ModelAndView joinCtl(UserBeans ub) {
 		mav = new ModelAndView();
 
@@ -188,36 +210,28 @@ public class Authentication{
 		mav.addObject("message", "회원가입에 실패했습니다. 다시 시도해주세요");
 
 
+
+		if(ub.getMpFile().isEmpty()) { //비어있다면
+			System.out.println("넘어온 파일이 없다.");
+			ub.setStickerPath("");
+		}else {
+			System.out.println("파일 있다.");
+			ub.setStickerPath("resources/image/"+pu.savingFile(ub.getMpFile()));
+		}
+
 		try {
 			ub.setUserMail(ub.getUserMail()+ub.getMailAdd());
 			ub.setUserName(enc.aesEncode(ub.getUserName(), ub.getUserId()));//이름 암호화
 			ub.setUserPhone(enc.aesEncode(ub.getUserPhone(), ub.getUserId()));//폰번호 암호화
 			ub.setUserMail(enc.aesEncode(ub.getUserMail(), ub.getUserId())); //이메일 암호화
 
-		} catch (InvalidKeyException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-
-			e.printStackTrace();
-		} catch (InvalidAlgorithmParameterException e) {
-
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-
-			e.printStackTrace();
-		}
+		} 
 
 		ub.setUserPass(enc.encode(ub.getUserPass())); //사용자가 입력한 비번을 가져와서 암호화된 비밀번호로 encode해서 set함
+
 		if(dao.insMember(ub)) { //인서트가 됐으면
 			mav.setViewName("logIn");
 			mav.addObject("message", "회원가입을 축하합니다.");
@@ -232,7 +246,7 @@ public class Authentication{
 		mav = new ModelAndView();
 		String message = null;
 		String encPwd=null; //암호화된 비번
-		
+
 		if(check) {
 			encPwd = dao.getEncPwd(ai);
 			if(check = (encPwd!= null)){ //아이디가 있어서 암호화된 비번이 null이 아니고
@@ -240,16 +254,17 @@ public class Authentication{
 					if(check = dao.insHistory(ai)) { //로그인 기록을 남겨졌으면
 						try {
 							pu.setAttribute("userId", ai.getUserId());//Session 생성! 
-							
+
 							mav.setViewName("certification");
 							mav.addObject("userId" , ai.getUserId()); //로그인할때 아이디 암호화
 							mav.addObject("uName" , enc.aesDecode(dao.getUserInfo(ai).get(0).getUserName(), ai.getUserId()));//복호화한 데이터를 setAttribute
+							mav.addObject("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath()); //프로필사진 경로
 							mav.addObject("tCode",ai.getTCode());
 							mav.addObject("publicIp", ai.getPublicIp());
 							mav.addObject("privateIp", ai.getPrivateIp());
 							mav.addObject("browser", ai.getBrowser());
 							pu.setAttribute("uName", dao.getUserInfo(ai).get(0).getUserName());
-							
+
 						} catch (Exception e) {
 							e.printStackTrace();
 						} 
@@ -258,7 +273,7 @@ public class Authentication{
 			}
 			message = (check)?"로그인 성공" : "로그인 정보를 확인해주세요";
 		}
-		
+
 		return mav;
 	}
 

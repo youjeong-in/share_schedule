@@ -22,7 +22,8 @@
 	 	SELECT MS_USERID AS USERID,
         MS_USERNAME AS USERNAME,
         MS_USERPHONE AS USERPHONE,
-        MS_USERMAIL AS USERMAIL
+        MS_USERMAIL AS USERMAIL,
+        MS_STICKERPATH AS STICKERPATH
  		FROM MS WHERE MS_USERID=#{userId}
 	</select>
 	
@@ -32,7 +33,9 @@
 	 	AH_BROWSER = #{browser} 
 	</select>
 	
-	
+	<select id="getTcode" parameterType="one.services.beans.AccessInfo" resultType="one.services.beans.AccessInfo">
+		SELECT * FROM TEAMLISTVIEW WHERE MSID=#{userId}
+	</select>
 	
 	<!-- 강제종료 -->
 	<insert id="forceLogOut" parameterType="one.services.beans.AccessInfo" >
@@ -48,7 +51,7 @@
 	</insert>
 
 	<insert id="insMember" parameterType="one.services.beans.UserBeans">
- 		INSERT INTO MS(MS_USERID,MS_USERPASS,MS_USERNAME,MS_USERPHONE,MS_USERMAIL)
- 		VALUES (#{userId},#{userPass},#{userName},#{userPhone},#{userMail})
+ 		INSERT INTO MS(MS_USERID,MS_USERPASS,MS_USERNAME,MS_USERPHONE,MS_USERMAIL,MS_STICKERPATH)
+ 		VALUES (#{userId},#{userPass},#{userName},#{userPhone},#{userMail},#{stickerPath})
 	</insert>
 </mapper>

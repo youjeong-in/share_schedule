@@ -4,5 +4,37 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
     <mapper namespace="one.database.mapper.ScheduleInterface">
-    
+   
+		 <insert id="insFile" parameterType="one.services.beans.SdDetailBean">
+		 INSERT INTO ALBUM VALUES  (#{tCode}, SCH_SEQ.CURRVAL, #{stickerPath})
+		</insert> 
+		
+		<select id="getImage" parameterType="one.services.beans.SdDetailBean" resultType="one.services.beans.SdDetailBean">
+			SELECT AL_PATH AS STICKERPATH FROM ALBUM WHERE AL_SDTECODE ='210804001' AND AL_SDNUM='1'
+		</select>
+		
+		<insert id="insSd" parameterType="one.services.beans.ScheduleBean">
+			INSERT INTO SD VALUES(#{tCode},SCH_SEQ.NEXTVAL,#{msId},#{title},#{dates},#{location},#{contents},#{process},#{open},#{loop})
+		</insert>
+		
+		<!-- 특정월의 스케줄 조회 -->
+		<select id="selMonthSd" parameterType="one.services.beans.ScheduleBean" resultType="one.services.beans.ScheduleBean">
+		SELECT * FROM SDLIST WHERE TO_CHAR(DATES,'YYYYMM') = #{dates} AND 
+                        TCODE IN(SELECT TD_TCODE FROM TD WHERE TD_MSID=#{msId})     
+		MINUS
+		SELECT *FROM SDLIST WHERE TO_CHAR(DATES,'YYYYMM') = #{dates} AND 
+                        TCODE IN(SELECT TD_TCODE FROM TD WHERE TD_MSID=#{msId}) AND
+                       (MSID !=#{msId} AND OPEN='N')
+		</select>
+		
+		<!-- 특정일의 스케줄 조회 -->
+			<select id="selDaySd" parameterType="one.services.beans.ScheduleBean" resultType="one.services.beans.ScheduleBean">
+		SELECT * FROM SDLIST WHERE TO_CHAR(DATES,'YYYYMMDD') = #{dates} AND 
+                        TCODE IN(SELECT TD_TCODE FROM TD WHERE TD_MSID=#{msId})     
+		MINUS
+		SELECT *FROM SDLIST WHERE TO_CHAR(DATES,'YYYYMMDD') = #{dates} AND 
+                        TCODE IN(SELECT TD_TCODE FROM TD WHERE TD_MSID=#{msId}) AND
+                       (MSID !=#{msId} AND OPEN='N')
+		</select>
+		
     </mapper>

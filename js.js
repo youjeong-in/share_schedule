@@ -3,6 +3,7 @@
  */
 let publicIp;
 
+
 function isIdCheck(word){ //소문자 숫자 특수문자 중 2가지 사용
 	const sEng = /[a-z]/;
 	const num = /[0-9]/;
@@ -36,11 +37,10 @@ function isPasswordCheck(word){
 /* 유효성 검사 */
 function isValidateCheck(type, word){
 	let result;
-	const codeComp = /^[a-zA-Z]{1}[0-9a-zA-Z]{7,11}$/g;
+	const codeComp = /^[a-zA-Z]{1}[0-9a-zA-Z]{5,11}$/g;
 	const pwdComp1 = /[a-z]/g;
-	const pwdComp2 = /[A-Z]/g;
-	const pwdComp3 = /[0-9]/g;
-	const pwdComp4 = /[!@#$%^&*]/g;
+	const pwdComp2 = /[0-9]/g;
+	const pwdComp3 = /[!@#$%^&*]/g;
 	
 	if(type == 1){
 		result = codeComp.test(word); 
@@ -49,7 +49,6 @@ function isValidateCheck(type, word){
 		count += pwdComp1.test(word)?1:0;
 		count += pwdComp2.test(word)?1:0;
 		count += pwdComp3.test(word)?1:0;
-		count += pwdComp4.test(word)?1:0;
 		
 		result = (count >= 3)? true:false;
 	}
@@ -72,94 +71,36 @@ function charCount(value, min, max){
 	
 }
 
-//아이디 -> 패스워드
-function sendUserId(){
-   let uCode = document.getElementsByName("userId")[0];
-   let aCode = document.getElementsByName("userPass")[0];
-   let id= document.getElementById("id");
-   
-   let next = document.getElementsByName("next")[0];
-   let button2 = document.getElementById("button2");
-   let pass = document.getElementById("pass");
-   
-   let text = document.getElementById("text");
-   let idFor = document.getElementById("idForget");
-   
-   uCode.style.display = "none";
-   aCode.style.display = "block";
-   next.style.display = "none";
-   button2.style.display = "block";
-   text.style.display = "none";
-   id.style.display = "none";
-   pass.style.display = "block";
-   idFor.innerText="비밀번호를 잊으셨나요?";
-   
-}
-//다음 누르면 패스워드 창으로 넘어감 (enter)
-function enterId(){
-   let uCode = document.getElementsByName("userId")[0];
-   let aCode = document.getElementsByName("userPass")[0];
-   let id= document.getElementById("id");
-   
-   let next = document.getElementsByName("next")[0];
-   let button2 = document.getElementById("button2");
-   let pass = document.getElementById("pass");
-   
-   let text = document.getElementById("text");
-   let idFor = document.getElementById("idForget");
-
-	if(window.event.keyCode==13){
-		
-	uCode.style.display = "none";
-   aCode.style.display = "block";
-   next.style.display = "none";
-   button2.style.display = "block";
-   text.style.display = "none";
-   id.style.display = "none";
-   pass.style.display = "block";
-   idFor.innerText="비밀번호를 잊으셨나요?";
-   	
-}
-   
-
-}
-//enter누르면 로그인이됨
-function enterPwd(){
-	
-	const id = document.getElementsByName("userId")[0];
-	const pwd =document.getElementsByName("userPass")[0];
-	let method = makeInput("hidden" , "method" , 1);
-	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
-	let privateIp = makeInput("hidden", "privateIp" , location.host);
-
-	if(window.event.keyCode==13){
-
-	let form = makeForm("Access","post");
-	
-	
-	form.appendChild(id);
-	form.appendChild(pwd);
-	form.appendChild(method);
-	form.appendChild(pubIp);
-	form.appendChild(privateIp);
-	
-	document.body.appendChild(form);
-	form.submit();
- }
-	
-}
 
 //로그인
 function logInInfo(){
 	//alert(publicIp); //publicIp
 	//alert(location.host); //privateIp
 	
+
+	const browser = navigator.userAgent.toLowerCase();
+	let result = "";
+	
+	if(browser.lastIndexOf('edg')>-1){
+		result = 'edge';
+	}else if(browser.lastIndexOf('whale')>-1){
+		result = 'whale';
+	}else if(browser.indexOf('chrome')>-1){
+		result = 'chrome';
+	}else{
+		result = 'any';
+	}
+
+	//alert(browser);
 	const id = document.getElementsByName("userId")[0];
 	const pwd =document.getElementsByName("userPass")[0];
 	let method = makeInput("hidden" , "method" , 1);
 	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
 	let privateIp = makeInput("hidden", "privateIp" , location.host);
+	const brow = makeInput("hidden", "browser", result);
 
+
+	
 	let form = makeForm("Access","post");
 	
 	form.appendChild(id);
@@ -167,11 +108,30 @@ function logInInfo(){
 	form.appendChild(method);
 	form.appendChild(pubIp);
 	form.appendChild(privateIp);
+	form.appendChild(brow);
+	
 	
 	document.body.appendChild(form);
 	form.submit();
 	
+		
+			
+
 }
+function upLoadFile(){
+	const file = document.getElementsByName("mpFile")[0];
+	alert(file);
+	
+	let f = makeForm("upLoad","post");
+	f.enctype = "multipart/form-data";
+	f.appendChild(file);
+	
+	document.body.appendChild(f);
+	f.submit();
+	
+}
+
+
 //회원가입 
 function joinInfo(){
 	
@@ -181,7 +141,13 @@ function joinInfo(){
 	const userName = document.getElementsByName("userName")[0];
 	const userMail = document.getElementsByName("userMail")[0];
 	const mailAdd = document.getElementsByName("mailAdd")[0];
+	const file = document.getElementsByName("mpFile")[0];
 
+	if(userId.value ==""){
+		alert("아이디는 필수 입력사항입니다.");
+		userId.focus();
+		return;
+	}
 
 	//이름 널값 X
 	if(userName.value ==""){
@@ -200,7 +166,7 @@ function joinInfo(){
 	}
 	
 	
-	let form = makeForm("signUp","post");
+	let form = makeMultipartForm("signUp","post");
 	
 	form.appendChild(userId);
 	form.appendChild(userPwd);
@@ -208,6 +174,8 @@ function joinInfo(){
 	form.appendChild(userName);
 	form.appendChild(userMail);
 	form.appendChild(mailAdd);
+	form.appendChild(file);
+	
 	
 	document.body.appendChild(form);
 	form.submit();
@@ -216,7 +184,7 @@ function joinInfo(){
 }
 
 
-function makeForm(action, method, name=null){
+function makeForm(action, method ,name=null){
 	
 	let form = document.createElement("form");
 	
@@ -225,8 +193,21 @@ function makeForm(action, method, name=null){
 	form.setAttribute("method", method);
 	
 	return form;
-		
 }
+
+function makeMultipartForm(action, method ,name=null){
+	
+	let form = document.createElement("form");
+	
+	if(name!= null){form.setAttribute("name", name);}
+	form.setAttribute("action",action);
+	form.setAttribute("method", method);
+	form.setAttribute("enctype", "multipart/form-data");
+	
+	return form;
+}
+
+
 
 function makeInput(type, name, val){
 	
@@ -247,7 +228,10 @@ function getAjax(jobCode, clientData, fn){
 	ajax.onreadystatechange = function(){
 		if(ajax.readyState == 4 && ajax.status == 200){
 			//step5
-			window[fn](JSON.parse(ajax.responseText));//window - 브라우저
+			const jsonData = ajax.responseText;
+			//alert(jsonData);
+			
+			window[fn](JSON.parse(jsonData));
 		}
 	};
 	//step3
@@ -262,7 +246,7 @@ function getAjax(jobCode, clientData, fn){
 	
 }
 
-function postAjax(jobCode, clientData, fn){
+function postAjax(jobCode, clientData, fn, header){
 	/* Step 1*/
 	let ajax = new XMLHttpRequest();
 		
@@ -270,13 +254,21 @@ function postAjax(jobCode, clientData, fn){
 	ajax.onreadystatechange = function(){
 		if(ajax.readyState == 4 && ajax.status == 200){
 			/* Step 5 */
-			window[fn](JSON.parse(ajax.responseText));
+			
+			
+			const jsonData = ajax.responseText;
+			//alert(jsonData);
+			
+			window[fn](JSON.parse(jsonData));
+			
 		}
 	};
 	/* Step 3 */
 	ajax.open("POST", jobCode);
 	/* Step 4 */
-	ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	//ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // form으로 넘겨줌
+	//"application/json"
+	ajax.setRequestHeader("Content-type", header); // json으로 넘겨줌
 	ajax.send(clientData);
 }
 
@@ -284,3 +276,6 @@ function setPublicIp(data){
 	publicIp = data.ip;
 	
 }
+
+
+	

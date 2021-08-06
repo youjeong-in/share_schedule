@@ -15,12 +15,14 @@ body {
 
 #logo{
 	text-align: center;
-	font-size : 50px;
+	text-shadow: 2px 2px 5px #1260df;
+	font-size : 60px;
 	font-weight: bold;
 	letter-spacing : 2px;
 	color :  #2b81c8;
 	padding-top : 15px;
 	margin-bottom: 15px;
+	cursor:pointer;
 }
 
 #inb{
@@ -36,7 +38,7 @@ body {
 		
 }
 #inner{
-	width: 1100px;
+	width: 280px;
     margin: 0 auto;
 
 }
@@ -44,7 +46,10 @@ body {
 .cate {
 	float: left;
     margin: 0 auto;
-    
+    cursor:pointer;
+    color:#bac;
+    font-weight: bold;
+	font-size: 23px;
 }
 
 a {
@@ -60,14 +65,38 @@ a {
     text-decoration: none;
 }
 
-ui{
-	margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    color: #333;
-    font-family: 'NanumBarunGothic', sans-serif;
-    font-size: 13px;
-    line-height: 1.6;
-    vertical-align: baseline;
+.button{
+	width:60px;
+	height:40px;
+	background-color:#5191ce;
+	border:2px outset #f0ebf0;
+	border-radius:10px;
+	margin:0 auto;
+	float:left;
+	color:#f0ebf0;
+	cursor:pointer;
+	text-align:center;
+	letter-spacing:3px;		
 }
+
+.button:hover{
+	background:#679DCF;
+	transition:0.3s;
+	font-weight:bold;
+}
+
+
+.sdFile{
+	margin-top:10px;
+	float:left;
+}
+
+.upload{
+	height: 100px;
+    padding-top: 2px;
+    border:1px solid #333;
+	width:30%;
+	margin-top:20px;
+	margin-left:36%;
+}
+

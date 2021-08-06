@@ -1,5 +1,11 @@
 package one.schedule.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.DeviceUtils;
@@ -7,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ProjectUtil {
@@ -47,4 +54,33 @@ public class ProjectUtil {
     public String getSessionId() throws Exception  {
         return RequestContextHolder.getRequestAttributes().getSessionId();
     }
+    
+    /*upLoad된 파일을 Local Repository에 저장하는 메서드 : savingFile(MultipartFile) ,savingFile(MultipartFile[])*/
+    public String savingFile(MultipartFile file) {
+    	String fileInfo =null;
+    	String uploadFileLocation = "C:" + File.separator + "FireBase" + File.separator + "SpringWorkSpace" +  File.separator + "schedule" +  File.separator
+    			+ "src" +  File.separator + "main" +  File.separator + "webapp" +  File.separator + "resources" +  File.separator + "image" +  File.separator;
+    	
+    	
+    	
+   /* 중복을 피해서 파일이름 저장 //대부분 : 파일이 넘어오면 그 파일이름을 겹치지않게 임의의이름을 저장한다.(uuId) 우리 : 파일이름 primaryKey로 저장*/
+    	UUID uuid = UUID.randomUUID(); //내장형이여서 import하지않아도된다.
+    	String savingFileName = uuid + "_" +file.getOriginalFilename(); //파일이름 정책 정하기
+
+    	// storage 에 실제 파일을 저장하기 위해 자바의 파일 객체 생성
+    	File sfile = new File(uploadFileLocation, savingFileName);
+    	try {
+			file.transferTo(sfile);
+			fileInfo = savingFileName;
+		} catch (IllegalStateException e) {
+		
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+
+    	return fileInfo;
+    }
+ 
 }

@@ -232,12 +232,13 @@ public class FriendsRelation implements FriendsInterface{
 	private void friendsAuth(List<TDetailBean> tdb) {//메일작성, 전송
 
 		String subject = "팀원으로 초대합니다.";
-		String contents = "<a href='http://192.168.219.195/EmailAuth?tCode="+tdb.get(0).getTCode()+"'>클릭하여 초대에 승낙해주세요.</a>";
-				
-//		for(int i=0; i<tdb.size(); i++) {
-//				contents[i] ="<a href='http://192.168.1.189/EmailAuth?msId="+tdb.get(i).getMsId()+"&tCode="+tdb.get(0).getTCode()+"'>클릭하여 초대에 승낙해주세요.</a>";
-//			
-//		}
+		String contents = "<a href='http://192.168.1.188/EmailAuth?tCode="+tdb.get(0).getTCode()+"'>클릭하여 초대에 승낙해주세요.</a>";
+
+		//		for(int i=0; i<tdb.size(); i++) {
+		//				contents[i] ="<a href='http://192.168.1.189/EmailAuth?msId="+tdb.get(i).getMsId()+"&tCode="+tdb.get(0).getTCode()+"'>클릭하여 초대에 승낙해주세요.</a>";
+		//			
+		//		}
+
 		String from = "i_innew0731@naver.com";
 		String[] to = new String[tdb.size()];
 		for(int index=0; index<tdb.size(); index++) {
@@ -253,8 +254,8 @@ public class FriendsRelation implements FriendsInterface{
 			helper.setTo(to);
 			helper.setSubject(subject);
 			helper.setText(contents,true);
-			
-			
+
+
 			javaMail.send(mail);
 		} catch (MessagingException e) {
 
@@ -264,7 +265,7 @@ public class FriendsRelation implements FriendsInterface{
 
 
 	}
-	
+
 	public ModelAndView authConfirm(TeamBean tb) {
 		mav = new ModelAndView();
 		String message = "멤버추가에 실패했습니다.";
@@ -298,7 +299,7 @@ public class FriendsRelation implements FriendsInterface{
 
 	//모든 멤버들을 불러옴
 	public List<SearchBean> allmember(){
-		List<SearchBean> memberList;
+		List<SearchBean> memberList;		
 		memberList =sqlSession.selectList("allmember");
 
 		return memberList;
@@ -307,6 +308,13 @@ public class FriendsRelation implements FriendsInterface{
 	//allmember와 검색어 비교 
 	public List<SearchBean> search (SearchBean sb) {
 		List<SearchBean> bean= new ArrayList<SearchBean>();
+
+		try {
+			sb.setUserId((String)pu.getAttribute("userId"));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		for(int list=0; list<this.allmember().size(); list++) {
 			SearchBean result  = new SearchBean();
@@ -331,37 +339,36 @@ public class FriendsRelation implements FriendsInterface{
 
 
 	//친구 신청
-	public String askFriend(SearchBean sb) {
-	
-		String message="친구신청이 실패하였습니다. 다시 시도하여주세요";
-		
-		
-		
+	public boolean askFriend(SearchBean sb) {
+		boolean result = false;
+
 		try {
 			sb.setMyId((String) pu.getAttribute("userId"));
-			
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.setTransactionConf(TransactionDefinition.PROPAGATION_REQUIRED,TransactionDefinition.ISOLATION_READ_COMMITTED ,false);
 
-		try {
-			if(this.askFr(sb)) {//만약에 0이 insert가 됐고, 
-				
-				message = "친구신청이 완료되었습니다.";
-				this.setTransactionResult(true);
-				System.out.println("성공");
+		if(!sb.getMyId().equals(sb.getUserId())) {	
+			try {
+				if(this.askFr(sb)) {//만약에 0이 insert가 됐고, 
+					result = true;
+					this.setTransactionResult(true);
+					System.out.println("친구신청 성공");
 
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				this.setTransactionResult(false); //rollback
+				System.out.println("insert fail");
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			this.setTransactionResult(false); // rollback
-			System.out.println("insert fail");
-		}
 
-		
-		return message;
+		}else {
+			result=false;
+			System.out.println("나와는 친구가 될수없다.");
+		}
+		return result;
 	}
 
 	//0으로 친구 신청
@@ -381,16 +388,16 @@ public class FriendsRelation implements FriendsInterface{
 	public Map<String, String> askMail(MailBean mb) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("message", "요청메일을 전송하지못했습니다. 다시 시도해주세요.");
-		
+
 		mb.setFrom("i_innew0731@naver.com");
 		mb.setSubject("초대장이 도착했습니다.");
 		try {
-			mb.setContent(((String)pu.getAttribute("userId"))+"님이 초대하셨습니다." + "<a href='http://192.168.219.195/signUpForm'>클릭하여 초대에 응해주세요.</a>");
+			mb.setContent(((String)pu.getAttribute("userId"))+"님이 초대하셨습니다." + "<a href='http://192.168.1.188/signUpForm'>클릭하여 초대에 응해주세요.</a>");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
+
 		if(this.friendsAuth(mb)) {
 			map.put("message", "요청메일을 전송하였습니다.");
 		}
@@ -400,7 +407,7 @@ public class FriendsRelation implements FriendsInterface{
 	//친구 초대 멜보내기
 	private boolean friendsAuth(MailBean mb) {//메일작성, 전송	
 		boolean check = false;
-		
+
 		MimeMessage mail = javaMail.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mail, "UTF-8");
 
@@ -419,15 +426,15 @@ public class FriendsRelation implements FriendsInterface{
 		}
 		return check;
 	}
-	
+
 }
 
 
 
 
 
-	//DATASOURCETRANSACTION MANAGER :
-	// 1.선언적 트랜잭션 : AOP 방식 (특정한 관점으로) @Transactional 어노테이션 사용 --> 관련된 메셔드는 반드시  public해야함
-	// 2. 명시적 트랜잭션 Programa Transaction 
-	//   	환경설정 : propacaion(전파방식) , isolation (격리수준)
+//DATASOURCETRANSACTION MANAGER :
+// 1.선언적 트랜잭션 : AOP 방식 (특정한 관점으로) @Transactional 어노테이션 사용 --> 관련된 메셔드는 반드시  public해야함
+// 2. 명시적 트랜잭션 Programa Transaction 
+//   	환경설정 : propacaion(전파방식) , isolation (격리수준)
 

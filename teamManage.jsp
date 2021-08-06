@@ -55,11 +55,12 @@
 		teCode = jsonData[0].tcode; //전역변수에 담아줌
 		
 		let member = document.getElementById("memberList"); 
-		let memberList = "<div>[멤버리스트(" + jsonData.length + ")]<div onClick=\"addMember(\'" + '${userId}' +  "\')\"> + 멤버추가 </div><br><br></div>";
+		let memberList = "<div>[멤버리스트(" + jsonData.length + ")]<div id='addMember' onClick=\"addMember(\'" + '${userId}' +  "\')\"> + 멤버추가 </div><br><br></div>";
 		
 		for(i = 0; i < jsonData.length; i++){
 			memberList += "<div> " + jsonData[i].msId + " - "+ jsonData[i].msName + " (" +jsonData[i].cgName + ") </div>"; 
 		}
+		
 		
 		member.innerHTML = memberList;
 		
