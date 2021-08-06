@@ -4,7 +4,7 @@ let date = new Date();
 const renderCalendar = () => {
 
 	const viewYear = date.getFullYear();
-	const viewMonth = date.getMonth();
+	const viewMonth = (date.getMonth());
 	
 	// year-month 채우기
 	document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`;
@@ -46,7 +46,7 @@ const renderCalendar = () => {
 	dates.forEach((date, i) => {
 		
 	  const condition = i >= firstDateIndex && i < lastDateIndex + 1 ? 'this':'other';
-	  dates[i] = "<div class ='date' onclick=\"choiceDay(this,\'"+(firstDateIndex+date-1)+"\',\'"+condition+"\')\"><span class =\'"+condition+"\'>"+date+"</span></div>";
+	  dates[i] = "<div class ='date' id='date' onclick=\"choiceDay(this,\'"+(firstDateIndex+date-1)+"\',\'"+condition+"\')\"><span class =\'"+condition+"\'>"+date+"</span></div>";
 	    //dates[i] = `<div class="date" onClick="test(this,${firstDateIndex+date-1},${condition})"><span class="${condition}"><input type="hidden" value="${condition}"/>${date}</span></div>`;	
 		})
 	
@@ -68,6 +68,8 @@ const renderCalendar = () => {
 };
 renderCalendar();
 
+
+
 function prevMonth(){
   date.setMonth(date.getMonth() - 1);
   renderCalendar();
@@ -88,10 +90,33 @@ function choiceDay(obj,index,condition){
 	if(condition=='other'){
 		return;
 	}
+	indexA = Number(index)+1;
+	
+	const viewYear = date.getFullYear();
+	const viewMonth = (date.getMonth());
+		
+	const sendDate = viewYear +""+ ((viewMonth)<9?"0"+(viewMonth+1):(viewMonth+1)) +""+((indexA)<10?"0"+(indexA):(indexA));
+		
+	//console.log(sendDate);
+
+	getAjax("/getDaySd", "dates="+sendDate, "getEverySd");
 	onOffDate(index);
 	let sideInfo = document.getElementById("sideInfo"); 
 	sideInfo.innerHTML = "<div id ='chDate' name='dateA'>"+replaceDate(obj.innerText)+"</div>";
 }
+//매 일의 스케줄 가져와서 innerHTML한 function
+function getEverySd(data){
+	//alert(data);
+	let dateList = document.getElementById("date");
+	let dateSdList ="";
+	
+	for(i=0; i<data.length; i++){
+		dateSdList += "<div style='font-size:15px;'>"+data[i].title +"(" + data[i].tname + ")"+"</div>";
+	}
+	
+	dateList.innerHTML = dateSdList;
+}
+
 function onOffDate(index){
 	let date = document.getElementsByClassName("date");
 
@@ -120,5 +145,33 @@ function replaceDate(obj){
    }
    return yearmonth.innerText.split("년")[0]+month+day;
 }
+
+function getAjax(jobCode, clientData, fn){
+	/*step1 */
+	let ajax = new XMLHttpRequest();
+	
+	//step2
+	ajax.onreadystatechange = function(){
+		if(ajax.readyState == 4 && ajax.status == 200){
+			//step5
+			const jsonData = ajax.responseText;
+			//alert(jsonData);
+			
+			window[fn](JSON.parse(jsonData));
+		}
+	};
+	//step3
+	if(clientData!= "") {
+		jobCode += "?" + clientData;
+	}
+	ajax.open("GET" , jobCode);
+	
+	//ajax.setRequestHeader("Context-type" , "application/x-www-form-urlencoded");
+	//step4
+	ajax.send();
+	
+}
+
+
 
 ////////////////////////////////////////////

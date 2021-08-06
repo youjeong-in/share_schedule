@@ -23,5 +23,6 @@ public interface FriendsInterface {
 	public boolean askFr(SearchBean sb);
 	public boolean acceptFr(SearchBean sb);
 	
+	
 }
 

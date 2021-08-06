@@ -12,11 +12,11 @@ public class ScheduleBean {
 	
 	private String tCode;
 	private String tName;
-	private int num;
+	private int num; //db의 예약어 때문에 어쩔수없음.
 	private String msId;
 	private String msName;
 	private String title;
-	private String date;  //가져올땐 to_char로 가져와야함.
+	private String dates;  //가져올땐 to_char로 가져와야함.
 	private String location;
 	private String contents;
 	private String proName;

@@ -113,6 +113,12 @@ public class HomeController {
 		return mav;
 	}
 	
+	@GetMapping("/idForget")
+	public String idForget () {
+		
+		return "idForget";
+	}
+	
 	@GetMapping("/scheduleManage")
 	public String scheduleManage () {
 		
@@ -164,6 +170,19 @@ public class HomeController {
 		
 			mav = sm.addSd(sb);
 		return mav;
+	}
+	
+	@GetMapping("/askMonthSd")
+	@ResponseBody //HomeController지만, ajax쓸때 꼭 써줘야함. 데이터만 보낼때 쓰는거 
+	public List<ScheduleBean> askMonthSd(@ModelAttribute ScheduleBean sb) {
+		return sm.askMonthSd(sb);
+	}
+	
+	@GetMapping("/getDaySd")
+	@ResponseBody //HomeController지만, ajax쓸때 꼭 써줘야함. 데이터만 보낼때 쓰는거 
+	public List<ScheduleBean> getDaySd(@ModelAttribute ScheduleBean sb) {
+		//System.out.println(sb);
+		return sm.askDaySd(sb);
 	}
 
 }

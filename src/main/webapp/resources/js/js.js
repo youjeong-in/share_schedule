@@ -71,119 +71,13 @@ function charCount(value, min, max){
 	
 }
 
-//아이디 -> 패스워드
-function sendUserId(){
-   let uCode = document.getElementsByName("userId")[0];
-   let aCode = document.getElementsByName("userPass")[0];
-   let id= document.getElementById("id");
-   
-   let next = document.getElementsByName("next")[0];
-   let button2 = document.getElementById("button2");
-   let pass = document.getElementById("pass");
-   
-   let text = document.getElementById("text");
-   let idFor = document.getElementById("idForget");
-
-
-	if(uCode.value ==""){
-		alert("아이디를 입력하세요.");
-		uCode.focus();
-		return;
-	}
-   
-   uCode.style.display = "none";
-   aCode.style.display = "block";
-   next.style.display = "none";
-   button2.style.display = "block";
-   text.style.display = "none";
-   id.style.display = "none";
-   pass.style.display = "block";
-   idFor.innerText="비밀번호를 잊으셨나요?";
-   
-}
-//다음 누르면 패스워드 창으로 넘어감 (enter)
-function enterId(){
-   let uCode = document.getElementsByName("userId")[0];
-   let aCode = document.getElementsByName("userPass")[0];
-   let id= document.getElementById("id");
-   
-   let next = document.getElementsByName("next")[0];
-   let button2 = document.getElementById("button2");
-   let pass = document.getElementById("pass");
-   
-   let text = document.getElementById("text");
-   let idFor = document.getElementById("idForget");
-
-
-
-	if(window.event.keyCode==13){
-		
-		
-	if(uCode.value ==""){
-		alert("아이디를 입력하세요.");
-		uCode.focus();
-		return;
-	}
-   
-		
-	uCode.style.display = "none";
-   aCode.style.display = "block";
-   next.style.display = "none";
-   button2.style.display = "block";
-   text.style.display = "none";
-   id.style.display = "none";
-   pass.style.display = "block";
-   idFor.innerText="비밀번호를 잊으셨나요?";
-   	
-}
-
-}
-//enter누르면 로그인이됨
-function enterPwd(){
-		const browser = navigator.userAgent.toLowerCase();
-	let result = "";
-	
-	if(browser.lastIndexOf('edg')>-1){
-		result = 'edge';
-	}else if(browser.lastIndexOf('whale')>-1){
-		result = 'whale';
-	}else if(browser.indexOf('chrome')>-1){
-		result = 'chrome';
-	}else{
-		result = 'any';
-	}
-	
-	const id = document.getElementsByName("userId")[0];
-	const pwd =document.getElementsByName("userPass")[0];
-	let method = makeInput("hidden" , "method" , 1);
-	let pubIp = makeInput("hidden" , "publicIp" , publicIp);
-	let privateIp = makeInput("hidden", "privateIp" , location.host);
-	const brow = makeInput("hidden", "browser", result);
-	
-	if(window.event.keyCode==13){
-
-	let form = makeForm("Access","post");
-	
-	
-	form.appendChild(id);
-	form.appendChild(pwd);
-	form.appendChild(method);
-	form.appendChild(pubIp);
-	form.appendChild(privateIp);
-	form.appendChild(brow);
-	
-	document.body.appendChild(form);
-	form.submit();
- }
-	
-}
 
 //로그인
 function logInInfo(){
 	//alert(publicIp); //publicIp
 	//alert(location.host); //privateIp
 	
-	
+
 	const browser = navigator.userAgent.toLowerCase();
 	let result = "";
 	
@@ -205,7 +99,7 @@ function logInInfo(){
 	let privateIp = makeInput("hidden", "privateIp" , location.host);
 	const brow = makeInput("hidden", "browser", result);
 
-	
+
 	
 	let form = makeForm("Access","post");
 	
@@ -219,6 +113,9 @@ function logInInfo(){
 	
 	document.body.appendChild(form);
 	form.submit();
+	
+		
+			
 
 }
 function upLoadFile(){
@@ -331,7 +228,10 @@ function getAjax(jobCode, clientData, fn){
 	ajax.onreadystatechange = function(){
 		if(ajax.readyState == 4 && ajax.status == 200){
 			//step5
-			window[fn](JSON.parse(ajax.responseText));//window - 브라우저
+			const jsonData = ajax.responseText;
+			//alert(jsonData);
+			
+			window[fn](JSON.parse(jsonData));
 		}
 	};
 	//step3

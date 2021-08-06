@@ -1,10 +1,18 @@
 package one.services.schedule;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +50,7 @@ public class ScheduleManage {
 	private DefaultTransactionDefinition def; //isolation과 propagation을 위한
 	private TransactionStatus status;
 	ModelAndView mav;
+
 
 	//테스트 파일전송
 	public ModelAndView sendFile(ScheduleBean sb) {
@@ -135,6 +144,66 @@ public class ScheduleManage {
 		return (data > 0)? true:false;
 	}
 
+	//월별 스케줄 불러오는 메서드
+	public List<ScheduleBean> askMonthSd(ScheduleBean sb) {
+		List<ScheduleBean> sdList;
+
+		try {
+			sb.setMsId((String)pu.getAttribute("userId"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		sdList = this.selMonthSd(sb);
+
+		for(int i=0; i<sdList.size(); i++) {
+			try {
+				sdList.get(i).setMsName(enc.aesDecode(this.selMonthSd(sb).get(i).getMsName(), sb.getMsId()));
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			} 
+		}
+
+		//System.out.println(sdList);
+		return sdList;
+	}
+
+	//월별 스케줄 불러오는 xml
+	public List<ScheduleBean> selMonthSd (ScheduleBean sb){
+
+		return sqlSession.selectList("selMonthSd", sb);
+	}
+
+	//일별 스케줄 불러오는 메서드
+	public List<ScheduleBean> askDaySd(ScheduleBean sb) {
+		List<ScheduleBean> daySd;
+		try {
+			sb.setMsId((String)pu.getAttribute("userId"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		daySd = this.selDaySd(sb);
+		for(int i=0; i<daySd.size(); i++) {
+			ScheduleBean day = new ScheduleBean();
+			if(sb.getDates().contains(daySd.get(i).getDates())) {
+				try {
+					day.setMsName(enc.aesDecode(daySd.get(i).getMsName(), sb.getMsId()));
+					daySd.add(day);
+				} catch (Exception e) {e.printStackTrace();}
+				
+			}
+
+		}
+		System.out.println(daySd);
+		return daySd;
+	}
+
+	public List<ScheduleBean> selDaySd(ScheduleBean sb){
+		return sqlSession.selectList("selDaySd", sb);
+	}
 
 	//transaction Configuration
 	private void setTransactionConf(int propagation, int isolationLevel, boolean isRead) {
@@ -155,4 +224,9 @@ public class ScheduleManage {
 			tx.rollback(status);
 		}
 	}
+
+
+
+
+
 }

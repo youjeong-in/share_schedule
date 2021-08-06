@@ -14,7 +14,27 @@
 		</select>
 		
 		<insert id="insSd" parameterType="one.services.beans.ScheduleBean">
-			INSERT INTO SD VALUES(#{tCode},SCH_SEQ.NEXTVAL,#{msId},#{title},#{date},#{location},#{contents},#{process},#{open},#{loop})
+			INSERT INTO SD VALUES(#{tCode},SCH_SEQ.NEXTVAL,#{msId},#{title},#{dates},#{location},#{contents},#{process},#{open},#{loop})
 		</insert>
+		
+		<!-- 특정월의 스케줄 조회 -->
+		<select id="selMonthSd" parameterType="one.services.beans.ScheduleBean" resultType="one.services.beans.ScheduleBean">
+		SELECT * FROM SDLIST WHERE TO_CHAR(DATES,'YYYYMM') = #{dates} AND 
+                        TCODE IN(SELECT TD_TCODE FROM TD WHERE TD_MSID=#{msId})     
+		MINUS
+		SELECT *FROM SDLIST WHERE TO_CHAR(DATES,'YYYYMM') = #{dates} AND 
+                        TCODE IN(SELECT TD_TCODE FROM TD WHERE TD_MSID=#{msId}) AND
+                       (MSID !=#{msId} AND OPEN='N')
+		</select>
+		
+		<!-- 특정일의 스케줄 조회 -->
+			<select id="selDaySd" parameterType="one.services.beans.ScheduleBean" resultType="one.services.beans.ScheduleBean">
+		SELECT * FROM SDLIST WHERE TO_CHAR(DATES,'YYYYMMDD') = #{dates} AND 
+                        TCODE IN(SELECT TD_TCODE FROM TD WHERE TD_MSID=#{msId})     
+		MINUS
+		SELECT *FROM SDLIST WHERE TO_CHAR(DATES,'YYYYMMDD') = #{dates} AND 
+                        TCODE IN(SELECT TD_TCODE FROM TD WHERE TD_MSID=#{msId}) AND
+                       (MSID !=#{msId} AND OPEN='N')
+		</select>
 		
     </mapper>

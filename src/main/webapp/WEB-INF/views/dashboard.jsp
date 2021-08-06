@@ -183,7 +183,7 @@ function resultFriendMail(data){
 		sdSpace.innerHTML = sdSpace2;
 		let dateDiv = document.getElementById("dateDiv");	
 		
-		dateB += "<input type=\"hidden\" name=\"date\" value=\""+dateA+"\"><div style='font-weight:bold; color:red;'>"+dateA+"</div>";
+		dateB += "<input type=\"hidden\" name=\"dates\" value=\""+dateA+"\"><div style='font-weight:bold; color:red;'>"+dateA+"</div>";
 		dateDiv.innerHTML=dateB;
 		
 
@@ -207,7 +207,7 @@ function check1(data){
  function submitSd(){
 	 let tCode = document.getElementsByName("tCode")[0];
 	 let title = document.getElementsByName("title")[0];
-	 let date = document.getElementsByName("date")[0];
+	 let date = document.getElementsByName("dates")[0];
 	 let addSd = document.assSd;
 		 
 	 if(tCode.value==""){
@@ -230,12 +230,47 @@ function check1(data){
 	 
 	 addSd.submit(); 
  }
+ 
+ 
+ function init(){
+		const viewYear = date.getFullYear();
+		const viewMonth = (date.getMonth());
+		
+		const sendDay = viewYear +""+ ((viewMonth)<9?"0"+(viewMonth+1):(viewMonth+1));
+		//alert(sendDay);
+		let input = document.createElement("input");
+		
+		input.setAttribute("type","hidden");
+		input.setAttribute("name","dates");
+		input.setAttribute("value",sendDay);
+		
+		getAjax('askMonthSd', 'dates='+sendDay, 'getMonthSd');
+	}
+
+	function getMonthSd(data){
+		
+		let sdDetail = document.getElementById("sdDetail");
+		let sdList = "<div>스케줄디테일</div><br><br>";
+		let day = "";
+		
+		for(d=0; d<data.length; d++){
+			day+= data[d].dates.replace("-","");
+		}
+		
+		
+		for(i=0; i<data.length; i++){
+			sdList += "<div>"+ data[i].tname+" 의 "+ data[i].title +"</div>";
+		}
+		
+		sdDetail.innerHTML = sdList;
+	}
+ 
 </script>
 </head>
-<body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp')">
+<body onLoad="getAjax('https://api.ipify.org','format=json','setPublicIp');init()">
 <div id ="header">
 <div id="logo"> O N E </div>
-		
+	<input type="hidden" value=>
 	<div id="inb">
 	<div id="picture"><img class="picture" src="${stickerPath }"></div>
  		<div id="title">${uName }님</div>
@@ -296,12 +331,11 @@ function check1(data){
 
 	<div class = "sideForm">
 		<div style="width: 100%; height: 50px;" class="infoBlank">
-	
 		<input type="button" class="sideAddBtn" value = "add Event+" onclick="newSchedule()" />
 	</div>
-	<div id="sideInfo" class="infoBlank">
-<!-- style="width:100%; height:620px;" <div id="daySdDetail"> -->
-	</div>
+	
+	<div id="sideInfo" class="infoBlank"></div>
+	<div id="sdDetail" name="sdDetail">스케줄리스트</div>
 	</div>
 	<div class = "MngForm">
 	    <div class="calendar">
@@ -333,6 +367,5 @@ function check1(data){
        
 
     <script type="text/javascript" src="resources/js/newDashboard.js"></script>
-	
 </body>
 </html>

@@ -10,10 +10,16 @@ body{
       
 }
 
+a{
+	color: inherit;
+	text-decoration: none;
+}
+
+
 #logo{
    font-size:30px;
    letter-spacing:3px;
-   text-shadow: 2px 2px 5px #1260df;
+   text-shadow: 2px 2px 5px #1260df70;
    margin-left:40%;
    color:#2b81c8;
    font-weight:bold;
@@ -24,6 +30,7 @@ body{
 .logo2{
    font-size:25px;
    letter-spacing:5px;
+   text-shadow: 2px 2px 5px #312522;
    color:#000000;
    margin-left:-1.7%;
    margin-top:10px;
@@ -34,7 +41,7 @@ body{
    border:1px solid #bbbbbb;
    background-color:#ffffff;
    border-radius:5px;
-   height:500px;
+   height:600px;
    width:400px;
    
 }
@@ -65,10 +72,10 @@ body{
    margin-top:-5px;
    position:absolute;
    z-index:1;
-   display:none;
+  
 }
 #passBox{
-   display:none;
+  
    position:relative;
    
 }
@@ -96,7 +103,7 @@ body{
 
 #idForget{
    margin-left:7.8%;
-   margin-top:9px;
+   margin-top:15px;
    margin-bottom:20px;
    font-size:15px;
    color:#5191ce;

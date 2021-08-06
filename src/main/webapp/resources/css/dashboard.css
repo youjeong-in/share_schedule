@@ -72,7 +72,7 @@ body {
 
 #buttonFrame {
 	position: absolute;
-	top: 30%;
+	top: 18%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 300px;
@@ -86,13 +86,12 @@ body {
 }
 
 .teambutton {
-	background: linear-gradient(120deg, #3498db, #8e44ad, #FF6B95);
+	/*background: linear-gradient(120deg, #3498db, #8e44ad, #FF6B95);*/
 	background-position: left;
 	background-size: 300%;
-	color: white;
+	color: #bac;
 	font-weight: bold;
 	font-size: 23px;
-	border: none;
 	cursor: pointer;
 	transition: 0.5s;
 	display: inline;
@@ -100,16 +99,16 @@ body {
 	min-width: 30%;
 	width: 60%;
 	margin-left: 10%;
-	border-radius: 10px;
+	
 }
 
 
 
 .schedulebutton {
-	background: linear-gradient(120deg, #3498db, #8e44ad, #FF6B95);
+	
 	background-position: left;
 	background-size: 200%;
-	color: white;
+	color: #bac;
 	font-weight: bold;
 	font-size: 23px;
 	border: none;
