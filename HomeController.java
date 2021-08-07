@@ -112,11 +112,26 @@ public class HomeController {
 
 		return mav;
 	}
-	
+	//아이디 찾기 페이지
 	@GetMapping("/idForget")
 	public String idForget () {
 		
 		return "idForget";
+	}
+	
+   //아이디찾기 데이터 넘어옴
+	@PostMapping("/findId")	
+	public ModelAndView findId(@ModelAttribute UserBeans ub) {
+		//System.out.println(ub);
+		return auth.findId(ub);
+	}
+	
+
+	@PostMapping("/findPwd")	
+	public ModelAndView findPwd(@ModelAttribute UserBeans ub) {
+		System.out.println(ub);
+
+		return auth.findPwd(ub);
 	}
 	
 	@GetMapping("/scheduleManage")

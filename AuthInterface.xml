@@ -54,4 +54,9 @@
  		INSERT INTO MS(MS_USERID,MS_USERPASS,MS_USERNAME,MS_USERPHONE,MS_USERMAIL,MS_STICKERPATH)
  		VALUES (#{userId},#{userPass},#{userName},#{userPhone},#{userMail},#{stickerPath})
 	</insert>
+	
+		<!-- 총 멤버리스트 -->
+	<select id="allmembers"  resultType="one.services.beans.UserBeans">
+		  SELECT MS_USERID AS USERID , MS_USERNAME AS USERNAME, MS_USERMAIL AS USERMAIL FROM MS 
+	</select>
 </mapper>

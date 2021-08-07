@@ -12,14 +12,19 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +34,8 @@ import one.database.mapper.AuthInterface;
 import one.schedule.util.Encryption;
 import one.schedule.util.ProjectUtil;
 import one.services.beans.AccessInfo;
+import one.services.beans.SearchBean;
+import one.services.beans.TDetailBean;
 import one.services.beans.UserBeans;
 
 
@@ -45,6 +52,9 @@ public class Authentication{
 
 	@Autowired
 	ProjectUtil pu;
+
+	@Autowired
+	JavaMailSenderImpl javaMail;
 
 	private ModelAndView mav = null;
 	AuthInterface auth;
@@ -120,18 +130,18 @@ public class Authentication{
 								//mav.addObject("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath());
 								pu.setAttribute("uName", dao.getUserInfo(ai).get(0).getUserName());
 								pu.setAttribute("stickerPath", dao.getUserInfo(ai).get(0).getStickerPath());
-				
+
 								for(int i=0; i<dao.getTcode(ai).size(); i++) {
 									tCode.append(dao.getTcode(ai).get(i).getTCode()+",");
 									tName.append(dao.getTcode(ai).get(i).getTName()+",");
 								}
-								
+
 								//System.out.println(tCode.toString());
 								//System.out.println(tName.toString());
 								pu.setAttribute("tCode", tCode.toString().substring(0,tCode.toString().length()-1));
 								pu.setAttribute("tName", tName.toString().substring(0,tName.toString().length()-1));
-								
-						
+
+
 							}
 						}
 					}
@@ -275,6 +285,71 @@ public class Authentication{
 		}
 
 		return mav;
+	}
+
+	//모든 멤버들을 불러옴
+
+
+	public ModelAndView findId(UserBeans ub) {
+		List<UserBeans> allMs;
+		allMs= dao.allmembers();
+
+		//모든멤버를 가져와서 이름과 이메일을 복호화했다.
+		for(int i=0; i<allMs.size(); i++) {
+			try {
+				allMs.get(i).setUserName(enc.aesDecode(allMs.get(i).getUserName(), allMs.get(i).getUserId()));
+				allMs.get(i).setUserMail(enc.aesDecode(allMs.get(i).getUserMail(), allMs.get(i).getUserId()));
+
+				if(allMs.get(i).getUserName().equals(ub.getUserName()) && allMs.get(i).getUserMail().equals(ub.getUserMail())) {
+					ub.setUserName(allMs.get(i).getUserName());
+					ub.setUserMail(allMs.get(i).getUserMail());
+					ub.setUserId(allMs.get(i).getUserId());
+					this.sendMail(ub);	
+					System.out.println("성공");
+
+				}else if(!allMs.get(i).getUserName().equals(ub.getUserName()) || !allMs.get(i).getUserMail().equals(ub.getUserMail())) {
+					mav.setViewName("idForget");
+					mav.addObject("message", "회원정보가 일치하지않습니다.");
+					System.out.println("실패");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();} 
+		}
+
+		mav.setViewName("idForget");
+		mav.addObject("message", "메일을 전송했습니다.");
+		return mav;
+	}
+
+	public ModelAndView findPwd(UserBeans ub) {
+
+		return null;
+	}
+
+
+	private void sendMail(UserBeans ub) {
+		String subject = "[ONE]회원정보 찾기를 위한 인증안내입니다. ";
+		String content = "<a href='http://192.168.219.199/logIn'>회원님의 아이디는 '" +ub.getUserId() + "' 입니다.</a>";
+
+		String from = "i_innew0731@naver.com";
+		String to = ub.getUserMail();
+
+		MimeMessage mail = javaMail.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mail, "UTF-8");
+
+
+		try {
+			helper.setFrom(from);
+			helper.setTo(to);
+			helper.setSubject(subject);
+			helper.setText(content,true);
+
+
+			javaMail.send(mail);
+		} catch (MessagingException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 }

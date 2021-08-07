@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import one.database.mapper.AuthInterface;
 import one.services.beans.AccessInfo;
+import one.services.beans.SearchBean;
 import one.services.beans.UserBeans;
 
 @Repository
@@ -68,8 +69,13 @@ public class AuthDAO{
 		
 		return sqlSession.selectList("getTcode", ai);
 	}
+	//모든멤버를 불러옴
+	public List<UserBeans> allmembers(){
+		List<UserBeans> members;		
+		members =sqlSession.selectList("allmembers");
 
-
+		return members;
+	}
 
 	//컨버트
 	private boolean convert(int value) {

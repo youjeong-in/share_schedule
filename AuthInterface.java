@@ -21,4 +21,5 @@ public interface AuthInterface {
 	boolean isCurrentAccess(AccessInfo ai);
 	boolean forceLogOut(AccessInfo ai);
 	String getTcode(AccessInfo ai);
+	List<UserBeans> allmembers();
 }
