@@ -90,31 +90,47 @@ function choiceDay(obj,index,condition){
 	if(condition=='other'){
 		return;
 	}
+	onOffDate(index);
 	indexA = Number(index)+1;
 	
 	const viewYear = date.getFullYear();
-	const viewMonth = (date.getMonth());
-		
+	const viewMonth = date.getMonth();
+	
+	//날짜 찍기	
 	const sendDate = viewYear +""+ ((viewMonth)<9?"0"+(viewMonth+1):(viewMonth+1)) +""+((indexA)<10?"0"+(indexA):(indexA));
 		
 	//console.log(sendDate);
 
 	getAjax("/getDaySd", "dates="+sendDate, "getEverySd");
-	onOffDate(index);
+	
 	let sideInfo = document.getElementById("sideInfo"); 
 	sideInfo.innerHTML = "<div id ='chDate' name='dateA'>"+replaceDate(obj.innerText)+"</div>";
 }
+
 //매 일의 스케줄 가져와서 innerHTML한 function
 function getEverySd(data){
-	//alert(data);
-	let dateList = document.getElementById("date");
+	
+	/*let dateList = document.getElementById("date");
 	let dateSdList ="";
 	
+	//console.log(dateList);
 	for(i=0; i<data.length; i++){
 		dateSdList += "<div style='font-size:15px;'>"+data[i].title +"(" + data[i].tname + ")"+"</div>";
 	}
 	
-	dateList.innerHTML = dateSdList;
+	dateList.innerHTML = dateSdList;*/
+	
+	//sideInfo에 넣는 div
+	let sdDetail = document.getElementById("sdDetail");
+	//let dataYYMMDD = data[0].dates.substring(0,10);
+	let sdDayList = "";
+	
+ 	//console.log(dataYYMMDD);
+	for(r=0; r<data.length; r++){
+		sdDayList += "<br><span style='font-size:15px;'>" + "[" +data[r].proName + "]   " + "</span>" + "<span style='font-size:16px; font-weight:bold;'>" +data[r].title +"(" + data[r].tname + ") - " + data[r].location+"</span><br>";
+	 }
+	
+	sdDetail.innerHTML=sdDayList;
 }
 
 function onOffDate(index){

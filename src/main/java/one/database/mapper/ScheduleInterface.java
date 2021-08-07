@@ -13,4 +13,5 @@ public interface ScheduleInterface {
 	boolean insSd(ScheduleBean sb);
 	List<ScheduleBean> selMonthSd (ScheduleBean sb);
 	List<ScheduleBean> selDaySd (ScheduleBean sb);
+	List<ScheduleBean> selCgName(ScheduleBean sb);
 }

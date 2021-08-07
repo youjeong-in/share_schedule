@@ -37,4 +37,11 @@
                        (MSID !=#{msId} AND OPEN='N')
 		</select>
 		
+		<!-- CG이름을 가져오는 XML -->
+		<select id="selCgName" parameterType="one.services.beans.ScheduleBean" resultType="one.services.beans.ScheduleBean">
+			SELECT CG.CG_CODE AS OPEN, CG.CG_NAME AS PRONAME
+			FROM SDLIST INNER JOIN CG ON SDLIST.PROCESS = CG.CG_CODE
+            WHERE DATES=#{dates} AND MSID=#{msId}
+		</select>
+		
     </mapper>

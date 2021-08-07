@@ -174,36 +174,35 @@ public class ScheduleManage {
 
 		return sqlSession.selectList("selMonthSd", sb);
 	}
-
-	//일별 스케줄 불러오는 메서드
-	public List<ScheduleBean> askDaySd(ScheduleBean sb) {
-		List<ScheduleBean> daySd;
-		try {
-			sb.setMsId((String)pu.getAttribute("userId"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		
-		daySd = this.selDaySd(sb);
-		for(int i=0; i<daySd.size(); i++) {
-			ScheduleBean day = new ScheduleBean();
-			if(sb.getDates().contains(daySd.get(i).getDates())) {
-				try {
-					day.setMsName(enc.aesDecode(daySd.get(i).getMsName(), sb.getMsId()));
-					daySd.add(day);
-				} catch (Exception e) {e.printStackTrace();}
-				
+	
+		//일별 스케줄 불러오는 메서드
+		public List<ScheduleBean> askDaySd(ScheduleBean sb) {
+			List<ScheduleBean> daySd;
+			try {
+				sb.setMsId((String)pu.getAttribute("userId"));
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
+			//System.out.println("sb   :   "+sb);
+			
+			daySd = this.selDaySd(sb);
+			for(int i=0; i<daySd.size(); i++) {
+					try {
+						daySd.get(i).setMsName(enc.aesDecode(daySd.get(i).getMsName(), sb.getMsId()));
+						daySd.get(i).setProName(this.selCgName(sb).get(i).getProName());
+					} catch (Exception e) {e.printStackTrace();}
+			}
+			System.out.println("최종 : "+daySd);
+			return daySd;
 		}
-		System.out.println(daySd);
-		return daySd;
-	}
-
-	public List<ScheduleBean> selDaySd(ScheduleBean sb){
-		return sqlSession.selectList("selDaySd", sb);
-	}
+	
+		public List<ScheduleBean> selDaySd(ScheduleBean sb){
+			return sqlSession.selectList("selDaySd", sb);
+		}
+		
+		public List<ScheduleBean> selCgName(ScheduleBean sb) {
+			return sqlSession.selectList("selCgName", sb);
+		}
 
 	//transaction Configuration
 	private void setTransactionConf(int propagation, int isolationLevel, boolean isRead) {

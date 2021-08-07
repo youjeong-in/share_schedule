@@ -250,7 +250,7 @@ function check1(data){
 	function getMonthSd(data){
 		
 		let sdDetail = document.getElementById("sdDetail");
-		let sdList = "<div>스케줄디테일</div><br><br>";
+		let sdList = "<div style='font-weight:bold; font-size:17px; color:red;'> <월별 스케줄> </div><br><br>";
 		let day = "";
 		
 		for(d=0; d<data.length; d++){
@@ -259,7 +259,7 @@ function check1(data){
 		
 		
 		for(i=0; i<data.length; i++){
-			sdList += "<div>"+ data[i].tname+" 의 "+ data[i].title +"</div>";
+			sdList += "<div style='font-weight:bold;'>"+ data[i].tname+" 의 "+ data[i].title +"</div><br>";
 		}
 		
 		sdDetail.innerHTML = sdList;
